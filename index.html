@@ -1,0 +1,2324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>字根探秘 · 汉字字族乐园</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="字根探秘">
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}
+</script>
+</head>
+<body>
+<header id="top">
+  <button class="btn ghost small" id="btnHome" title="回到首页">🏠 首页</button>
+  <div class="brand">
+    <span class="seal">字</span>
+    <span class="btitle">字根探秘</span>
+    <span class="bsub">汉字字族乐园</span>
+  </div>
+  <div class="topright">
+    <span class="badge gold" id="badgeStars">⭐ 0</span>
+    <button class="btn ghost small" id="btnSound">🔊</button>
+  </div>
+</header>
+<div class="resbar" id="resChips"></div>
+<div class="xpwrap"><span class="xpbar" id="xpbar"></span></div>
+<main id="app"><p style="text-align:center;color:var(--muted);padding:40px">正在加载字族地图…</p></main>
+<nav id="botnav">
+  <button class="bn-item on" id="bnHome" data-nav="home">🏠<span>大厅</span></button>
+  <button class="bn-item" id="bnSchool" data-nav="school">📚<span>字族</span></button>
+  <button class="bn-item" id="bnGame" data-nav="game">🎮<span>闯关</span></button>
+  <button class="bn-item" id="bnMe" data-nav="me">🏆<span>我的</span></button>
+</nav>
+
+<script src="data_auto.js"></script>
+<script src="extras_data.js"></script>
+<script src="grade_data.js"></script>
+<script src="read_data.js"></script>
+<script src="read_data2.js"></script>
+<script src="read_classics.js"></script>
+<script src="read_data3.js"></script>
+<script src="read_books.js"></script>
+<script src="shuowen_stories.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/meta.js"></script>
+<script src="js/anim.js"></script>
+<script src="js/read.js"></script>
+<script src="js/map.js"></script>
+<script>
+'use strict';
+/* ================= 数据 ================= */
+var PICTS={
+wang:'<svg viewBox="0 0 100 100"><path d="M16 20 L16 9 H34" fill="none" stroke="#5B4A2F" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="28" r="8" fill="none" stroke="#5B4A2F" stroke-width="4"/><path d="M60 38 V56 M60 56 L51 71 M60 56 L69 71" fill="none" stroke="#5B4A2F" stroke-width="4" stroke-linecap="round"/><path d="M50 26 H34" fill="none" stroke="#C94A2C" stroke-width="3.5" stroke-dasharray="6 6" stroke-linecap="round"/><path d="M34 26 l-8 -4.5 v9 z" fill="#C94A2C"/></svg>',
+qing:'<svg viewBox="0 0 100 100"><path d="M50 66 V26" fill="none" stroke="#3E7C4F" stroke-width="4" stroke-linecap="round"/><path d="M50 50 C43 45 43 38 33 36" fill="none" stroke="#3E7C4F" stroke-width="4" stroke-linecap="round"/><path d="M50 50 C57 45 57 38 67 36" fill="none" stroke="#3E7C4F" stroke-width="4" stroke-linecap="round"/><path d="M22 76 H78" fill="none" stroke="#5B4A2F" stroke-width="4" stroke-linecap="round"/><ellipse cx="50" cy="84" rx="15" ry="7" fill="#E8D9B8" stroke="#5B4A2F" stroke-width="3"/></svg>',
+mu:'<svg viewBox="0 0 100 100"><path d="M50 88 V24" fill="none" stroke="#8B5E34" stroke-width="5" stroke-linecap="round"/><path d="M14 44 H86" fill="none" stroke="#8B5E34" stroke-width="5" stroke-linecap="round"/><path d="M50 58 L28 76" fill="none" stroke="#8B5E34" stroke-width="5" stroke-linecap="round"/><path d="M50 58 L72 76" fill="none" stroke="#8B5E34" stroke-width="5" stroke-linecap="round"/></svg>',
+shui:'<svg viewBox="0 0 100 100"><path d="M8 58 Q28 44 50 58 T92 58" fill="none" stroke="#3E7CB1" stroke-width="5" stroke-linecap="round"/><path d="M26 22 q6 10 0 19" fill="none" stroke="#3E7CB1" stroke-width="3.5" stroke-linecap="round"/><path d="M74 22 q-6 10 0 19" fill="none" stroke="#3E7CB1" stroke-width="3.5" stroke-linecap="round"/></svg>'
+};
+var FAM=[
+{
+ id:'wang', name:'亡字家族', root:'亡', py:'wáng', emoji:'💨', color:'#6C5A90',
+ desc:'亡 = 消失，不是"死亡"！忘、忙、盲、芒、妄、荒、望，一次说透。',
+ pict:PICTS.wang,
+ story:{
+  meaning:'逃跑、消失',
+  book:'《说文解字》："亡，逃也。"',
+  text:'古文字的"亡"，和"逃跑、躲藏、消失"有关。古人说"亡羊补牢"，不是"死羊"，是羊<b>跑丢了</b>！后来，"人不见了、消失了"，才慢慢引申出"死亡"的意思。',
+  det:'🕵️ 小侦探提醒：很多同学以为"亡"就是"死"——错啦！本义是"消失、逃跑"。忘、忙、盲、芒、妄、荒……全都和"消失、没有"有关。抓住字根，一整族字都能看懂！'
+ },
+ song:'「亡」字本义是"消失"，\n只背"死亡"可记错！\n记忆消失叫做「忘」，\n心里着急叫做「忙」；\n眼睛"亡"了是「盲」人，\n草叶尖刺叫做「芒」；\n胡乱没根据是「妄」，\n庄稼没了田地「荒」；\n抬头望月看远方，\n亡字家族本领强！',
+ members:[
+  {ch:'忘',py:'wàng',lss:'形声 · 声旁兼表义',parts:[{c:'亡',l:'声旁，读wáng，表示"消失"'},{c:'心',l:'形旁，和心思、记忆有关'}],m:'记忆从心里"消失"了。',w:'忘记 · 难忘 · 念念不忘',s:'出去玩，别忘了带水壶。',tip:'心里的事"丢"了，就是「忘」。'},
+  {ch:'忙',py:'máng',lss:'形声 · 声旁兼表义',parts:[{c:'忄',l:'形旁，"心"的变形（竖心旁）'},{c:'亡',l:'声旁兼表义，"没了空闲"' }],m:'事情多、没空闲，心都"丢"了章法。',w:'忙碌 · 帮忙 · 手忙脚乱',s:'妈妈上班很忙。',tip:'「忙」的左边是竖心旁（忄），是"心"的变形。心里着急、没了空闲，就是忙。'},
+  {ch:'盲',py:'máng',lss:'形声 · 声旁兼表义',parts:[{c:'亡',l:'声旁兼表义，"消失"'},{c:'目',l:'形旁，眼睛'}],m:'眼睛的功能"消失"了——看不见。',w:'盲人 · 盲目 · 扫盲',s:'过马路要看清红绿灯，不能盲目乱跑。',tip:'目 = 眼睛。眼睛"亡"了 = 看不见。「盲人摸象」说的就是看不见的人。'},
+  {ch:'芒',py:'máng',lss:'形声',parts:[{c:'艹',l:'形旁，和草有关'},{c:'亡',l:'声旁，读máng'}],m:'禾谷、草叶上针尖一样的细刺。',w:'麦芒 · 锋芒 · 光芒',s:'麦子熟了，麦芒刺得人痒痒。',tip:'艹 = 草。草叶上针尖一样的细刺就是芒。后来"光芒"也用芒——光像针一样射出来。'},
+  {ch:'妄',py:'wàng',lss:'形声',parts:[{c:'亡',l:'声旁兼表义，"没有"'},{c:'女',l:'形旁'}],m:'胡乱、没有根据、自以为了不起。',w:'妄想 · 狂妄 · 妄自菲薄',s:'做人要谦虚，不能狂妄自大。',tip:'「妄」本义是"乱"。胡乱的想法叫「妄想」，自以为了不起叫「狂妄」。'},
+  {ch:'荒',py:'huāng',lss:'形声',parts:[{c:'艹',l:'形旁，和草有关'},{c:'巟',l:'声旁，里面藏着"亡"=消失'}],m:'田地没人种，庄稼"消失"，长满野草。',w:'荒地 · 荒凉 · 荒芜',s:'很久没人种的地，已经荒了。',tip:'荒的声旁"巟"里藏着"亡"（消失）。庄稼"消失"了，只剩野草，就是荒。'},
+  {ch:'望',py:'wàng',lss:'形声',parts:[{c:'亡',l:'声旁，读wáng'},{c:'月',l:'古人抬头望的是月亮'},{c:'王',l:'声旁的一部分，也表读音'}],m:'抬头看向远方；心里盼着美好。',w:'希望 · 遥望 · 盼望',s:'我盼望暑假快点到来。',tip:'古字形像人踮起脚、抬头望月。望 = 往远处看；心里盼着美好，所以"希望"里也有望。'},
+  {ch:'罔',py:'wǎng',lss:'形声 · 借作"没有"',challenge:true,parts:[{c:'网',l:'形旁，本义是渔网'},{c:'亡',l:'声旁，读wáng'}],m:'渔网；后来借去表示"没有"。',w:'欺罔 · 置若罔闻',s:'他对老师的提醒置若罔闻。',tip:'罔本来指渔网，后来借去表示"没有、欺骗"。"置若罔闻"就是"像没听见一样"。'}
+ ],
+ build:[
+  {target:'忘',q:'哪个字表示"把记忆弄丢了"？请拼出来。',pool:['亡','心','目','日'],ans:['亡','心']},
+  {target:'忙',q:'哪个字表示"事情多、没空闲"？请拼出来。',pool:['忄','亡','心','广'],ans:['忄','亡']},
+  {target:'盲',q:'哪个字表示"眼睛看不见"？请拼出来。',pool:['亡','目','日','月'],ans:['亡','目']},
+  {target:'芒',q:'哪个字表示"草上细细的尖刺"？请拼出来。',pool:['艹','亡','木','禾'],ans:['艹','亡']},
+  {target:'妄',q:'哪个字表示"胡乱、没根据"？请拼出来。',pool:['亡','女','马','子'],ans:['亡','女']},
+  {target:'荒',q:'哪个字表示"田地没人种、长满野草"？请拼出来。',pool:['艹','巟','亡','广'],ans:['艹','巟']},
+  {target:'望',q:'哪个字表示"抬头看向远方"？请拼出来。',pool:['亡','月','王','目'],ans:['亡','月','王']}
+ ],
+ fill:[
+  {s:'妈妈工作很__，周末才有空陪我。',opts:['忙','盲','忘'],a:'忙',ex:'忙 = 忄+亡：事情多，心都"没空"了。'},
+  {s:'过马路不能__目乱跑，要看清红绿灯。',opts:['盲','忙','忘'],a:'盲',ex:'盲 = 亡+目：眼睛看不见。"盲目"就是像眼睛看不见一样乱来。'},
+  {s:'我把铅笔盒__在家里了。',opts:['忘','忙','盲'],a:'忘',ex:'忘 = 亡+心：记忆从心里"消失"了。'},
+  {s:'麦子熟了，麦__像针一样尖。',opts:['芒','忙','荒'],a:'芒',ex:'芒 = 艹+亡：草叶上针尖一样的细刺。'},
+  {s:'做人要谦虚，不能__妄自大。',opts:['狂','亡','妄'],a:'妄',ex:'妄 = 亡+女：胡乱、没根据。"狂妄"就是自大得没边。'},
+  {s:'山坡上那块地没人种，已经__了。',opts:['荒','盲','芒'],a:'荒',ex:'荒 = 艹+巟（里面藏"亡"）：庄稼"消失"，只剩野草。'},
+  {s:'我盼__着周末和爸爸妈妈去公园。',opts:['望','忘','忙'],a:'望',ex:'望 = 亡+月+王：抬头望向远方；盼着美好。'},
+  {s:'只要努力，就有__。',opts:['望','忙','忘'],a:'望',ex:'望还有"希望"的意思——心里盼着的美好。'}
+ ],
+ match:[['盲','眼睛看不见'],['忘','记不住'],['忙','事情多、没空闲'],['芒','草叶上的尖刺'],['妄','胡乱、没根据'],['荒','田地长草没人管']]
+},
+{
+ id:'qing', name:'青字家族', root:'青', py:'qīng', emoji:'🌱', color:'#2F8F74',
+ desc:'部编版课文《小青蛙》里的老朋友：晴、情、清、请、睛、精、蜻、静。',
+ pict:PICTS.qing,
+ story:{
+  meaning:'草木初生的颜色（青绿）',
+  book:'《说文解字》："青，东方色也。从生、丹。"',
+  text:'"青"字上面是"生"——小草破土长出来；下面是"丹"——一种矿石的颜色。植物生长 + 矿物的颜色 = "青"。古人还用"青"指蓝色（青天）、黑色（青丝）。',
+  det:'🕵️ 小侦探提醒：一年级课文《小青蛙》里，"晴、情、清、请、睛"用的就是这个字族！再加"精、蜻、静"，一共8个字——认准"青"，全都能记住。'
+ },
+ song:'青青小草冒新芽，\n河水清清沙见底（清）；\n太阳出来天气晴（晴），\n心里感觉是感情（情）；\n说话礼貌说声请（请），\n黑眼珠儿是眼睛（睛）；\n米中精华就是精（精），\n蜻蜓飞飞静悄悄（蜻、静）。',
+ members:[
+  {ch:'清',py:'qīng',lss:'形声',parts:[{c:'氵',l:'形旁，和水有关'},{c:'青',l:'声旁，读qīng，也表示"鲜亮"' }],m:'水干净透明，像刚冒出的草芽一样鲜亮。',w:'清水 · 清澈 · 清洁',s:'山上的泉水真清。',tip:'氵+青：和"水"有关的字，认准三点水。'},
+  {ch:'晴',py:'qíng',lss:'形声',parts:[{c:'日',l:'形旁，和太阳、天气有关'},{c:'青',l:'声旁，读qīng'}],m:'太阳出来，天空明朗。',w:'晴天 · 晴朗 · 雨过天晴',s:'今天是晴天，我们出去玩。',tip:'有太阳（日）才是晴。'},
+  {ch:'情',py:'qíng',lss:'形声',parts:[{c:'忄',l:'形旁，"心"的变形'},{c:'青',l:'声旁，读qīng'}],m:'心里的感受，像小草一样悄悄萌发。',w:'感情 · 心情 · 友情',s:'我的心情很好。',tip:'感情在心里，用竖心旁（忄）。'},
+  {ch:'请',py:'qǐng',lss:'形声',parts:[{c:'讠',l:'形旁，和说话有关'},{c:'青',l:'声旁，读qīng'}],m:'用礼貌的话请人做事。',w:'请求 · 请坐 · 邀请',s:'请你帮我一个忙。',tip:'说话（讠）要有礼貌——"请"用言字旁。'},
+  {ch:'睛',py:'jīng',lss:'形声',parts:[{c:'目',l:'形旁，眼睛'},{c:'青',l:'声旁，古义也指黑色'}],m:'眼珠（古人用"青"指黑色——黑眼珠）。',w:'眼睛 · 目不转睛 · 火眼金睛',s:'眼睛是心灵的窗户。',tip:'目 = 眼睛。青在古代也指黑色——"睛"就是黑眼珠！'},
+  {ch:'精',py:'jīng',lss:'形声',parts:[{c:'米',l:'形旁，和米有关'},{c:'青',l:'声旁'}],m:'挑过的好米；引申为最好的部分。',w:'精神 · 精彩 · 精心',s:'他的作业写得很精彩。',tip:'米里挑出的精华 = 精。'},
+  {ch:'蜻',py:'qīng',lss:'形声',parts:[{c:'虫',l:'形旁，和小虫有关'},{c:'青',l:'声旁，读qīng'}],m:'蜻蜓——细长的绿色小虫。',w:'蜻蜓 · 蜻蜓点水',s:'蜻蜓点水，飞得真轻快。',tip:'虫旁；蜻蜓是青（绿）色的小虫。'},
+  {ch:'静',py:'jìng',lss:'形声',parts:[{c:'青',l:'形旁，表示清亮、不杂乱'},{c:'争',l:'声旁，读zhēng'}],m:'不吵不闹、不杂乱。',w:'安静 · 平静 · 静悄悄',s:'图书馆里很安静。',tip:'声旁是"争"，可"静"偏偏是"不争不吵"——记住：安静的静 = 青+争。'}
+ ],
+ build:[
+  {target:'清',q:'哪个字表示"水干净透明"？请拼出来。',pool:['氵','青','日','月'],ans:['氵','青']},
+  {target:'晴',q:'哪个字表示"太阳出来、天气好"？请拼出来。',pool:['日','青','目','月'],ans:['日','青']},
+  {target:'情',q:'哪个字表示"心里的感受"？请拼出来。',pool:['忄','青','心','日'],ans:['忄','青']},
+  {target:'请',q:'哪个字表示"礼貌地请人做事"？请拼出来。',pool:['讠','青','口','言'],ans:['讠','青']},
+  {target:'睛',q:'哪个字表示"眼睛、眼珠"？请拼出来。',pool:['目','青','日','月'],ans:['目','青']},
+  {target:'精',q:'哪个字表示"挑过的好米、精华"？请拼出来。',pool:['米','青','木','禾'],ans:['米','青']},
+  {target:'蜻',q:'哪个字表示"蜻蜓的小虫"？请拼出来。',pool:['虫','青','鸟','马'],ans:['虫','青']},
+  {target:'静',q:'哪个字表示"不吵不闹"？请拼出来。',pool:['青','争','氵','日'],ans:['青','争']}
+ ],
+ fill:[
+  {s:'今天是__天，我们一起去放风筝。',opts:['晴','清','情'],a:'晴',ex:'晴 = 日+青：太阳出来，天气晴朗。'},
+  {s:'山泉水真__，能看见水底的小石子。',opts:['清','晴','情'],a:'清',ex:'清 = 氵+青：水干净透明。'},
+  {s:'我对小学生活很有感__。',opts:['情','清','晴'],a:'情',ex:'情 = 忄+青：心里的感受。'},
+  {s:'进门先敲敲门，__坐再说话。',opts:['请','情','清'],a:'请',ex:'请 = 讠+青：说话要有礼貌。'},
+  {s:'眼__是心灵的窗户。',opts:['睛','晴','精'],a:'睛',ex:'睛 = 目+青：眼睛。"青"古义也指黑色——黑眼珠。'},
+  {s:'他做手工很__细。',opts:['精','睛','静'],a:'精',ex:'精 = 米+青：米里挑出的精华，比喻最好的部分。'},
+  {s:'图书馆里很安__。',opts:['静','清','晴'],a:'静',ex:'静 = 青+争：不吵不闹。"争"在这里表读音。'},
+  {s:'一只__蜓落在荷叶上。',opts:['蜻','晴','请'],a:'蜻',ex:'蜻 = 虫+青：蜻蜓是一种小虫。'}
+ ],
+ match:[['晴','太阳出来天气好'],['清','水很干净'],['情','心里的感受'],['请','礼貌地说话'],['睛','眼睛'],['静','不吵不闹']]
+},
+{
+ id:'mu', name:'木字家族', root:'木', py:'mù', emoji:'🌳', color:'#9A6B3C',
+ desc:'象形、指事、会意大聚会：本、末、林、森、休、采、果、相。',
+ pict:PICTS.mu,
+ story:{
+  meaning:'树木',
+  book:'"木"是象形字：中间是树干，横是树枝，撇捺是树根。',
+  text:'"木"是最古老的象形字之一。在"木"上加一笔、加一个部件，就能变出一堆新字——这就是汉字造字的秘密：象形、指事、会意。',
+  det:'🕵️ 小侦探提醒：「本」和「末」最容易搞混：一横在下 = 树根 = 本；一横在上 = 树梢 = 末。"本末倒置"就是把根和梢弄反了。'
+ },
+ song:'一个木是树木，\n两个木排成林；\n三个木大森林，\n人靠树旁是休；\n手在树上采果子，\n树上结的是果；\n目看树木细端详，\n互相帮助记心上；\n本下加横是树根，\n末上加横是树梢，\n本末倒置可不行！',
+ members:[
+  {ch:'木',py:'mù',lss:'象形 · 画成一棵树',parts:[],m:'树木。',w:'树木 · 木头 · 木板',s:'山上种满了树木。',tip:'中间一竖是树干，一横是树枝，撇和捺是树根。'},
+  {ch:'林',py:'lín',lss:'会意',parts:[{c:'木',l:'树'},{c:'木',l:'树'}],m:'两棵树站在一起——很多树。',w:'树林 · 森林 · 竹林',s:'小树林里鸟儿真多。',tip:'双木成林。'},
+  {ch:'森',py:'sēn',lss:'会意',parts:[{c:'木',l:'树'},{c:'木',l:'树'},{c:'木',l:'树'}],m:'树多到数不清。',w:'森林 · 阴森森',s:'大森林是动物的家。',tip:'三木成森，树多极了。'},
+  {ch:'休',py:'xiū',lss:'会意',parts:[{c:'亻',l:'人（单人旁）'},{c:'木',l:'树'}],m:'人累了，靠着树休息。',w:'休息 · 休假 · 午休',s:'玩累了，我们在树下休息。',tip:'亻 = 人。人靠着树 = 休。'},
+  {ch:'采',py:'cǎi',lss:'会意',parts:[{c:'爫',l:'手（"爪"的变形）'},{c:'木',l:'树'}],m:'手在树上摘果子。',w:'采花 · 采摘 · 风采',s:'春天我们去采草莓。',tip:'爫是"爪"的变形 = 手。手在树上摘果子 = 采。'},
+  {ch:'果',py:'guǒ',lss:'象形 · 树上结果',parts:[{c:'木',l:'树'},{c:'田',l:'果实的形状（不是田地哦）'}],m:'树上结的果子。',w:'果实 · 水果 · 苹果',s:'秋天，果树上结满了果实。',tip:'"果"像树上结着圆圆的果子——中间的"田"是果子的形状，不是田地。'},
+  {ch:'相',py:'xiāng',lss:'会意',parts:[{c:'木',l:'树'},{c:'目',l:'眼睛'}],m:'眼睛盯着树仔细看；你看我、我看你——互相。',w:'互相 · 相同 · 相信',s:'同学之间要互相帮助。',tip:'目 = 眼睛。眼睛看树 = 仔细看（观察）；你看我、我看你 → 互相。'},
+  {ch:'本',py:'běn',lss:'指事 · 一横标出树根',parts:[{c:'木',l:'树'},{c:'一',l:'加在"木"下面，标出树根'}],m:'树根——根本、来源。',w:'根本 · 本来 · 课本',s:'这棵大树的根部很粗壮。',tip:'一横加在"木"的下面，指树根——「本」。'},
+  {ch:'末',py:'mò',lss:'指事 · 一横标出树梢',parts:[{c:'木',l:'树'},{c:'一',l:'加在"木"上面，标出树梢'}],m:'树梢——末尾、最后。',w:'末尾 · 周末 · 末班车',s:'这个故事的末尾很精彩。',tip:'一横加在"木"的上面，指树梢——「末」。'}
+ ],
+ build:[
+  {target:'林',q:'哪个字表示"很多树"？请拼出来。',pool:['木','木','亻','人'],ans:['木','木']},
+  {target:'森',q:'哪个字表示"很多很多的树"？请拼出来。',pool:['木','木','木','亻'],ans:['木','木','木']},
+  {target:'休',q:'哪个字表示"人靠着树休息"？请拼出来。',pool:['亻','木','人','大'],ans:['亻','木']},
+  {target:'采',q:'哪个字表示"用手在树上摘"？请拼出来。',pool:['爫','木','爪','手'],ans:['爫','木']},
+  {target:'相',q:'哪个字表示"眼睛看树、互相"？请拼出来。',pool:['木','目','日','月'],ans:['木','目']},
+  {type:'zhishi',base:'木',result:'本',pos:'bottom',q:'树根在哪里？在「木」的哪边加一横，写成「本」？',ex:'一横加在下面，指树根——根本。'},
+  {type:'zhishi',base:'木',result:'末',pos:'top',q:'树梢在哪里？在「木」的哪边加一横，写成「末」？',ex:'一横加在上面，指树梢——末尾。'}
+ ],
+ fill:[
+  {s:'山那边有一片小树__。',opts:['林','木','森'],a:'林',ex:'林 = 木+木：两棵树，树林。'},
+  {s:'大森__里住着很多小动物。',opts:['林','森','木'],a:'林',ex:'森林 = 森+林：树很多很多。'},
+  {s:'跑累了，我们坐在树下__息一会儿。',opts:['休','体','木'],a:'休',ex:'休 = 亻+木：人靠着树休息。'},
+  {s:'秋天到了，我们上山__果子。',opts:['采','菜','木'],a:'采',ex:'采 = 爫+木：爫是"爪"，手在树上摘。'},
+  {s:'树上的__子又大又红。',opts:['果','采','木'],a:'果',ex:'果：树上结着圆圆的果子。'},
+  {s:'朋友之间要互__帮助。',opts:['相','想','木'],a:'相',ex:'相 = 木+目：你看我、我看你——互相。'},
+  {s:'每天读书，是学习之__。',opts:['本','木','末'],a:'本',ex:'本：在"木"下面加一横，指树根——根本。'},
+  {s:'故事的__尾很精彩。',opts:['末','本','木'],a:'末',ex:'末：在"木"上面加一横，指树梢——末尾。'}
+ ],
+ match:[['林','很多树'],['休','人靠着树休息'],['采','用手摘'],['果','树上结的果子'],['相','互相'],['本','树根']]
+},
+{
+ id:'shui', name:'水字家族', root:'水', py:'shuǐ', emoji:'🌊', color:'#3E7CB1',
+ desc:'三点水的秘密：江、河、湖、海、洗、泳、汗、泪，都和"水"有关。',
+ pict:PICTS.shui,
+ story:{
+  meaning:'流动的水',
+  book:'"水"是象形字：甲骨文像弯弯曲曲的河流。',
+  text:'"水"做偏旁时，常常变成三点水"氵"。所以看见"氵"，就要想到"和水有关"——这就是形声字的"形旁表义"。江、河、湖、海……都是水族！',
+  det:'🕵️ 小侦探提醒：「泪」不是形声字，是会意字：目（眼睛）+ 氵（水）= 眼睛里流出的水！拆开一看就懂。'
+ },
+ song:'三点水，本领大，\n江河湖海都靠它；\n饭前洗手讲卫生，\n夏天游泳乐开花；\n眼睛流泪三点水，\n运动出汗热汗洒；\n见了氵字想一想，\n准和水儿是一家！',
+ members:[
+  {ch:'水',py:'shuǐ',lss:'象形 · 画成流动的水',parts:[],m:'流动的水。',w:'河水 · 水果 · 泪水',s:'水是生命之源。',tip:'做偏旁时，"水"常常写成三点水（氵）。'},
+  {ch:'江',py:'jiāng',lss:'形声',parts:[{c:'氵',l:'形旁，和水有关'},{c:'工',l:'声旁，读gōng'}],m:'大河。',w:'长江 · 江水 · 江边',s:'长江是中国最长的江。',tip:'氵表义（和水有关），工表音。'},
+  {ch:'河',py:'hé',lss:'形声',parts:[{c:'氵',l:'形旁，和水有关'},{c:'可',l:'声旁，读kě'}],m:'河流。',w:'黄河 · 河水 · 河流',s:'黄河是我们的母亲河。',tip:'氵表义，可表音。'},
+  {ch:'湖',py:'hú',lss:'形声',parts:[{c:'氵',l:'形旁，和水有关'},{c:'胡',l:'声旁，读hú'}],m:'被陆地围着的大水。',w:'湖泊 · 西湖 · 湖面',s:'西湖的湖水很平静。',tip:'氵表义，胡表音。'},
+  {ch:'海',py:'hǎi',lss:'形声',parts:[{c:'氵',l:'形旁，和水有关'},{c:'每',l:'声旁，读měi'}],m:'大海。',w:'大海 · 海洋 · 海边',s:'暑假我去看大海。',tip:'氵表义，每表音。'},
+  {ch:'洗',py:'xǐ',lss:'形声',parts:[{c:'氵',l:'形旁，和水有关'},{c:'先',l:'声旁，读xiān'}],m:'用水去掉脏东西。',w:'洗手 · 洗脸 · 洗衣',s:'饭前便后要洗手。',tip:'氵表义，先表音。'},
+  {ch:'泳',py:'yǒng',lss:'形声',parts:[{c:'氵',l:'形旁，和水有关'},{c:'永',l:'声旁，读yǒng'}],m:'在水里游动。',w:'游泳 · 蛙泳 · 自由泳',s:'夏天我在泳池里游泳。',tip:'氵表义，永表音。'},
+  {ch:'泪',py:'lèi',lss:'会意 · 眼睛流出的水',parts:[{c:'目',l:'眼睛'},{c:'氵',l:'水'}],m:'眼睛里流出的水。',w:'眼泪 · 泪水 · 流泪',s:'听到好消息，她感动得流下眼泪。',tip:'目（眼睛）+ 氵（水）= 眼睛里流出的水！会意字，拆开就懂。'},
+  {ch:'汗',py:'hàn',lss:'形声',parts:[{c:'氵',l:'形旁，和水有关'},{c:'干',l:'声旁，读gàn'}],m:'身体热了、累了流出的水。',w:'汗水 · 出汗',s:'运动完，他满头大汗。',tip:'氵表义，干表音。'}
+ ],
+ build:[
+  {target:'江',q:'哪个字表示"大江、长江"？请拼出来。',pool:['氵','工','可','干'],ans:['氵','工']},
+  {target:'河',q:'哪个字表示"河流、黄河"？请拼出来。',pool:['氵','可','工','干'],ans:['氵','可']},
+  {target:'洗',q:'哪个字表示"用水去掉脏东西"？请拼出来。',pool:['氵','先','牛','干'],ans:['氵','先']},
+  {target:'泪',q:'哪个字表示"眼睛里流出的水"？（会意字！）',pool:['氵','目','日','月'],ans:['氵','目']},
+  {target:'汗',q:'哪个字表示"身体流出的水"？请拼出来。',pool:['氵','干','千','工'],ans:['氵','干']},
+  {target:'泳',q:'哪个字表示"在水里游动"？请拼出来。',pool:['氵','永','水','禾'],ans:['氵','永']},
+  {target:'湖',q:'哪个字表示"被陆地围着的大水"？请拼出来。',pool:['氵','胡','古','月'],ans:['氵','胡']},
+  {target:'海',q:'哪个字表示"大海"？请拼出来。',pool:['氵','每','母','梅'],ans:['氵','每']}
+ ],
+ fill:[
+  {s:'黄河是我们的母亲__。',opts:['河','江','湖'],a:'河',ex:'河 = 氵+可：氵表义（和水有关），可表音。'},
+  {s:'西湖的__水很平静。',opts:['湖','胡','河'],a:'湖',ex:'湖 = 氵+胡：被陆地围着的大水。'},
+  {s:'暑假我跟着爸妈去看大__。',opts:['海','每','洗'],a:'海',ex:'海 = 氵+每：大海。"每"表读音。'},
+  {s:'饭前要__手。',opts:['洗','汗','泳'],a:'洗',ex:'洗 = 氵+先：用水去掉脏东西。'},
+  {s:'夏天我在泳池里游__。',opts:['泳','永','水'],a:'泳',ex:'泳 = 氵+永："永"表读音。'},
+  {s:'听到好消息，她感动得流下眼__。',opts:['泪','目','水'],a:'泪',ex:'泪 = 氵+目：眼睛里流出的水——会意字！'},
+  {s:'运动完，他满头大__。',opts:['汗','干','泪'],a:'汗',ex:'汗 = 氵+干：身体流出的水。'},
+  {s:'我们乘船游览长__三峡。',opts:['江','河','汗'],a:'江',ex:'江 = 氵+工：大河。"工"表读音。'}
+ ],
+ match:[['江','大河'],['湖','被陆地围着的大水'],['洗','用水去掉脏东西'],['泳','在水里游动'],['泪','眼睛里流出的水'],['汗','身体流出的水']]
+}
+];
+var FAMMAP={};
+/* 自动族文本清理：修正字典原文里残留的未配对引号等痕迹 */
+function cleanAutoText(s){
+  if(!s) return s;
+  var open=(s.match(/“/g)||[]).length, close=(s.match(/”/g)||[]).length;
+  while(close>open){ s=s.replace(/”/,''); close--; }
+  return s.replace(/\s+/g,' ').trim();
+}
+if (window.AUTO_FAMS && window.AUTO_FAMS.length) {
+  window.AUTO_FAMS.forEach(function(f){
+    (f.members||[]).forEach(function(m){ m.m=cleanAutoText(m.m); m.w=cleanAutoText(m.w); });
+  });
+  FAM = FAM.concat(window.AUTO_FAMS);
+}
+FAM.forEach(function(f){FAMMAP[f.id]=f;});
+var GAME_NAMES=['组装汉字','选字填空','字义连连看'];
+var AUTO_GAME_NAMES=['组装汉字','字义侦探','字义连连看'];
+var GAME_ICONS=['🧩','📝','🔗'];
+var TITLES=['识字新芽','字族学徒','识字小达人','字族侦探','字根大师'];
+var TITLE_EMOJI=['🌱','📖','⭐','🔍','👑'];
+var PRAISE=['太棒了！','真厉害！','你真聪明！','答对啦！','好样的！','字根小侦探！'];
+
+/* ================= 状态 ================= */
+/* 多学生档案：存储 key 按当前档案后缀隔离（与 meta.js 保持一致） */
+function profileSuffix(){ try{ var p=localStorage.getItem('zigen_current_profile')||''; return p?('_'+p):''; }catch(e){ return ''; } }
+function progKey(){ return 'zigen_progress_v1'+profileSuffix(); }
+var PROG=loadProg();
+var SOUND=true;
+function loadProg(){
+  try{
+    var p=JSON.parse(localStorage.getItem(progKey()));
+    if(p && p.stars){
+      if(!p.perf) p.perf={};
+      if(!p.gradeBest) p.gradeBest={};
+      if(!p.starSlots) p.starSlots=['wang','qing','mu','shui'];
+      return p;
+    }
+  }catch(e){}
+  return {stars:{},review:null,perf:{},gradeBest:{},starSlots:['wang','qing','mu','shui']};
+}
+function saveProg(){ try{ localStorage.setItem(progKey(),JSON.stringify(PROG)); }catch(e){} }
+function totalStars(){
+  var s=0;
+  Object.keys(PROG.stars).forEach(function(k){
+    PROG.stars[k].forEach(function(x){s+=x;});
+  });
+  if(PROG.review) s+=PROG.review;
+  if(PROG.riddle) s+=PROG.riddle;
+  return s;
+}
+function famStars(id){ return PROG.stars[id]||[0,0,0]; }
+function setStars(fam,gi,s){
+  if(!PROG.stars[fam]) PROG.stars[fam]=[0,0,0];
+  if(s>(PROG.stars[fam][gi]||0)){ PROG.stars[fam][gi]=s; saveProg(); }
+}
+function titleFor(s){
+  if(s>=40) return 4;
+  if(s>=30) return 3;
+  if(s>=20) return 2;
+  if(s>=10) return 1;
+  return 0;
+}
+
+/* ================= 工具 ================= */
+var app=document.getElementById('app');
+var TIMERS=[];
+function later(fn,ms){ var t=setTimeout(fn,ms); TIMERS.push(t); return t; }
+function clearTimers(){ TIMERS.forEach(clearTimeout); TIMERS=[]; stopReading(); }
+function shuffle(a){
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=a[i];a[i]=a[j];a[j]=t;
+  }
+  return a;
+}
+function $(sel,root){ return (root||document).querySelector(sel); }
+function $all(sel,root){ return Array.prototype.slice.call((root||document).querySelectorAll(sel)); }
+function speak(t){
+  stopReading();
+  if(!SOUND) return;
+  if(window.META) META.trackListen();
+  try{
+    if(window.AndroidTTS && window.AndroidTTS.speak){ window.AndroidTTS.speak(String(t)); return; }
+    if(!window.speechSynthesis) return;
+    var u=new SpeechSynthesisUtterance(t);
+    u.lang='zh-CN'; u.rate=0.9; u.pitch=1.0;
+    var vs=speechSynthesis.getVoices();
+    var pick=null;
+    for(var i=0;i<vs.length;i++){
+      var v=vs[i];
+      if(!v.lang||v.lang.indexOf('zh')!==0) continue;
+      if(v.name&&(/Xiaoxiao|Xiaoyi|Yunxi|Yunjian|Yunxia|晓晓|云希/i.test(v.name))){ pick=v; break; }
+      if(!pick) pick=v;
+    }
+    if(pick) u.voice=pick;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+/* 带完成回调的朗读（全文朗读逐句推进用）：Android 走原生 TTS 回调，浏览器走 utterance.onend，
+   老版本 APK 无回调时按字数估算兜底 */
+var TTS_SEQ={n:0,pending:{}};
+var TTS_READING=null;
+window.__ttsDone=function(id){
+  var cb=TTS_SEQ.pending[id];
+  if(cb){ delete TTS_SEQ.pending[id]; try{cb();}catch(e){} }
+};
+function stopReading(){
+  if(TTS_READING){ try{TTS_READING.stop();}catch(e){} TTS_READING=null; }
+}
+function speakT(t,cb){
+  if(!SOUND){ if(cb) later(cb,50); return; }
+  if(window.META) META.trackListen();
+  try{
+    if(window.AndroidTTS && window.AndroidTTS.speak){
+      var id='zg'+(++TTS_SEQ.n)+'_'+Math.floor(Math.random()*1e6);
+      if(cb) TTS_SEQ.pending[id]=cb;
+      window.AndroidTTS.speak(String(t),id);
+      if(cb){
+        var est=Math.max(1500,String(t).length*280)+5000;
+        setTimeout(function(){ if(TTS_SEQ.pending[id]){ delete TTS_SEQ.pending[id]; cb(); } },est);
+      }
+      return;
+    }
+    if(!window.speechSynthesis){ if(cb) later(cb,50); return; }
+    var u=new SpeechSynthesisUtterance(t);
+    u.lang='zh-CN'; u.rate=0.9; u.pitch=1.0;
+    if(cb) u.onend=function(){ cb(); };
+    speechSynthesis.speak(u);
+  }catch(e){ if(cb) later(cb,50); }
+}
+function praise(){
+  var w=PRAISE[Math.floor(Math.random()*PRAISE.length)];
+  toast(w);
+  speak(w);
+  if(window.META) META.onAnswer(true);
+}
+function miss(){
+  if(window.META) META.onAnswer(false);
+}
+function toast(msg){
+  var el=document.createElement('div');
+  el.className='toast'; el.textContent=msg;
+  document.body.appendChild(el);
+  setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); },1100);
+}
+function confetti(){
+  var colors=['#E5A93C','#C94A2C','#4F8A5B','#3E7CB1','#E8A0B4','#9A6B3C'];
+  var box=document.createElement('div');
+  box.className='confetti-box';
+  for(var i=0;i<70;i++){
+    var c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=(Math.random()*100)+'%';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration=(1.6+Math.random()*1.6)+'s';
+    c.style.animationDelay=(Math.random()*0.5)+'s';
+    c.style.transform='rotate('+(Math.random()*360)+'deg)';
+    box.appendChild(c);
+  }
+  document.body.appendChild(box);
+  setTimeout(function(){ if(box.parentNode) box.parentNode.removeChild(box); },4200);
+}
+function starsHtml(n,max){
+  max=max||3;
+  var h='';
+  for(var i=0;i<max;i++) h+='<span class="star '+(i<n?'on':'')+'">★</span>';
+  return h;
+}
+function memOf(famId,ch){
+  var f=FAMMAP[famId];
+  for(var i=0;i<f.members.length;i++) if(f.members[i].ch===ch) return f.members[i];
+  return null;
+}
+
+/* ================= 顶栏 ================= */
+function updateHeader(){
+  var t=totalStars();
+  $('#badgeStars').textContent='⭐ '+t;
+  var ti=titleFor(t);
+  var te=document.getElementById('badgeTitle');
+  if(te) te.textContent=TITLE_EMOJI[ti]+' '+TITLES[ti];
+  $('#btnSound').textContent=SOUND?'🔊':'🔇';
+  if(window.META){
+    var rc=document.getElementById('resChips');
+    if(rc) rc.innerHTML=META.chipsHtml();
+    META.updateBar();
+  }
+}
+document.getElementById('btnHome').addEventListener('click',function(){ renderHome(); });
+document.getElementById('btnSound').addEventListener('click',function(){
+  SOUND=!SOUND;
+  if(!SOUND){
+    try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
+    try{ if(window.AndroidTTS&&window.AndroidTTS.stop) window.AndroidTTS.stop(); }catch(e){}
+  }
+  updateHeader();
+});
+
+/* ================= 首页 ================= */
+function familyCardHtml(f){
+  var ss=famStars(f.id);
+  var got=ss[0]+ss[1]+ss[2];
+  var st='<span class="starsline">'+starsHtml(ss[0])+'</span> ';
+  st+='<span class="starsline">'+starsHtml(ss[1])+'</span> ';
+  st+='<span class="starsline">'+starsHtml(ss[2])+'</span>';
+  var tierChip='';
+  if(f.tiers){
+    var parts=[];
+    if(f.tiers.b) parts.push('起步'+f.tiers.b);
+    if(f.tiers.c1) parts.push('常用'+f.tiers.c1);
+    if(f.tiers.c2) parts.push('拓展'+f.tiers.c2);
+    tierChip='<br><span class="fc-tier">'+parts.join(' · ')+'</span>';
+  }
+  return '<div class="famcard" data-fam="'+f.id+'" style="--fc:'+f.color+'">'+
+    '<div class="fc-root">'+f.root+'</div>'+
+    '<h3>'+f.name+' '+f.emoji+'</h3>'+
+    '<p class="fc-desc">'+f.desc+'</p>'+
+    '<div class="fc-meta">'+f.members.length+'个字 · 得星 '+got+'/9'+tierChip+'<br>'+st+'</div>'+
+    '</div>';
+}
+var LIB={q:'',tier:'all',shown:24};
+function libFams(){
+  var starIds=PROG.starSlots||[];
+  var retired=FAM.slice(0,4).filter(function(f){ return starIds.indexOf(f.id)<0; });
+  var list=FAM.slice(4).filter(function(f){ return starIds.indexOf(f.id)<0; }).concat(retired);
+  if(LIB.q){
+    var q=LIB.q;
+    list=list.filter(function(f){
+      if(f.name.indexOf(q)>=0||(f.root||'').indexOf(q)>=0) return true;
+      for(var i=0;i<f.members.length;i++){ if(f.members[i].ch.indexOf(q)>=0) return true; }
+      return false;
+    });
+  }
+  if(LIB.tier!=='all'){
+    list=list.filter(function(f){ return (f.tiers||{})[LIB.tier]>0; });
+  }
+  return list;
+}
+function renderLib(reset){
+  if(reset) LIB.shown=24;
+  var list=libFams();
+  var total=0;
+  FAM.slice(4).forEach(function(f){ total+=f.members.length; });
+  $('#libStat').textContent='扩展字族库：'+list.length+' 族 · 全库 '+(FAM.length-4)+' 族 '+total+' 字（义务教育课标常用字表 3500 字全覆盖）';
+  $('#libGrid').innerHTML=list.slice(0,LIB.shown).map(familyCardHtml).join('');
+  $all('#libGrid .famcard').forEach(function(el){
+    el.addEventListener('click',function(){ renderFamily(el.getAttribute('data-fam')); });
+  });
+  var moreBtn=$('#libMore');
+  if(LIB.shown>=list.length){ moreBtn.classList.add('hidden'); } else { moreBtn.classList.remove('hidden'); }
+}
+function pickStarCand(exclude){
+  var used={};
+  (PROG.starSlots||[]).forEach(function(id){ used[id]=1; });
+  (exclude||[]).forEach(function(id){ used[id]=1; });
+  var cands=FAM.slice(4).filter(function(f){
+    return !used[f.id] && f.build&&f.build.length&&f.det&&f.det.length&&f.match&&f.match.length&&f.members.length>=5;
+  });
+  cands.sort(function(a,b){ return b.members.length-a.members.length; });
+  return cands[0]||null;
+}
+function refreshStarSlots(){
+  var slots=PROG.starSlots||['wang','qing','mu','shui'];
+  var changed=false, graduated=[];
+  var picked=[]; /* 本轮已补位的新族，防止两个字族同时毕业时补进同一族 */
+  var newSlots=slots.map(function(id){
+    var f=FAMMAP[id];
+    if(!f) return id;
+    var ss=famStars(id);
+    if(ss[0]===3&&ss[1]===3&&ss[2]===3){
+      var cand=pickStarCand(picked);
+      if(cand){
+        graduated.push(f.name);
+        picked.push(cand.id);
+        changed=true;
+        return cand.id;
+      }
+    }
+    return id;
+  });
+  if(changed){
+    PROG.starSlots=newSlots; saveProg();
+    toast('🎉 '+graduated.join('、')+' 毕业啦！新明星字族登场！');
+    if(window.ANIM) ANIM.burst();
+    if(window.AUDIO&&SOUND) AUDIO.levelup();
+  }
+  return newSlots;
+}
+function renderHome(){
+  clearTimers();
+  setNav('home');
+  if(window.META) META.init();
+  var t=totalStars();
+  var slots=refreshStarSlots();
+  var handUnlocked=0;
+  slots.forEach(function(id){ if(famStars(id).some(function(x){return x>0;})) handUnlocked++; });
+  var cards=slots.map(function(id){ var f=FAMMAP[id]; return f?familyCardHtml(f):''; }).join('');
+  var revUnlocked=t>=12;
+  var revStars=PROG.review?(' · 已得 '+PROG.review+'★'):'';
+  var challenge='<div class="famcard challenge '+(revUnlocked?'':'locked')+'" data-rev="1">'+
+    '<div class="fc-root" style="background:'+(revUnlocked?'#C94A2C':'#B9B2A0')+'" title="终极挑战">冠</div>'+
+    '<h3>终极挑战 '+(revUnlocked?'🏆':'🔒')+'</h3>'+
+    '<p class="fc-desc">'+(revUnlocked?'四大字族混合闯关，检验真本领！':'攒够 12 颗星才能解锁')+revStars+'</p>'+
+    '<div class="fc-meta">12题混合 · '+(PROG.review?('最佳 '+PROG.review+'★'):'满分 3★')+'</div>'+
+    '</div>';
+  var M=window.META||null;
+  var stats=M?M.statsHtml():null;
+  var nextInfo=M&&M.next()?('距 '+M.next().e+M.next().n+' 还差 '+(M.next().xp-M.statsHtml().xp)+' 经验'):'已是最高等级！';
+  var xpW=M&&M.next()?Math.round((M.statsHtml().xp-M.lv().xp)*100/(M.next().xp-M.lv().xp)):100;
+  app.innerHTML=
+    '<div class="hero">'+
+      '<div class="mascot" id="mascot" title="点我换装">'+(M?M.mascot().e:'🦉')+'</div>'+
+      '<h1>字根探秘</h1>'+
+      '<p class="sub">像小侦探一样拆开汉字——抓住一个字根，一串字一次学透</p>'+
+      '<div class="resbar">'+(M?M.chipsHtml():'')+'</div>'+
+      '<div class="xpwrap"><span class="xpbar" id="xpbar" style="width:'+xpW+'%"></span></div>'+
+      '<p class="sub" style="font-size:12px">'+(M?('经验 '+(M.statsHtml().xp)+' · '+nextInfo):'')+'</p>'+
+      '<p class="lead">汉字里藏着一个大秘密：10个字里有8个是<b>形声字</b>——一半表义、一半表音。<b>忘、忙、盲、芒、妄、荒、望</b>……全是字根「亡」的家族成员。把字根学透，生字自己就会"猜"！<br><br>👋 你好，我是字根小精灵<b>「根宝」</b>。学字根→闯关→攒星星→升级科举称号，跟我一起探险吧！</p>'+
+      '<button class="btn big" id="btnStart">🚀 开始探险</button>'+
+    '</div>'+
+    '<div class="questbox"><div class="qcard"><h3>📋 今日任务 <span style="font-weight:400;font-size:12px;color:var(--muted)">（完成后自动奖励铜钱）</span></h3>'+
+      '<div id="qBox">'+(M?M.questsHtml():'')+'</div></div></div>'+
+    '<div class="questbox">'+halfHourHtml()+'</div>'+
+    '<div class="homesec">🀄 明星字族（已点亮 '+handUnlocked+'/'+slots.length+'）</div>'+
+    '<div class="famgrid">'+cards+challenge+'</div>'+
+    '<div class="homesec">🎪 游戏与活动</div>'+
+    '<div class="entrygrid">'+
+      '<div class="entrycard" id="btnRead"><span class="eic">📖</span><b>悦读馆</b><small>读短文 · 点藏好词好句 · 仿写</small></div>'+
+      '<div class="entrycard" id="btnMap"><span class="eic">🗺️</span><b>字林探险</b><small>30天学习地图 · 每日任务包</small></div>'+
+      '<div class="entrycard" id="btnArena"><span class="eic">⚔️</span><b>每日擂台</b><small>90秒限时挑战</small></div>'+
+      '<div class="entrycard" id="btnGrade"><span class="eic">🎓</span><b>分年级闯关</b><small>1~6年级自适应自检</small></div>'+
+      '<div class="entrycard" id="btnRiddle"><span class="eic">🏮</span><b>字谜乐园</b><small>'+window.RIDDLES.length+' 条传统字谜</small></div>'+
+      '<div class="entrycard" id="btnMuseum"><span class="eic">🏛️</span><b>部首博物馆</b><small>六书 + '+window.RAD_MUSEUM.length+' 个部首</small></div>'+
+      '<div class="entrycard" id="btnGallery"><span class="eic">🖼️</span><b>象形字画廊</b><small>看图猜字</small></div>'+
+      '<div class="entrycard" id="btnWrong"><span class="eic">📒</span><b>错题本</b><small>写错的字在这里加班</small></div>'+
+    '</div>'+
+    '<div class="homesec">🏅 我的成就（'+(M?stats.badges:'0')+'/'+(M?stats.badgesTotal:16)+'）</div>'+
+    '<div class="badgesrow">'+(M?M.badgesHtml():'')+'</div>'+
+    '<div style="text-align:center;margin:14px 0"><button class="btn secondary" id="btnMeGo">🏆 查看我的全部成就</button></div>'+
+    '<div class="homesec">📚 给家长和老师</div>'+
+    '<div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
+      '<button class="btn secondary" id="btnGuide">📖 家长必读 · 这套教程的科学依据</button>'+
+      '<button class="btn secondary" id="btnParent">🛡️ 家长中心</button>'+
+    '</div>'+
+    '<div class="home-meta">'+
+      '<span class="linklike" style="text-decoration:none;cursor:default">共 '+t+' 颗星 · '+TITLE_EMOJI[titleFor(t)]+' '+TITLES[titleFor(t)]+' · 档案：'+currentProfileName()+'</span>'+
+    '</div>';
+  $all('.famcard[data-fam]').forEach(function(el){
+    el.addEventListener('click',function(){ renderFamily(el.getAttribute('data-fam')); });
+  });
+  var chal=$('.famcard[data-rev]');
+  chal.addEventListener('click',function(){
+    if(totalStars()<12){ toast('再攒 '+ (12-totalStars()) +' 颗星就能解锁！'); return; }
+    runReview();
+  });
+  $('#btnStart').addEventListener('click',function(){
+    var grid=$('.famgrid');
+    if(grid) grid.scrollIntoView({behavior:'smooth',block:'start'});
+    AUDIO.tap();
+  });
+  $('#mascot').addEventListener('click',function(){ AUDIO.tap(); renderShop(); });
+  $('#btnGuide').addEventListener('click',renderGuide);
+  $('#btnRiddle').addEventListener('click',renderRiddle);
+  $('#btnMuseum').addEventListener('click',renderMuseum);
+  $('#btnGallery').addEventListener('click',renderGallery);
+  $('#btnWrong').addEventListener('click',renderWrongBook);
+  $('#btnGrade').addEventListener('click',function(){ renderGrade(); });
+  $('#btnRead').addEventListener('click',renderReadHome);
+  $('#btnMap').addEventListener('click',renderMap);
+  $('#btnArena').addEventListener('click',renderArena);
+  $('#btnMeGo').addEventListener('click',renderMe);
+  $('#btnParent').addEventListener('click',function(){ parentGate(renderParent); });
+  $all('.entrycard,.famcard,.badgechip').forEach(function(el){
+    el.addEventListener('click',function(){ AUDIO.tap(); });
+  });
+  updateHeader();
+}
+
+/* ================= 字族页 ================= */
+function renderFamily(id){
+  clearTimers();
+  CUR.fam=id;
+  if(window.META) META.trackFam(id);
+  var f=FAMMAP[id];
+  var ss=famStars(id);
+  var MAX_CARDS=300;
+  var shownMembers=f.members.slice(0,MAX_CARDS);
+  var moreNote=f.members.length>MAX_CARDS?('<div class="sec-title" style="font-weight:400">……其余 '+(f.members.length-MAX_CARDS)+' 个字请在底部「字族」学堂里搜索直达，或在闯关里遇到</div>'):'';
+  var members=shownMembers.map(function(m){
+    var parts;
+    if(m.parts.length){
+      parts='<div class="mc-parts">'+m.parts.slice(0,4).map(function(p){return '<span class="mc-part">'+p.c+'</span>';}).join('')+'</div>';
+    }else{
+      parts='<div class="mc-parts"><span class="mc-part" style="background:#FDF6E3">'+(m.lss||'字根')+'</span></div>';
+    }
+    return '<div class="memcard" data-ch="'+m.ch+'">'+
+      (m.challenge?'<span class="mc-badge">👑挑战</span>':'')+
+      '<div class="mc-char">'+m.ch+'</div>'+
+      '<div class="mc-py">'+m.py+'</div>'+
+      parts+
+      '<div class="mc-m">'+m.m+'</div>'+
+    '</div>';
+  }).join('');
+  var gameNames=f.auto?AUTO_GAME_NAMES:GAME_NAMES;
+  var gameDescs=f.auto?['选对部件，拼出汉字','看释义，选对字','字和意思连连看']:['选对部件，拼出汉字','句子填空，语境猜字','字和意思连连看'];
+  var games='';
+  var gi=0;
+  for(var i=0;i<3;i++){
+    var avail;
+    if(f.auto){ avail=(i===0?f.build.length>0:(i===1?f.det.length>0:f.match.length>0)); }
+    else avail=true;
+    if(!avail) continue;
+    games+='<button class="gamebtn" data-gi="'+i+'">'+
+      '<span class="gicon">'+GAME_ICONS[i]+'</span>'+
+      '<span><div class="gname">第'+(gi+1)+'关 · '+gameNames[i]+'</div>'+
+      '<div class="gdesc">'+gameDescs[i]+'</div></span>'+
+      '<span style="margin-left:auto" class="starsline">'+starsHtml(ss[i])+'</span>'+
+    '</button>';
+    gi++;
+  }
+  var rootStrip=glyphStrip(f.root,true);
+  var evoHtml;
+  var pictHtml=f.pict?('<div class="pict">'+f.pict+'</div>'):('<div class="pict" style="display:flex;align-items:center;justify-content:center;font-family:var(--f-kai);font-size:76px;color:'+f.color+'">'+f.root+'</div>');
+  evoHtml=pictHtml+'<span class="evolabel">古字形（教学示意图）</span><span class="arrow">⬇️</span>'+(rootStrip||('<div class="now">'+f.root+'</div><span class="evolabel">今天的写法</span>'));
+  var songHtml=f.song?('<div class="songcard"><h3>🎵 '+f.name+'歌诀 <button class="btn ghost small" id="btnSpeakSong">🔊 朗读歌诀</button></h3><div class="songlines">'+f.song+'</div></div>'):'';
+  var wordSet=[];
+  f.members.forEach(function(m){
+    if(m.w){ m.w.split(' · ').forEach(function(w){ w=w.trim(); if(w && wordSet.indexOf(w)<0) wordSet.push(w); }); }
+  });
+  var wordsHtml=wordSet.slice(0,60).map(function(w){ return '<button class="wordchip">'+w+'</button>'; }).join('');
+  var wordsSec=wordSet.length?('<div class="sec-title" id="sec4">④ 组词说话 · 把词语用起来（'+wordSet.length+' 个词 · 点击听读音）</div><div class="wordbox">'+wordsHtml+(wordSet.length>60?('<span style="color:var(--muted);font-size:13px">……共 '+wordSet.length+' 个词</span>'):'')+'</div>'):'';
+  var tips=window.SAGE_TIPS?window.SAGE_TIPS[f.id]:null;
+  if(!tips && f.auto){
+    tips={
+      lead:(f.kind==='p')?('出示字根「'+f.root+'」，问：认识它吗？它还能"变"出哪些字？——引出本族字。'):('出示一组本族字，问：找一找，它们身上藏着哪个相同的偏旁？'),
+      key:f.story.text,
+      avoid:'同音易混提醒：本族里有读音相同或相近的字，让孩子指着部件说理由——形旁看义、声旁定音。',
+      act:'活动建议：①字族开花——以「'+f.root+'」为花心，写出家族成员；②给每个字找一个词语朋友；③当小老师，把拆字讲给爸爸妈妈听。'
+    };
+  }
+  var tipsHtml=tips?('<details class="tipbox"><summary>🧑‍🏫 课堂实践 · 教学建议（字理识字教学法）</summary>'+
+    '<div class="tiprow"><b>🎬 导入：</b>'+tips.lead+'</div>'+
+    '<div class="tiprow"><b>📖 讲解要点：</b>'+tips.key+'</div>'+
+    '<div class="tiprow"><b>⚠️ 易错提醒：</b>'+tips.avoid+'</div>'+
+    '<div class="tiprow"><b>🎮 活动设计：</b>'+tips.act+'</div>'+
+    '</details>'):'';
+  app.innerHTML=
+    '<div class="crumbs"><button class="btn ghost small" id="btnBack">← 返回首页</button><span>'+f.name+'</span></div>'+
+    '<div class="stepbar">'+
+      '<span class="stepchip" data-target="sec1">① 观察字形</span>'+
+      '<span class="stepchip" data-target="sec2">② 追根溯源</span>'+
+      '<span class="stepchip" data-target="sec3">③ 理解字义</span>'+
+      '<span class="stepchip" data-target="sec4">④ 组词说话</span>'+
+      '<span class="stepchip" data-target="sec5">⑤ 巩固闯关</span>'+
+    '</div>'+
+    '<div class="rootcard" id="sec1">'+
+      '<div class="evo">'+
+        evoHtml+
+      '</div>'+
+      '<div class="root-info" id="sec2">'+
+        '<h2>字根「'+f.root+'」 '+f.emoji+' <button class="btn ghost small" id="btnSpeakRoot">🔊</button></h2>'+
+        '<div class="root-meaning">本义：<b>'+f.story.meaning+'</b></div>'+
+        '<div class="root-text">'+f.story.text+'</div>'+
+        (window.STORY&&window.STORY[f.root]?('<div class="root-text" style="font-size:13.5px">📜 '+window.STORY[f.root]+'</div>'):'')+
+        '<div class="root-text" style="color:var(--muted)">📜 '+f.story.book+'</div>'+
+        '<div class="detective">'+f.story.det+'</div>'+
+        '<div style="margin-top:10px"><button class="btn gold small" id="btnSage">🧓 听字圣爷爷讲故事</button></div>'+
+      '</div>'+
+    '</div>'+
+    songHtml+
+    '<div class="sec-title" id="sec3">③ 理解字义 · 家族成员（'+f.members.length+'个字 · 点开看拆字动画）</div>'+
+    '<div class="mgrid">'+members+'</div>'+
+    moreNote+
+    wordsSec+
+    '<div class="sec-title" id="sec5">⑤ 巩固闯关 · 夺星游戏</div>'+
+    '<div class="games">'+games+'</div>'+
+    tipsHtml;
+  $('#btnBack').addEventListener('click',renderHome);
+  $all('.stepchip').forEach(function(el){
+    el.addEventListener('click',function(){
+      var t=$('#'+el.getAttribute('data-target'));
+      if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+  $('#btnSage').addEventListener('click',function(){ openSageModal(f); });
+  $all('.wordchip').forEach(function(el){
+    el.addEventListener('click',function(){ speak(el.textContent); });
+  });
+  $('#btnSpeakRoot').addEventListener('click',function(){ speak(f.root+'，'+f.py+'，本义：'+f.story.meaning); });
+  if(f.song){ $('#btnSpeakSong').addEventListener('click',function(){ speak(f.name+'歌诀：'+f.song.replace(/\n/g,'，')); }); }
+  $all('.memcard').forEach(function(el){
+    el.addEventListener('click',function(){ openMemberModal(f.id,el.getAttribute('data-ch')); });
+  });
+  $all('.gamebtn').forEach(function(el){
+    el.addEventListener('click',function(){ renderGame(f.id,parseInt(el.getAttribute('data-gi'),10)); });
+  });
+  updateHeader();
+}
+
+/* ================= 字卡弹窗 ================= */
+function openMemberModal(famId,ch){
+  var f=FAMMAP[famId];
+  var m=memOf(famId,ch);
+  if(!m) return;
+  CUR.modal={famId:famId,ch:ch};
+  if(window.META){ META.trackLearn(); META.trackGlyph(); }
+  var formula;
+  if(m.parts.length){
+    var partsHtml=m.parts.map(function(p,i){
+      return '<span class="fpart" style="animation-delay:'+(i*0.12)+'s">'+p.c+'</span>'+
+             '<span class="fsym">+</span>';
+    }).join('');
+    formula='<div class="m-formula">'+partsHtml+'<span class="ftarget">'+m.ch+'</span></div>';
+    formula+='<div class="m-labels">'+m.parts.map(function(p){
+      return '<div class="m-label"><b>'+p.c+'</b>　'+p.l+'</div>';
+    }).join('')+'</div>';
+  }else{
+    formula=(f.pict?('<div class="m-pict">'+f.pict+'</div>'):'')+
+            '<div class="m-formula"><span class="ftarget">'+m.ch+'</span></div>';
+  }
+  var swSec='';
+  var storyTxt=window.STORY?window.STORY[m.ch]:null;
+  var g0=window.SWG?window.SWG[m.ch]:null;
+  if(g0||storyTxt||m.m){
+    var partsStr2=m.parts.map(function(p){return p.c;}).join('+');
+    if(!storyTxt) storyTxt=autoStory(m.ch,m.lss,m.m,partsStr2||'');
+    swSec='<details class="swsec"'+(window.STORY&&window.STORY[m.ch]?' open':'')+'><summary>📜 说文解字 · 字源（甲骨文→金文→小篆→楷书）</summary>'+
+      glyphStrip(m.ch)+
+      '<div class="swstory">'+storyTxt+'</div>'+
+      '</details>';
+  }
+  var mask=document.createElement('div');
+  mask.className='modal-mask';
+  mask.innerHTML='<div class="modal">'+
+    '<button class="modal-x">✕</button>'+
+    '<div class="m-head"><span class="m-char">'+m.ch+'</span><span class="m-py">'+m.py+'</span>'+(m.lss?('<span class="m-lss">'+m.lss+'</span>'):'')+'</div>'+
+    swSec+
+    formula+
+    '<div class="m-meaning">💡 '+m.m+(f.auto?' <span class="m-auto">字典释义 · 拓展</span>':'')+'</div>'+
+    (m.w?('<div class="m-words">词语：<b>'+m.w+'</b></div>'):'')+
+    (m.s?('<div class="m-sent">例句：'+m.s+'</div>'):'')+
+    (m.tip?('<div class="m-tip">🔎 小侦探：'+m.tip+'</div>'):'')+
+    '<div class="m-actions">'+
+      '<button class="btn secondary small" id="mSpeak">🔊 听一听</button>'+
+      '<button class="btn secondary small" id="mTrace">✍️ 描一描</button>'+
+    '</div>'+
+    '</div>';
+  document.body.appendChild(mask);
+  $('#mSpeak',mask).addEventListener('click',function(){ speak(m.ch+'，'+m.py+'，'+m.m); });
+  $('#mTrace',mask).addEventListener('click',function(){ openTraceModal(m.ch); });
+  mask.addEventListener('click',function(e){ if(e.target===mask){ mask.remove(); CUR.modal=null; } });
+  $('.modal-x',mask).addEventListener('click',function(){ mask.remove(); CUR.modal=null; });
+}
+
+/* ================= 描红画布 ================= */
+function openTraceModal(ch){
+  var mask=document.createElement('div');
+  mask.className='modal-mask';
+  mask.innerHTML='<div class="modal trace-modal">'+
+    '<button class="modal-x">✕</button>'+
+    '<div class="sage-title" style="margin-bottom:4px">✍️ 描一描「'+ch+'」</div>'+
+    '<p style="color:var(--muted);font-size:13px;margin-bottom:8px">用手指或鼠标，照着米字格里的灰字描一遍</p>'+
+    '<canvas id="traceCv" width="300" height="300"></canvas>'+
+    '<div class="m-actions"><button class="btn secondary small" id="trClear">🧽 重来</button>'+
+    '<button class="btn big" id="trDone">✅ 描好了</button></div></div>';
+  document.body.appendChild(mask);
+  var cv=$('#traceCv',mask), ctx=cv.getContext('2d');
+  function drawTemplate(){
+    ctx.clearRect(0,0,300,300);
+    ctx.strokeStyle='#D8CBA8'; ctx.lineWidth=1.5;
+    ctx.strokeRect(8,8,284,284);
+    ctx.save();
+    ctx.setLineDash([6,6]); ctx.strokeStyle='#E5DCC2';
+    ctx.beginPath();
+    ctx.moveTo(150,8); ctx.lineTo(150,292);
+    ctx.moveTo(8,150); ctx.lineTo(292,150);
+    ctx.moveTo(8,8); ctx.lineTo(292,292);
+    ctx.moveTo(292,8); ctx.lineTo(8,292);
+    ctx.stroke(); ctx.restore();
+    ctx.font='220px "Kaiti SC","KaiTi","STKaiti","楷体",serif';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillStyle='rgba(91,74,47,0.20)';
+    ctx.fillText(ch,150,168);
+  }
+  drawTemplate();
+  var drawing=false;
+  function pos(e){
+    var r=cv.getBoundingClientRect();
+    var t=(e.touches&&e.touches.length)?e.touches[0]:e;
+    return {x:(t.clientX-r.left)*(300/r.width), y:(t.clientY-r.top)*(300/r.height)};
+  }
+  function start(e){ drawing=true; var p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); if(e.cancelable) e.preventDefault(); }
+  function move(e){
+    if(!drawing) return;
+    var p=pos(e);
+    ctx.lineWidth=10; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#C94A2C';
+    ctx.lineTo(p.x,p.y); ctx.stroke();
+    if(e.cancelable) e.preventDefault();
+  }
+  function end(){ drawing=false; }
+  cv.addEventListener('mousedown',start);
+  cv.addEventListener('mousemove',move);
+  cv.addEventListener('touchstart',start,{passive:false});
+  cv.addEventListener('touchmove',move,{passive:false});
+  cv.addEventListener('touchend',end);
+  window.addEventListener('mouseup',end);
+  function close(){ window.removeEventListener('mouseup',end); mask.remove(); }
+  $('#trClear',mask).addEventListener('click',function(){ drawTemplate(); if(window.AUDIO) AUDIO.tap(); });
+  $('#trDone',mask).addEventListener('click',function(){ close(); praise(); if(window.META) META.addCoins(2); });
+  $('.modal-x',mask).addEventListener('click',close);
+  mask.addEventListener('click',function(e){ if(e.target===mask) close(); });
+}
+
+/* ================= 游戏引擎 ================= */
+/* 满星规则：短关卡（<8题）须零失误；长关卡允许错 1 题仍得满星，减少挫败感 */
+function starsFor(mistakes,total){
+  if(mistakes===0) return 3;
+  if(total&&total>=8&&mistakes===1) return 3;
+  if(mistakes<=2) return 2;
+  return 1;
+}
+function wrongRecord(type,q,a,ex){
+  return {type:type,q:q,a:a,ex:ex};
+}
+function renderResult(opts){
+  clearTimers();
+  var stars=starsFor(opts.mistakes,opts.total);
+  var ti=stars===3?['满星通关！你是字族大师！','🎉 一个错都没有，字根彻底学透了！']:
+         stars===2?['很不错！再接再厉！','💪 差一点点，回去看看字卡再挑战！']:
+                    ['继续加油，多想想字根！','📖 先回字族页复习一下故事和歌诀吧！'];
+  if(opts.save) opts.save(stars);
+  if(window.META) META.onGameEnd(stars);
+  var wrongsHtml='';
+  if(opts.wrongs.length){
+    wrongsHtml='<div class="res-wrongs"><h4>📒 错题回顾（'+opts.wrongs.length+'题）</h4><ul>'+
+      opts.wrongs.map(function(w){
+        var body='';
+        if(w.type==='build') body='题目：'+w.q+'<br>正确答案：<span class="ans">'+w.a+'</span>';
+        else if(w.type==='fill') body='句子：'+w.q.replace('＿','<span class="ans">'+w.a+'</span>')+'<br><span class="ans">'+w.a+'</span>　'+w.ex;
+        else body='<span class="ans">'+w.q+'</span><br>'+w.ex;
+        return '<li>'+body+'</li>';
+      }).join('')+
+      '</ul></div>';
+  }
+  var btns='';
+  if(opts.nextBtn) btns+='<button class="btn big" id="resNext">'+opts.nextBtn+'</button>';
+  if(opts.famId) btns+='<button class="btn secondary" id="resFam">🏠 回到字族</button>';
+  btns+='<button class="btn ghost" id="resRetry">🔄 再玩一次</button>';
+  app.innerHTML=
+    '<div class="result">'+
+      '<div class="res-stars" id="resStars">'+starsHtml(stars)+'</div>'+
+      '<div class="res-title">'+ti[0]+'</div>'+
+      '<div class="res-sub">'+ti[1]+'　（答对 '+(opts.total-opts.mistakes)+' / '+opts.total+' 题）</div>'+
+      wrongsHtml+
+      '<div class="res-btns">'+btns+'</div>'+
+    '</div>';
+  var starsEls=$all('#resStars .star');
+  starsEls.forEach(function(el,i){ el.style.animationDelay=(0.25+i*0.35)+'s'; });
+  if(stars===3) confetti();
+  if(opts.retry) $('#resRetry').addEventListener('click',function(){ opts.retry(); });
+  if(opts.nextBtn) $('#resNext').addEventListener('click',function(){ opts.next(); });
+  if(opts.famId) $('#resFam').addEventListener('click',function(){ renderFamily(opts.famId); });
+  updateHeader();
+}
+
+function gameShell(famId,gi,headHtml){
+  clearTimers();
+  if(window.META) META.comboReset();
+  var f=FAMMAP[famId];
+  var gname=f.auto?AUTO_GAME_NAMES[gi]:GAME_NAMES[gi];
+  app.innerHTML=
+    '<div class="combo hidden" id="comboBox"></div>'+
+    '<div class="ghead">'+
+      '<button class="btn ghost small" id="gBack">← 字族</button>'+
+      '<div class="gtitle">'+f.name+' · 第'+(gi+1)+'关 '+gname+'</div>'+
+    '</div>'+
+    '<div class="gmeta" id="gmeta"></div>'+
+    '<div id="gameArea">'+headHtml+'</div>';
+  $('#gBack').addEventListener('click',function(){ renderFamily(famId); });
+  updateHeader();
+  return $('#gameArea');
+}
+
+/* --- 组装汉字（单题） --- */
+function buildOne(item,famId,onDone,headHtml){
+  var area=$('#gameArea');
+  area.innerHTML=headHtml;
+  if(item.type==='zhishi'){
+    area.innerHTML+=
+      '<div class="gcard">'+
+        '<p class="gq">👉 '+item.q+'</p>'+
+        '<div class="zhishi-base">'+item.base+'</div>'+
+        '<div class="zhishi-btns">'+
+          '<button class="btn secondary" data-pos="top">⬆️ 加在上边</button>'+
+          '<button class="btn secondary" data-pos="bottom">⬇️ 加在下边</button>'+
+        '</div>'+
+        '<div class="hint" id="zhHint"></div>'+
+      '</div>';
+    var mistakes=0,wrong=false;
+    $all('.zhishi-btns button').forEach(function(b){
+      b.addEventListener('click',function(){
+        if(wrong) return;
+        if(b.getAttribute('data-pos')===item.pos){
+          wrong=true;
+          var g=$('.gcard',area);
+          g.querySelector('.zhishi-base').remove();
+          g.querySelector('.zhishi-btns').remove();
+          var r=document.createElement('div');
+          r.className='zhishi-result';
+          r.textContent=item.result;
+          g.insertBefore(r,g.querySelector('#zhHint'));
+          praise(); speak(item.result);
+          later(function(){ onDone(mistakes,[]); },1500);
+        }else{
+          mistakes++;
+          miss();
+          wrong=true;
+          b.classList.add('shake');
+          var h=$('#zhHint',area);
+          h.textContent='❌ 再想想：'+item.ex;
+          later(function(){ wrong=false; b.classList.remove('shake'); },800);
+        }
+      });
+    });
+    return;
+  }
+  area.innerHTML+=
+    '<div class="gcard">'+
+      '<p class="gq">🧩 '+item.q+'</p>'+
+      '<div class="targetline"><span class="target-label">拼出这个字：</span></div>'+
+      '<div class="slots">'+item.ans.map(function(){return '<div class="slot"></div>';}).join('')+'</div>'+
+      '<div class="pool">'+item.pool.map(function(c){return '<button class="chip">'+c+'</button>';}).join('')+'</div>'+
+      '<div><span class="hint" id="bHint"></span></div>'+
+    '</div>';
+  var mistakes=0,wrongs=[],solved=false;
+  var slots=$all('.slot',area), chips=$all('.chip',area);
+  function chosenNow(){ return slots.map(function(s){return s.dataset.ch||'';}).filter(Boolean); }
+  function check(){
+    var got=chosenNow();
+    var ok=got.slice().sort().join('')===item.ans.slice().sort().join('');
+    if(ok){
+      solved=true;
+      var tl=$('.targetline',area);
+      var el=document.createElement('span');
+      el.className='assembled'; el.textContent=item.target;
+      tl.appendChild(el);
+      chips.forEach(function(c){ c.classList.add('used'); });
+      praise(); speak(item.target);
+      later(function(){ onDone(mistakes,wrongs); },1500);
+    }else{
+      mistakes++;
+      miss();
+      noteWrong(item.target);
+      var mem=memOf(famId,item.target);
+      var hintText=(mem&&mem.tip)?('❌ 再想想：'+mem.tip):'❌ 再想想：想想字义，选对部件！';
+      $('#bHint',area).textContent=hintText;
+      $('.slots',area).classList.add('shake');
+      later(function(){
+        $('.slots',area).classList.remove('shake');
+        slots.forEach(function(s){ s.dataset.ch=''; s.textContent=''; s.classList.remove('filled'); });
+        chips.forEach(function(c){ c.classList.remove('used'); });
+      },750);
+    }
+  }
+  chips.forEach(function(c){
+    c.addEventListener('click',function(){
+      if(solved||c.classList.contains('used')) return;
+      var empty=slots.filter(function(s){return !s.dataset.ch;})[0];
+      if(!empty) return;
+      empty.dataset.ch=c.textContent;
+      empty.textContent=c.textContent;
+      empty.classList.add('filled');
+      c.classList.add('used');
+      if(chosenNow().length===item.ans.length) check();
+    });
+  });
+  slots.forEach(function(s){
+    s.addEventListener('click',function(){
+      if(solved||!s.dataset.ch) return;
+      var ch=s.dataset.ch;
+      var chip=chips.filter(function(c){return c.textContent===ch&&c.classList.contains('used');})[0];
+      if(chip) chip.classList.remove('used');
+      s.dataset.ch=''; s.textContent=''; s.classList.remove('filled');
+    });
+  });
+}
+
+/* --- 选字填空（单题） --- */
+function fillOne(item,famId,onDone,headHtml){
+  var area=$('#gameArea');
+  area.innerHTML=headHtml;
+  var parts=item.s.split('__');
+  area.innerHTML+=
+    '<div class="gcard">'+
+      '<p class="gq">📝 选一个字填进去</p>'+
+      '<p class="fill-sent">'+parts[0]+'<span class="blank">？</span>'+parts[1]+'</p>'+
+      '<div class="opts">'+item.opts.map(function(o){return '<button>'+o+'</button>';}).join('')+'</div>'+
+      '<div class="explain" id="fEx"></div>'+
+    '</div>';
+  var mistakes=0,wrongs=[],done=false,tries=0;
+  var blank=$('.blank',area);
+  var exBox=$('#fEx',area);
+  function advance(){
+    if(done) return;
+    done=true;
+    later(function(){ onDone(mistakes,wrongs); },1600);
+  }
+  $all('.opts button',area).forEach(function(b){
+    b.addEventListener('click',function(){
+      if(done||b.disabled) return;
+      if(b.textContent===item.a){
+        blank.textContent=item.a;
+        blank.classList.add('right');
+        b.classList.add('right');
+        exBox.textContent='✅ '+item.ex;
+        exBox.classList.add('show');
+        praise(); speak(item.a);
+        advance();
+      }else{
+        tries++; mistakes++;
+        miss();
+        b.classList.add('wrong'); b.disabled=true;
+        if(tries>=2){
+          wrongs.push(wrongRecord('fill',parts[0]+'＿'+parts[1],item.a,item.ex));
+          noteWrong(item.a);
+          blank.textContent=item.a;
+          blank.classList.add('wrongshow');
+          exBox.textContent='💡 '+item.ex;
+          exBox.classList.add('show');
+          advance();
+        }else{
+          b.classList.add('shake');
+          later(function(){ b.classList.remove('shake'); },600);
+        }
+      }
+    });
+  });
+}
+
+/* --- 字义侦探（自动字族单题） --- */
+function detectiveOne(item,famId,onDone,headHtml){
+  var area=$('#gameArea');
+  area.innerHTML=headHtml;
+  area.innerHTML+=
+    '<div class="gcard">'+
+      '<p class="gq">🕵️ '+item.s+'</p>'+
+      '<div class="opts">'+item.opts.map(function(o){return '<button>'+o+'</button>';}).join('')+'</div>'+
+      '<div class="explain" id="dEx"></div>'+
+    '</div>';
+  var mistakes=0,wrongs=[],done=false,tries=0;
+  var exBox=$('#dEx',area);
+  function advance(){
+    if(done) return;
+    done=true;
+    later(function(){ onDone(mistakes,wrongs); },1800);
+  }
+  $all('.opts button',area).forEach(function(b){
+    b.addEventListener('click',function(){
+      if(done||b.disabled) return;
+      if(b.textContent===item.a){
+        b.classList.add('right');
+        exBox.textContent='✅ '+item.ex;
+        exBox.classList.add('show');
+        praise(); speak(item.a);
+        advance();
+      }else{
+        tries++; mistakes++;
+        miss();
+        b.classList.add('wrong'); b.disabled=true;
+        if(tries>=2){
+          wrongs.push(wrongRecord('det',item.s.replace(/[「」]/g,''),item.a,item.ex));
+          noteWrong(item.a);
+          exBox.textContent='💡 '+item.ex;
+          exBox.classList.add('show');
+          $all('.opts button',area).forEach(function(x){ if(x.textContent===item.a) x.classList.add('right'); });
+          advance();
+        }else{
+          b.classList.add('shake');
+          later(function(){ b.classList.remove('shake'); },600);
+        }
+      }
+    });
+  });
+}
+function startDetectiveFlow(famId,items){
+  var i=0,mistakes=0,wrongs=[];
+  function next(){
+    if(i>=items.length){
+      renderResult({
+        total:items.length,mistakes:mistakes,wrongs:wrongs,
+        famId:famId,
+        save:function(s){ setStars(famId,1,s); },
+        nextBtn:'▶️ 下一关',
+        next:function(){ renderGame(famId,2); },
+        retry:function(){ renderGame(famId,1); }
+      });
+      return;
+    }
+    var head='<div class="gmeta"><span class="gnum">第 '+(i+1)+' / '+items.length+' 题</span><span>出错 '+mistakes+' 次</span></div>';
+    detectiveOne(items[i],famId,function(m,w){
+      mistakes+=m;
+      wrongs=wrongs.concat(w);
+      i++; next();
+    },head);
+  }
+  next();
+}
+
+/* --- 完整关卡 --- */
+function startBuildFlow(famId,items){
+  var i=0,mistakes=0,wrongs=[];
+  function next(){
+    if(i>=items.length){
+      renderResult({
+        total:items.length,mistakes:mistakes,wrongs:wrongs,
+        famId:famId,
+        save:function(s){ setStars(famId,0,s); },
+        nextBtn:'▶️ 下一关',
+        next:function(){ renderGame(famId,1); },
+        retry:function(){ renderGame(famId,0); }
+      });
+      return;
+    }
+    var head='<div class="gmeta"><span class="gnum">第 '+(i+1)+' / '+items.length+' 题</span><span>出错 '+mistakes+' 次</span></div>';
+    buildOne(items[i],famId,function(m,w){
+      mistakes+=m;
+      wrongs=wrongs.concat(w);
+      i++; next();
+    },head);
+  }
+  next();
+}
+function startFillFlow(famId,items){
+  var i=0,mistakes=0,wrongs=[];
+  function next(){
+    if(i>=items.length){
+      renderResult({
+        total:items.length,mistakes:mistakes,wrongs:wrongs,
+        famId:famId,
+        save:function(s){ setStars(famId,1,s); },
+        nextBtn:'▶️ 下一关',
+        next:function(){ renderGame(famId,2); },
+        retry:function(){ renderGame(famId,1); }
+      });
+      return;
+    }
+    var head='<div class="gmeta"><span class="gnum">第 '+(i+1)+' / '+items.length+' 题</span><span>出错 '+mistakes+' 次</span></div>';
+    fillOne(items[i],famId,function(m,w){
+      mistakes+=m;
+      wrongs=wrongs.concat(w);
+      i++; next();
+    },head);
+  }
+  next();
+}
+function startMatchFlow(famId,pairs){
+  var area=gameShell(famId,2,'');
+  var mistakes=0,wrongs=[],doneCount=0;
+  var selCh=null;
+  var ms=pairs.map(function(p){return p[1];});
+  shuffle(ms);
+  area.innerHTML=
+    '<div class="gmeta"><span>把字和意思连起来</span><span id="mMiss">出错 0 次</span></div>'+
+    '<div class="gcard matchwrap">'+
+      '<div class="mcol chars" id="colL">'+pairs.map(function(p){return '<button data-ch="'+p[0]+'">'+p[0]+'</button>';}).join('')+'</div>'+
+      '<div class="mcol" id="colR">'+ms.map(function(m){return '<button data-m="'+m+'">'+m+'</button>';}).join('')+'</div>'+
+    '</div>';
+  var leftBtns=$all('#colL button',area), rightBtns=$all('#colR button',area);
+  leftBtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      if(b.classList.contains('locked')) return;
+      leftBtns.forEach(function(x){x.classList.remove('sel');});
+      b.classList.add('sel');
+      selCh=b.getAttribute('data-ch');
+    });
+  });
+  rightBtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      if(b.classList.contains('locked')||!selCh) return;
+      var correctM=null;
+      for(var i=0;i<pairs.length;i++) if(pairs[i][0]===selCh) correctM=pairs[i][1];
+      if(b.getAttribute('data-m')===correctM){
+        var lb=leftBtns.filter(function(x){return x.getAttribute('data-ch')===selCh;})[0];
+        lb.classList.remove('sel'); lb.classList.add('locked');
+        b.classList.add('locked');
+        selCh=null; doneCount++;
+        speak(lb.getAttribute('data-ch'));
+        if(doneCount===pairs.length){
+          later(function(){
+            renderResult({
+              total:pairs.length,mistakes:mistakes,wrongs:wrongs,
+              famId:famId,
+              save:function(s){ setStars(famId,2,s); },
+              retry:function(){ renderGame(famId,2); }
+            });
+          },900);
+        }
+      }else{
+        mistakes++;
+        miss();
+        noteWrong(selCh);
+        var mem=memOf(famId,selCh);
+        wrongs.push(wrongRecord('match',selCh+' 应该和「'+correctM+'」配对','🔎 '+(mem?mem.tip:''),''));
+        b.classList.add('wrongflash');
+        b.classList.add('shake');
+        $('#mMiss',area).textContent='出错 '+mistakes+' 次';
+        later(function(){ b.classList.remove('wrongflash'); b.classList.remove('shake'); },700);
+      }
+    });
+  });
+}
+function renderGame(famId,gi){
+  var f=FAMMAP[famId];
+  if(gi===0){ gameShell(famId,0,''); startBuildFlow(famId,f.build); }
+  else if(gi===1){ gameShell(famId,1,''); if(f.auto) startDetectiveFlow(famId,f.det); else startFillFlow(famId,f.fill); }
+  else { startMatchFlow(famId,f.match); }
+}
+
+/* ================= 终极挑战 ================= */
+function runReview(){
+  clearTimers();
+  var items=[];
+  FAM.slice(0,4).forEach(function(f){
+    items.push({t:'build',it:f.build[0]});
+    items.push({t:'fill',it:f.fill[0]});
+    items.push({t:'fill',it:f.fill[4]});
+  });
+  shuffle(items);
+  var i=0,mistakes=0,wrongs=[];
+  app.innerHTML=
+    '<div class="ghead">'+
+      '<button class="btn ghost small" id="gBack">← 首页</button>'+
+      '<div class="gtitle">🏆 终极挑战 · 四大字族混合</div>'+
+    '</div>'+
+    '<div id="gameArea"></div>';
+  $('#gBack').addEventListener('click',renderHome);
+  function next(){
+    if(i>=items.length){
+      var stars=starsFor(mistakes,items.length);
+      if(PROG.review===null||stars>PROG.review){ PROG.review=stars; saveProg(); }
+      renderResult({
+        total:items.length,mistakes:mistakes,wrongs:wrongs,
+        save:function(){},
+        retry:runReview
+      });
+      return;
+    }
+    var item=items[i]; i++;
+    var head='<div class="gmeta"><span class="gnum">第 '+i+' / '+items.length+' 题</span><span>出错 '+mistakes+' 次</span></div>';
+    var cb=function(m,w){
+      mistakes+=m;
+      wrongs=wrongs.concat(w);
+      next();
+    };
+    if(item.t==='build') buildOne(item.it,familyOfTarget(item.it.target),cb,head);
+    else fillOne(item.it,familyOfTarget(item.it.a),cb,head);
+  }
+  function familyOfTarget(ch){
+    for(var k=0;k<FAM.length;k++){
+      if(FAM[k].members.some(function(m){return m.ch===ch;})) return FAM[k].id;
+    }
+    return FAM[0].id;
+  }
+  next();
+  updateHeader();
+}
+
+/* ================= 字圣讲故事 ================= */
+function famOfChar(ch){
+  for(var i=0;i<FAM.length;i++){
+    if(FAM[i].root===ch) return FAM[i];
+    for(var j=0;j<FAM[i].members.length;j++) if(FAM[i].members[j].ch===ch) return FAM[i];
+  }
+  return null;
+}
+function openSageModal(f){
+  var story=window.SAGE_STORIES?window.SAGE_STORIES[f.id]:null;
+  var title,steps;
+  if(story){
+    title=story.title;
+    steps=story.steps;
+  }else{
+    title='字圣爷爷讲「'+f.root+'」的故事';
+    steps=[
+      '看，这就是「'+f.root+'」的样子。古人照着样子画，画着画着就成了今天的字。',
+      f.story.text,
+      (f.story.det||'')+(f.song?(' 记住歌诀：'+f.song.replace(/\n/g,'，')):'')
+    ];
+  }
+  var mask=document.createElement('div');
+  mask.className='modal-mask';
+  mask.innerHTML='<div class="modal">'+
+    '<button class="modal-x">✕</button>'+
+    '<div class="sage-head"><span class="sage-avatar">🧓</span><div><div class="sage-title">'+title+'</div><div class="sage-sub">字圣爷爷：仓颉造字，许慎解字——跟字圣学汉字</div></div></div>'+
+    steps.map(function(s,i){ return '<div class="sage-step"><span class="sage-num">'+(i+1)+'</span><div class="sage-text">'+s+'</div><button class="btn ghost small sage-speak" data-i="'+i+'">🔊</button></div>'; }).join('')+
+    '<div class="m-actions"><button class="btn secondary small" id="sageAll">🔊 从头到尾听一遍</button></div>'+
+    '</div>';
+  document.body.appendChild(mask);
+  $all('.sage-speak',mask).forEach(function(el){
+    el.addEventListener('click',function(){
+      speak(steps[parseInt(el.getAttribute('data-i'),10)].replace(/<[^>]+>/g,''));
+    });
+  });
+  $('#sageAll',mask).addEventListener('click',function(){
+    speak(title+'。'+steps.join('。').replace(/<[^>]+>/g,''));
+  });
+  mask.addEventListener('click',function(e){ if(e.target===mask) mask.remove(); });
+  $('.modal-x',mask).addEventListener('click',function(){ mask.remove(); });
+}
+
+/* ================= 部首博物馆 ================= */
+function renderMuseum(){
+  clearTimers();
+  var liushu=window.LIUSHU.map(function(l){
+    return '<div class="ls-card"><div class="ls-name">'+l.n+'</div>'+
+      '<div class="ls-kid">'+l.kid+'</div>'+
+      '<div class="ls-quote">《说文·叙》："'+l.k+'"</div>'+
+      '<div class="ls-eg">'+l.eg.map(function(ch){return '<span class="ls-egchar" data-ch="'+ch+'">'+ch+'</span>';}).join('')+'</div>'+
+      '</div>';
+  }).join('');
+  var rads=window.RAD_MUSEUM.map(function(r){
+    var f=famOfChar(r.r);
+    var ex='';
+    if(f){
+      ex='<div class="rad-ex">'+f.members.slice(0,5).map(function(m){return m.ch;}).join(' ')+'</div>';
+    }else{
+      var found=[];
+      FAM.forEach(function(ff){ ff.members.forEach(function(m){
+        if(found.length<5) m.parts.forEach(function(p){ if(p.c===r.r && found.indexOf(m.ch)<0 && found.length<5) found.push(m.ch); });
+      }); });
+      ex=found.length?('<div class="rad-ex">'+found.join(' ')+'</div>'):'<div class="rad-ex" style="color:var(--muted)">本教程暂未收录此旁的字</div>';
+    }
+    return '<div class="rad-card" data-rad="'+r.r+'">'+
+      '<div class="rad-char">'+r.r+'</div>'+
+      '<div class="rad-info"><b>'+r.n+'</b> <span class="rad-emu">'+r.emu+'</span><div class="rad-m">'+r.m+'</div>'+ex+'</div>'+
+      '</div>';
+  }).join('');
+  app.innerHTML=
+    '<div class="crumbs"><button class="btn ghost small" id="btnBack">← 返回首页</button><span>部首博物馆</span></div>'+
+    '<div class="ghead"><div class="gtitle">🏛️ 部首博物馆 · 偏旁是意义的密码</div></div>'+
+    '<div class="sec-title">📜 六书馆（许慎《说文解字·叙》· 点击例字看拆解）</div>'+
+    '<div class="ls-grid">'+liushu+'</div>'+
+    '<div class="sec-title">🔑 常用部首 '+window.RAD_MUSEUM.length+' 个（《说文》540 部首的现代常用子集 · 点击进入该旁字族）</div>'+
+    '<div class="rad-grid">'+rads+'</div>';
+  $('#btnBack').addEventListener('click',renderHome);
+  $all('.ls-egchar').forEach(function(el){
+    el.addEventListener('click',function(){
+      var ch=el.getAttribute('data-ch');
+      var f=famOfChar(ch);
+      if(f){ openMemberModal(f.id,ch); } else { toast('还没有这个字的字族哦'); }
+    });
+  });
+  $all('.rad-card').forEach(function(el){
+    el.addEventListener('click',function(){
+      var rad=el.getAttribute('data-rad');
+      var f=famOfChar(rad);
+      if(f){ renderFamily(f.id); } else { toast('本教程暂未收录「'+rad+'」旁的字族'); }
+    });
+  });
+  updateHeader();
+}
+
+/* ================= 象形字画廊 ================= */
+function renderGallery(){
+  clearTimers();
+  var pics=window.PICTS_EXTRA||{};
+  var cards=Object.keys(pics).map(function(ch){
+    var f=famOfChar(ch);
+    var gloss='',py='';
+    if(f){
+      if(f.root===ch){ gloss=f.story.meaning; py=f.py; }
+      else{ var m=memOf(f.id,ch); if(m){ gloss=m.m; py=m.py; } }
+    }
+    return '<div class="gal-card" data-ch="'+ch+'">'+
+      '<div class="gal-pict">'+pics[ch]+'</div>'+
+      '<div class="gal-now">'+ch+(py?(' <span class="gal-py">'+py+'</span>'):'')+'</div>'+
+      '<div class="gal-m">'+gloss+'</div>'+
+      '</div>';
+  }).join('');
+  app.innerHTML=
+    '<div class="crumbs"><button class="btn ghost small" id="btnBack">← 返回首页</button><span>象形字画廊</span></div>'+
+    '<div class="ghead"><div class="gtitle">🖼️ 象形字画廊 · 字就是画</div></div>'+
+    '<p style="color:var(--muted);font-size:14px;margin-bottom:14px">古人造字，照着东西的样子画。猜一猜每幅画是什么？点开卡片看字理讲解。（图为教学示意图）</p>'+
+    '<div class="gal-grid">'+cards+'</div>';
+  $('#btnBack').addEventListener('click',renderHome);
+  $all('.gal-card').forEach(function(el){
+    el.addEventListener('click',function(){
+      var ch=el.getAttribute('data-ch');
+      var f=famOfChar(ch);
+      if(f){ openMemberModal(f.id,ch); } else { toast('还没有这个字的字族哦'); }
+    });
+  });
+  updateHeader();
+}
+
+/* ================= 字谜乐园 ================= */
+function renderRiddle(){
+  clearTimers();
+  var items=window.RIDDLES.slice();
+  shuffle(items);
+  items=items.slice(0,8);
+  var answers=window.RIDDLES.map(function(r){return r.a;});
+  items=items.map(function(r){
+    var opts=[r.a];
+    var pool=answers.slice();
+    shuffle(pool);
+    for(var i=0;i<pool.length && opts.length<4;i++){ if(opts.indexOf(pool[i])<0) opts.push(pool[i]); }
+    shuffle(opts);
+    var f=famOfChar(r.a);
+    var gl='';
+    if(f){ var m=memOf(f.id,r.a); if(m) gl=m.m; }
+    return {s:'谜面：'+r.q+'（打一字）',opts:opts,a:r.a,ex:'谜底「'+r.a+'」'+(gl?('：'+gl):'')};
+  });
+  app.innerHTML=
+    '<div class="ghead">'+
+      '<button class="btn ghost small" id="gBack">← 首页</button>'+
+      '<div class="gtitle">🏮 字谜乐园 · 猜字谜（每局 8 题）</div>'+
+    '</div>'+
+    '<div id="gameArea"></div>';
+  $('#gBack').addEventListener('click',renderHome);
+  var i=0,mistakes=0,wrongs=[];
+  function next(){
+    if(i>=items.length){
+      var stars=starsFor(mistakes,items.length);
+            if(window.META) META.onGameEnd(stars);
+            if(!PROG.riddle||stars>PROG.riddle){ PROG.riddle=stars; saveProg(); META.trackRiddle(stars); }
+      renderResult({
+        total:items.length,mistakes:mistakes,wrongs:wrongs,
+        save:function(){},
+        retry:renderRiddle
+      });
+      return;
+    }
+    var head='<div class="gmeta"><span class="gnum">第 '+(i+1)+' / '+items.length+' 题</span><span>出错 '+mistakes+' 次</span></div>';
+    detectiveOne(items[i],null,function(m,w){
+      mistakes+=m; wrongs=wrongs.concat(w); i++; next();
+    },head);
+  }
+  next();
+  updateHeader();
+}
+
+/* ================= 说文解字 · 字源（13MB 数据按需懒加载） ================= */
+var SWG_LOAD={state:0,cbs:[]};
+var CUR={fam:null,modal:null};
+function ensureSWG(cb){
+  if(window.SWG){ if(cb) cb(); return; }
+  if(cb) SWG_LOAD.cbs.push(cb);
+  if(SWG_LOAD.state===1) return;
+  SWG_LOAD.state=1;
+  var s=document.createElement('script');
+  s.src='shuowen_glyphs.js';
+  s.onload=function(){
+    SWG_LOAD.state=2;
+    var cbs=SWG_LOAD.cbs; SWG_LOAD.cbs=[];
+    cbs.forEach(function(f){ try{ f(); }catch(e){} });
+  };
+  s.onerror=function(){ SWG_LOAD.state=0; SWG_LOAD.cbs=[]; };
+  document.head.appendChild(s);
+}
+/* 字源数据加载完成后：仅当用户还停留在原页面时才重渲染 */
+function swgRefresh(){
+  if(CUR.modal&&document.querySelector('.modal-mask')){
+    var m=CUR.modal;
+    $all('.modal-mask').forEach(function(el){ el.remove(); });
+    CUR.modal=null;
+    openMemberModal(m.famId,m.ch);
+  }else if(CUR.fam&&document.getElementById('sec1')){
+    renderFamily(CUR.fam);
+  }
+}
+function glyphStrip(ch,mini){
+  if(!window.SWG){
+    ensureSWG(swgRefresh);
+    return '<div class="glyphstrip'+(mini?' mini':'')+'"><div class="glyphcell"><div class="glyphbox glyphloading">…</div><div class="glyphlabel">字源加载中</div></div></div>';
+  }
+  var g=window.SWG[ch]||null;
+  if(!g) return '';
+  var cells=[['o','甲骨文'],['b','金文'],['s','小篆']].map(function(k){
+    var v=g[k[0]];
+    if(!v) return '';
+    var inner=(v.charAt(0)==='<')?v:'<img src="'+v+'" alt="">';
+    return '<div class="glyphcell"><div class="glyphbox">'+inner+'</div><div class="glyphlabel">'+k[1]+'</div></div>';
+  }).join('');
+  if(!cells) return '';
+  cells+='<div class="glyphcell"><div class="glyphbox gnow"><span>'+ch+'</span></div><div class="glyphlabel">楷书</div></div>';
+  return '<div class="glyphstrip'+(mini?' mini':'')+'">'+cells+'</div>';
+}
+function autoStory(ch,lss,gl,partsStr){
+  var base='「'+ch+'」是'+(lss||'汉字')+'字'+(partsStr?('：'+partsStr):'')+'，本义是「'+(gl||'—')+'」。';
+  return base+'字形从甲骨文、金文到小篆，再到隶书、楷书和今天的简化字，一路演变——最初的图画渐渐变成笔画。学字追根溯源，把"看不见"的图画找回来，字就活了。';
+}
+
+/* ================= 分年级闯关自检 ================= */
+var GCH={g:'1'};
+function gradePoolAll(){
+  var s=[];
+  Object.keys(window.GRADE_CHARS||{}).forEach(function(k){ s=s.concat(window.GRADE_CHARS[k]); });
+  return s;
+}
+function gradePool(){
+  if(GCH.g==='all') return gradePoolAll();
+  return (window.GRADE_CHARS&&window.GRADE_CHARS[GCH.g])||[];
+}
+function charWeight(ch){
+  var p=PROG.perf&&PROG.perf[ch];
+  if(!p) return 1;
+  var w=1;
+  if(p.w>0) w+=2*Math.min(p.w,3);
+  if(p.r>=3 && p.w===0) w=0.35;
+  else if(p.r>p.w && p.r>=2) w=0.7;
+  return w;
+}
+function charGlossOf(ch){
+  var f=famOfChar(ch);
+  if(f){
+    if(f.root===ch) return f.story.meaning;
+    var m=memOf(f.id,ch);
+    if(m && m.m) return m.m;
+  }
+  return '';
+}
+function weightedPick(pool,n){
+  var arr=pool.slice();
+  var out=[];
+  while(out.length<n && arr.length){
+    var total=0,i;
+    for(i=0;i<arr.length;i++) total+=charWeight(arr[i]);
+    var r=Math.random()*total;
+    var acc=0,picked=-1;
+    for(i=0;i<arr.length;i++){ acc+=charWeight(arr[i]); if(r<acc){ picked=i; break; } }
+    if(picked<0) picked=arr.length-1;
+    out.push(arr[picked]);
+    arr.splice(picked,1);
+  }
+  return out;
+}
+function gradeOne(item,onDone,headHtml){
+  var area=$('#gameArea');
+  area.innerHTML=headHtml;
+  area.innerHTML+=
+    '<div class="gcard">'+
+      '<p class="gq">🎓 '+item.s+'</p>'+
+      '<div class="opts">'+item.opts.map(function(o){return '<button>'+o+'</button>';}).join('')+'</div>'+
+      '<div class="explain" id="dEx"></div>'+
+    '</div>';
+  var done=false,tries=0,ok=false;
+  var exBox=$('#dEx',area);
+  function advance(){
+    if(done) return;
+    done=true;
+    later(function(){ onDone(ok); },1700);
+  }
+  $all('.opts button',area).forEach(function(b){
+    b.addEventListener('click',function(){
+      if(done||b.disabled) return;
+      var isOk=(b.textContent===item.a);
+      var p=PROG.perf[item.a]||{r:0,w:0};
+      if(isOk){
+        ok=true;
+        p.r=(p.r||0)+1; PROG.perf[item.a]=p;
+        noteRight(item.a);
+        saveProg();
+        b.classList.add('right');
+        exBox.textContent='✅ '+item.ex;
+        exBox.classList.add('show');
+        praise(); speak(item.a);
+        advance();
+      }else{
+        tries++;
+        miss();
+        p.w=(p.w||0)+1; PROG.perf[item.a]=p;
+        noteWrong(item.a);
+        saveProg();
+        b.classList.add('wrong'); b.disabled=true;
+        if(tries>=2){
+          exBox.textContent='💡 '+item.ex;
+          exBox.classList.add('show');
+          $all('.opts button',area).forEach(function(x){ if(x.textContent===item.a) x.classList.add('right'); });
+          advance();
+        }else{
+          b.classList.add('shake');
+          later(function(){ b.classList.remove('shake'); },600);
+        }
+      }
+    });
+  });
+}
+function gradeMastery(list){
+  var mastered=0;
+  list.forEach(function(ch){ var p=PROG.perf[ch]; if(p&&p.r>=3&&p.w===0) mastered++; });
+  return list.length?Math.round(mastered/list.length*100):0;
+}
+function renderGrade(){
+  clearTimers();
+  var grades=['1','2','3','4','5','6'];
+  var labels=['一年级','二年级','三年级','四年级','五年级','六年级'];
+  var chips=grades.map(function(g){
+    var list=(window.GRADE_CHARS[g]||[]).filter(function(ch){ return !!charGlossOf(ch); });
+    var mast=gradeMastery(list);
+    return '<div class="gradecard '+(GCH.g===g?'sel':'')+'" data-g="'+g+'">'+
+      '<div class="gc-name">'+labels[+g-1]+'</div>'+
+      '<div class="gc-n">'+list.length+' 字</div>'+
+      '<div class="gc-bar"><div class="gc-fill" style="width:'+mast+'%"></div></div>'+
+      '<div class="gc-m">已掌握 '+mast+'%'+(PROG.gradeBest[g]?(' · 最佳 '+(PROG.gradeBest[g]===3?'⭐⭐⭐':(PROG.gradeBest[g]===2?'⭐⭐':'⭐'))):'')+'</div>'+
+      '</div>';
+  }).join('');
+  var allList=gradePoolAll().filter(function(ch){ return !!charGlossOf(ch); });
+  var allMast=gradeMastery(allList);
+  chips+='<div class="gradecard '+(GCH.g==='all'?'sel':'')+'" data-g="all">'+
+    '<div class="gc-name">全部年级</div>'+
+    '<div class="gc-n">'+allList.length+' 字</div>'+
+    '<div class="gc-bar"><div class="gc-fill" style="width:'+allMast+'%"></div></div>'+
+    '<div class="gc-m">已掌握 '+allMast+'%'+(PROG.gradeBest['all']?(' · 最佳 '+(PROG.gradeBest['all']===3?'⭐⭐⭐':(PROG.gradeBest['all']===2?'⭐⭐':'⭐'))):'')+'</div>'+
+    '</div>';
+  app.innerHTML=
+    '<div class="crumbs"><button class="btn ghost small" id="btnBack">← 返回首页</button><span>分年级闯关自检</span></div>'+
+    '<div class="ghead"><div class="gtitle">🎓 分年级闯关自检 · 像练打字一样练识字</div></div>'+
+    '<p style="color:var(--muted);font-size:14px;margin-bottom:12px">每局 10 题，可自由选择年级。答对的字会"退休"（少出现），答错的字会"加班"（反复出现）——直到全部掌握！</p>'+
+    '<div class="gradegrid">'+chips+'</div>'+
+    '<div style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">'+
+      '<button class="btn big" id="btnGo">🚀 选字自检（10 题）</button>'+
+      '<button class="btn big gold" id="btnDict">📝 听写模式（10 词）</button>'+
+    '</div>';
+  $('#btnBack').addEventListener('click',renderHome);
+  $all('.gradecard').forEach(function(el){
+    el.addEventListener('click',function(){
+      GCH.g=el.getAttribute('data-g');
+      renderGrade();
+    });
+  });
+  $('#btnGo').addEventListener('click',function(){ startGradeFlow(); });
+  $('#btnDict').addEventListener('click',function(){ startDictFlow(); });
+  updateHeader();
+}
+/* 干扰项设计：优先同字族成员（形近/音近，最有辨析价值），其次同偏旁字，最后随机补满 */
+function distractorsFor(ch,pool,n){
+  var out=[];
+  var f=famOfChar(ch);
+  if(f){
+    f.members.forEach(function(m){ if(m.ch!==ch&&out.indexOf(m.ch)<0&&pool.indexOf(m.ch)>=0) out.push(m.ch); });
+    if(f.root!==ch&&out.indexOf(f.root)<0&&pool.indexOf(f.root)>=0) out.push(f.root);
+  }
+  var m0=f?memOf(f.id,ch):null;
+  if(m0&&m0.parts&&m0.parts.length){
+    var pc=m0.parts[0].c;
+    for(var i=0;i<FAM.length&&out.length<n*3;i++){
+      var mm=FAM[i].members;
+      for(var j=0;j<mm.length;j++){
+        if(mm[j].ch===ch||out.indexOf(mm[j].ch)>=0||pool.indexOf(mm[j].ch)<0) continue;
+        if(mm[j].parts&&mm[j].parts.length&&mm[j].parts[0].c===pc) out.push(mm[j].ch);
+      }
+    }
+  }
+  shuffle(out);
+  var others=pool.slice(); shuffle(others);
+  for(var k=0;k<others.length&&out.length<n;k++){ if(others[k]!==ch&&out.indexOf(others[k])<0) out.push(others[k]); }
+  return out.slice(0,n);
+}
+function startGradeFlow(){
+  /* 只考字族库里有释义的字，避免出现"哪个字表示「这个字」？"的空题干 */
+  var pool=gradePool().filter(function(ch){ return !!charGlossOf(ch); });
+  if(pool.length<4){ toast('这个年级的字还在字族库建设中，先换个年级试试'); return; }
+  var picked=weightedPick(pool,Math.min(10,pool.length));
+  var items=picked.map(function(ch){
+    var gl=charGlossOf(ch);
+    var opts=[ch].concat(distractorsFor(ch,pool,2));
+    shuffle(opts);
+    return {s:'哪个字表示「'+gl+'」？',opts:opts,a:ch,ex:'「'+ch+'」：'+gl};
+  });
+  app.innerHTML=
+    '<div class="ghead">'+
+      '<button class="btn ghost small" id="gBack">← 等级</button>'+
+      '<div class="gtitle">🎓 自检中 · '+(GCH.g==='all'?'全部年级':('年级 '+GCH.g))+'</div>'+
+    '</div>'+
+    '<div id="gameArea"></div>';
+  $('#gBack').addEventListener('click',function(){ renderGrade(); });
+  var i=0,right=0;
+  function next(){
+    if(i>=items.length){
+      var stars=starsFor(items.length-right,items.length);
+      if(!PROG.gradeBest[GCH.g]||stars>PROG.gradeBest[GCH.g]){ PROG.gradeBest[GCH.g]=stars; saveProg(); }
+      var weak=[];
+      items.forEach(function(it){
+        var p=PROG.perf[it.a]||{};
+        if((p.w||0)>(p.r||0)) weak.push(it.a);
+      });
+      var weakHtml=weak.length?('<div class="res-wrongs"><h4>📌 需要加强的 '+weak.length+' 个字（点击去学）</h4><div class="weakchips">'+weak.slice(0,10).map(function(ch){return '<button class="wordchip" data-wch="'+ch+'">'+ch+'</button>';}).join('')+'</div></div>'):'';
+      app.innerHTML=
+        '<div class="result">'+
+          '<div class="res-stars" id="resStars">'+starsHtml(stars)+'</div>'+
+          '<div class="res-title">'+(right===items.length?'全对！这个等级已经难不倒你！':'答对 '+right+' / '+items.length+' 题')+'</div>'+
+          '<div class="res-sub">'+(right===items.length?'可以挑战更高年级啦！':'错过的字会自动"加班"，下次优先考你')+'</div>'+
+          weakHtml+
+          '<div class="res-btns">'+
+            '<button class="btn big" id="resAgain">🔄 再来 10 题</button>'+
+            '<button class="btn secondary" id="resBack">← 选择等级</button>'+
+          '</div>'+
+        '</div>';
+      var starsEls=$all('#resStars .star');
+      starsEls.forEach(function(el,i2){ el.style.animationDelay=(0.25+i2*0.35)+'s'; });
+      if(stars===3) confetti();
+      if(window.META){ META.onGameEnd(stars); META.trackGradeDone(); }
+      $('#resAgain').addEventListener('click',startGradeFlow);
+      $('#resBack').addEventListener('click',function(){ renderGrade(); });
+      $all('.weakchips .wordchip').forEach(function(el){
+        el.addEventListener('click',function(){
+          var ch=el.getAttribute('data-wch');
+          var f=famOfChar(ch);
+          if(f){ openMemberModal(f.id,ch); }
+        });
+      });
+      updateHeader();
+      return;
+    }
+    var head='<div class="gmeta"><span class="gnum">第 '+(i+1)+' / '+items.length+' 题</span><span>答对 '+right+' 题</span></div>';
+    gradeOne(items[i],function(ok){
+      if(ok) right++;
+      i++; next();
+    },head);
+  }
+  next();
+  updateHeader();
+}
+
+/* ================= 根宝装扮商店（铜钱消费闭环） ================= */
+function renderShop(){
+  clearTimers();
+  var M=window.META;
+  if(!M){ renderHome(); return; }
+  var s=M.statsHtml();
+  var cards=M.MASCOTS.map(function(m){
+    var owned=M.ownsMascot(m.id);
+    var equipped=M.mascot().id===m.id;
+    var cls=equipped?'shopcard equipped':(owned?'shopcard owned':'shopcard');
+    var btn=equipped?'<span class="shopbtn cur">✓ 使用中</span>'
+           :owned?'<button class="btn secondary small" data-mid="'+m.id+'">换装</button>'
+           :'<button class="btn gold small" data-mid="'+m.id+'">🪙 '+m.p+'</button>';
+    return '<div class="'+cls+'"><div class="shop-e">'+m.e+'</div><b>'+m.n+'</b>'+btn+'</div>';
+  }).join('');
+  app.innerHTML=
+    '<div class="crumbs"><button class="btn ghost small" id="btnBack">← 返回首页</button><span>根宝换装</span></div>'+
+    '<div class="ghead"><div class="gtitle">🎀 根宝换装店 · 我有 🪙 '+s.coins+'</div></div>'+
+    '<p style="color:var(--muted);font-size:14px;margin-bottom:14px">闯关、完成任务赚的铜钱，可以给根宝换新形象！换上之后，首页和悦读馆都会看到它。</p>'+
+    '<div class="shopgrid">'+cards+'</div>';
+  $('#btnBack').addEventListener('click',renderHome);
+  $all('.shopcard button').forEach(function(el){
+    el.addEventListener('click',function(){
+      var r=M.buyMascot(el.getAttribute('data-mid'));
+      if(r.ok){
+        if(r.equip) toast('换装成功！');
+        else { toast('🎉 新伙伴到手！'); if(window.ANIM) ANIM.burst(); if(window.AUDIO) AUDIO.coin(); }
+        renderShop();
+      }else{
+        toast('铜钱不够，还差 '+r.need+' 枚，去闯关赚吧！');
+        if(window.AUDIO) AUDIO.wrong();
+      }
+    });
+  });
+  updateHeader();
+}
+
+/* ================= 错题本（持久化） ================= */
+function getWrongBook(){
+  if(!PROG.wrongBook) PROG.wrongBook={};
+  return PROG.wrongBook;
+}
+function noteWrong(ch){
+  if(!ch) return;
+  var wb=getWrongBook();
+  var e=wb[ch]||{c:0,last:0};
+  e.c++; e.last=Date.now();
+  wb[ch]=e; saveProg();
+}
+function noteRight(ch){
+  var wb=getWrongBook();
+  if(wb[ch]){ wb[ch].c-=2; if(wb[ch].c<=0) delete wb[ch]; saveProg(); }
+}
+function wrongBookList(){
+  var wb=getWrongBook();
+  return Object.keys(wb).sort(function(a,b){ return wb[b].c-wb[a].c; });
+}
+
+/* ================= 听写模式 ================= */
+function dictWordOf(ch){
+  var f=famOfChar(ch);
+  if(!f) return '';
+  if(f.root===ch){ var m0=f.members[0]; return m0&&m0.w?m0.w.split(' · ')[0]:''; }
+  var m=memOf(f.id,ch);
+  return m&&m.w?m.w.split(' · ')[0]:'';
+}
+function startDictFlow(){
+  clearTimers();
+  var pool=gradePool().filter(function(ch){ return !!charGlossOf(ch); });
+  if(pool.length<4){ toast('这个年级的字还在字族库建设中，先换个年级试试'); return; }
+  var picked=weightedPick(pool,Math.min(10,pool.length));
+  var i=0,right=0,wrongs=[];
+  app.innerHTML=
+    '<div class="ghead">'+
+      '<button class="btn ghost small" id="gBack">← 等级</button>'+
+      '<div class="gtitle">📝 听写中 · '+(GCH.g==='all'?'全部年级':('年级 '+GCH.g))+'</div>'+
+    '</div>'+
+    '<div id="gameArea"></div>';
+  $('#gBack').addEventListener('click',function(){ renderGrade(); });
+  function next(){
+    if(i>=picked.length){
+      var stars=starsFor(picked.length-right,picked.length);
+      if(window.META){ META.onGameEnd(stars); META.trackGradeDone(); }
+      var wrongHtml=wrongs.length?('<div class="res-wrongs"><h4>📌 写错的 '+wrongs.length+' 个字（已收入错题本，点击去学）</h4><div class="weakchips">'+wrongs.map(function(ch){return '<button class="wordchip" data-wch="'+ch+'">'+ch+'</button>';}).join('')+'</div></div>'):'';
+      app.innerHTML=
+        '<div class="result">'+
+          '<div class="res-stars" id="resStars">'+starsHtml(stars)+'</div>'+
+          '<div class="res-title">'+(right===picked.length?'全对！听写小能手！':'听写完成：写对 '+right+' / '+picked.length)+'</div>'+
+          '<div class="res-sub">'+(right===picked.length?'可以挑战更高年级啦！':'写错的字已自动加入错题本，记得去复习')+'</div>'+
+          wrongHtml+
+          '<div class="res-btns">'+
+            '<button class="btn big" id="dAgain">🔄 再听写 10 词</button>'+
+            '<button class="btn secondary" id="dBook">📒 去错题本</button>'+
+            '<button class="btn ghost" id="dBack">← 选择等级</button>'+
+          '</div>'+
+        '</div>';
+      var starsEls=$all('#resStars .star');
+      starsEls.forEach(function(el,i2){ el.style.animationDelay=(0.25+i2*0.35)+'s'; });
+      if(stars===3) confetti();
+      $('#dAgain').addEventListener('click',startDictFlow);
+      $('#dBook').addEventListener('click',renderWrongBook);
+      $('#dBack').addEventListener('click',renderGrade);
+      $all('.weakchips .wordchip').forEach(function(el){
+        el.addEventListener('click',function(){
+          var ch=el.getAttribute('data-wch');
+          var f=famOfChar(ch);
+          if(f) openMemberModal(f.id,ch);
+        });
+      });
+      updateHeader();
+      return;
+    }
+    var ch=picked[i];
+    var w=dictWordOf(ch);
+    var head='<div class="gmeta"><span class="gnum">第 '+(i+1)+' / '+picked.length+' 词</span><span>已写对 '+right+'</span></div>';
+    var area=$('#gameArea');
+    area.innerHTML=head+
+      '<div class="gcard dictcard">'+
+        '<p class="gq">📝 听仔细，把字写在纸上（不会就想想它的字根）</p>'+
+        '<div class="dict-big">？</div>'+
+        '<div class="rbtns"><button class="btn" id="dHear">🔊 再听一遍</button>'+
+        '<button class="btn big" id="dShow">👀 写好了，对答案</button></div>'+
+        '<div id="dAnswer"></div>'+
+      '</div>';
+    function speakIt(){ speak(w?('请听写，'+w+'。'+w+'的'+ch+'。'):('请听写，'+ch+'。'+charGlossOf(ch))); }
+    later(speakIt,400);
+    $('#dHear').addEventListener('click',speakIt);
+    $('#dShow').addEventListener('click',function(){
+      var ans=$('#dAnswer');
+      if(ans.dataset.open) return;
+      ans.dataset.open='1';
+      ans.innerHTML=
+        '<div class="dict-reveal"><span class="dict-char">'+ch+'</span>'+
+        '<div class="dict-gl">'+(w?('词语：'+w+' · '):'')+charGlossOf(ch)+'</div></div>'+
+        '<p class="gq" style="margin-top:10px">写对了吗？诚实点哦</p>'+
+        '<div class="rbtns"><button class="btn big" id="dRight">✅ 写对了</button>'+
+        '<button class="btn secondary" id="dWrong">❌ 写错了</button></div>';
+      speak(ch+'，'+charGlossOf(ch));
+      $('#dRight').addEventListener('click',function(){
+        right++;
+        var p=PROG.perf[ch]||{r:0,w:0}; p.r=(p.r||0)+1; PROG.perf[ch]=p;
+        noteRight(ch);
+        praise(); saveProg();
+        i++; next();
+      });
+      $('#dWrong').addEventListener('click',function(){
+        var p=PROG.perf[ch]||{r:0,w:0}; p.w=(p.w||0)+1; PROG.perf[ch]=p;
+        noteWrong(ch); saveProg();
+        wrongs.push(ch);
+        miss();
+        if(window.AUDIO) AUDIO.wrong();
+        i++; next();
+      });
+    });
+  }
+  next();
+  updateHeader();
+}
+
+/* ================= 错题本页面 ================= */
+function renderWrongBook(){
+  clearTimers();
+  var list=wrongBookList();
+  var wb=getWrongBook();
+  var items=list.map(function(ch){
+    var gl=charGlossOf(ch);
+    return '<button class="wbchip" data-ch="'+ch+'"><b>'+ch+'</b><small>'+(gl||'')+'</small><span class="wbc">错 '+wb[ch].c+' 次</span></button>';
+  }).join('');
+  app.innerHTML=
+    '<div class="crumbs"><button class="btn ghost small" id="btnBack">← 返回首页</button><span>错题本</span></div>'+
+    '<div class="ghead"><div class="gtitle">📒 错题本 · 错过的字都在这里"加班"</div></div>'+
+    '<p style="color:var(--muted);font-size:14px;margin-bottom:12px">闯关、自检、听写里写错的字会自动收进来。点字看字理讲解；点"开始复习"考一遍——复习答对的字会"毕业"离开错题本。</p>'+
+    (list.length?('<div class="wbgrid">'+items+'</div>'+
+      '<div style="text-align:center;margin-top:18px"><button class="btn big" id="wbGo">🚀 开始复习（'+Math.min(10,list.length)+' 题）</button></div>')
+      :'<div class="emptybook">错题本是空的，太棒了！<br>去闯关或听写，写错的字会自动出现在这里。</div>');
+  $('#btnBack').addEventListener('click',renderHome);
+  $all('.wbchip').forEach(function(el){
+    el.addEventListener('click',function(){
+      var ch=el.getAttribute('data-ch');
+      var f=famOfChar(ch);
+      if(f) openMemberModal(f.id,ch); else toast('这个字还没有字族讲解');
+    });
+  });
+  var go=$('#wbGo');
+  if(go) go.addEventListener('click',startWrongReview);
+  updateHeader();
+}
+function startWrongReview(){
+  clearTimers();
+  var list=wrongBookList().filter(function(ch){ return !!charGlossOf(ch); }).slice(0,10);
+  if(!list.length){ toast('错题本里的字暂时没有释义题，直接点字卡复习吧'); return; }
+  var pool=gradePoolAll().filter(function(ch){ return !!charGlossOf(ch); });
+  var items=list.map(function(ch){
+    var gl=charGlossOf(ch);
+    var opts=[ch].concat(distractorsFor(ch,pool.length?pool:list,2));
+    shuffle(opts);
+    return {s:'哪个字表示「'+gl+'」？',opts:opts,a:ch,ex:'「'+ch+'」：'+gl};
+  });
+  var i=0,right=0;
+  app.innerHTML=
+    '<div class="ghead"><button class="btn ghost small" id="gBack">← 错题本</button>'+
+    '<div class="gtitle">📒 错题复习 · '+items.length+' 题</div></div><div id="gameArea"></div>';
+  $('#gBack').addEventListener('click',renderWrongBook);
+  function next(){
+    if(i>=items.length){
+      var stars=starsFor(items.length-right,items.length);
+      if(window.META) META.onGameEnd(stars);
+      app.innerHTML=
+        '<div class="result">'+
+          '<div class="res-stars" id="resStars">'+starsHtml(stars)+'</div>'+
+          '<div class="res-title">'+(right===items.length?'全部攻克！错题毕业啦！':'复习完成：答对 '+right+' / '+items.length)+'</div>'+
+          '<div class="res-sub">答对的字已经从错题本里"毕业"，还错的会继续留下来</div>'+
+          '<div class="res-btns">'+
+            '<button class="btn big" id="wrAgain">🔄 再复习一轮</button>'+
+            '<button class="btn secondary" id="wrBack">📒 回错题本</button>'+
+          '</div>'+
+        '</div>';
+      var starsEls=$all('#resStars .star');
+      starsEls.forEach(function(el,i2){ el.style.animationDelay=(0.25+i2*0.35)+'s'; });
+      if(stars===3) confetti();
+      $('#wrAgain').addEventListener('click',startWrongReview);
+      $('#wrBack').addEventListener('click',renderWrongBook);
+      updateHeader();
+      return;
+    }
+    var head='<div class="gmeta"><span class="gnum">第 '+(i+1)+' / '+items.length+' 题</span><span>答对 '+right+'</span></div>';
+    gradeOne(items[i],function(ok){
+      if(ok){ right++; noteRight(items[i].a); }
+      else noteWrong(items[i].a);
+      i++; next();
+    },head);
+  }
+  next();
+  updateHeader();
+}
+
+/* ================= 底部导航 ================= */
+function setNav(which){
+  $all('#botnav .bn-item').forEach(function(b){
+    b.classList.toggle('on', b.getAttribute('data-nav')===which);
+  });
+}
+function renderSchool(){
+  clearTimers();
+  setNav('school');
+  app.innerHTML=
+    '<div class="schoolpage">'+
+      '<div class="ghead"><div class="gtitle">📚 字族学堂</div></div>'+
+      '<p class="sub" style="text-align:center;color:var(--muted);margin:4px 0 12px">3500 常用字 · '+(FAM.length-4)+' 个字族 · 搜索任意汉字直达它的家族</p>'+
+      '<div class="libbar">'+
+        '<input type="text" id="libSearch" placeholder="🔍 搜索字族 / 字根 / 任意汉字，如：包、氵、跑">'+
+        '<select id="libTier">'+
+          '<option value="all">全部学段</option>'+
+          '<option value="b">起步 · 基本字表(300字)</option>'+
+          '<option value="c1">常用 · 字表一(2500字)</option>'+
+          '<option value="c2">拓展 · 字表二(1000字)</option>'+
+        '</select>'+
+      '</div>'+
+      '<div id="libStat" style="text-align:center;color:var(--muted);font-size:13px;margin:8px 0"></div>'+
+      '<div class="famgrid" id="libGrid"></div>'+
+      '<div style="text-align:center;margin-top:16px"><button class="btn secondary" id="libMore">加载更多字族</button></div>'+
+    '</div>';
+  $('#libSearch').addEventListener('input',function(){ LIB.q=this.value.trim(); renderLib(true); });
+  $('#libTier').addEventListener('change',function(){ LIB.tier=this.value; renderLib(true); });
+  $('#libMore').addEventListener('click',function(){ LIB.shown+=24; renderLib(false); });
+  renderLib(true);
+  updateHeader();
+}
+function renderMe(){
+  clearTimers();
+  setNav('me');
+  var M=window.META||null;
+  var s=M?M.statsHtml():null;
+  app.innerHTML=
+    '<div class="mepage">'+
+      '<div class="ghead"><div class="gtitle">🏆 我的成就</div></div>'+
+      '<div class="mecard"><h3>👤 我的等级 · '+currentProfileName()+'</h3>'+
+        '<div style="text-align:center;font-size:52px">'+(s?s.lv.e:'🌱')+'</div>'+
+        '<div style="text-align:center;font-family:var(--f-kai);font-size:26px;color:var(--red)">'+(s?s.lv.n:'蒙童')+'</div>'+
+        '<div class="xpwrap" style="margin-top:10px"><span class="xpbar" id="xpbar" style="width:'+(s?(M.next()?Math.round((s.xp-s.lv.xp)*100/(M.next().xp-s.lv.xp)):100):0)+'%"></span></div>'+
+        '<p class="sub" style="text-align:center;font-size:12px;color:var(--muted)">经验 '+(s?s.xp:0)+(s&&M.next()?(' · 距 '+M.next().e+M.next().n+' 还差 '+(M.next().xp-s.xp)):' · 已是最高等级')+'</p>'+
+      '</div>'+
+      '<div class="mecard"><h3>📊 学习统计</h3><div class="mestats">'+
+        '<div class="mestat"><b>'+(s?s.totalRight:0)+'</b><span>累计答对</span></div>'+
+        '<div class="mestat"><b>'+(s?s.coins:0)+'</b><span>铜钱</span></div>'+
+        '<div class="mestat"><b>'+(s?s.streak:0)+' 天</b><span>连续学习</span></div>'+
+        '<div class="mestat"><b>'+(s?s.todayLearned:0)+'</b><span>今日学字</span></div>'+
+        '<div class="mestat"><b>'+(s?s.glyphSeen:0)+'</b><span>看过的字源</span></div>'+
+        '<div class="mestat"><b>⭐ '+totalStars()+'</b><span>游戏星星</span></div>'+
+      '</div></div>'+
+      '<div class="mecard"><h3>🏅 成就徽章（'+(s?s.badges:0)+'/'+(s?s.badgesTotal:16)+'）</h3>'+
+        '<div class="badgesrow">'+(M?M.badgesHtml():'')+'</div></div>'+
+      '<div class="mecard"><h3>⚙️ 设置</h3>'+
+        '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">'+
+          '<button class="btn secondary" id="meCalendar">📅 签到日历</button>'+
+          '<button class="btn secondary" id="meSound">'+(SOUND?'🔊 声音已开':'🔇 声音已关')+'</button>'+
+          '<button class="btn secondary" id="meShop">🎀 根宝换装</button>'+
+          '<button class="btn secondary" id="meGuide">📖 家长必读</button>'+
+          '<button class="btn secondary" id="meParent">🛡️ 家长中心</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  $('#meCalendar').addEventListener('click',renderCalendar);
+  $('#meSound').addEventListener('click',function(){
+    SOUND=!SOUND; updateHeader(); renderMe();
+  });
+  $('#meShop').addEventListener('click',renderShop);
+  $('#meGuide').addEventListener('click',renderGuide);
+  $('#meParent').addEventListener('click',function(){ parentGate(renderParent); });
+  updateHeader();
+}
+
+/* ================= 多学生档案 & 家长中心 ================= */
+function getProfiles(){
+  try{ return JSON.parse(localStorage.getItem('zigen_profiles')||'[]'); }catch(e){ return []; }
+}
+function saveProfiles(list){ try{ localStorage.setItem('zigen_profiles',JSON.stringify(list)); }catch(e){} }
+function currentProfileId(){ try{ return localStorage.getItem('zigen_current_profile')||''; }catch(e){ return ''; } }
+function currentProfileName(){
+  var id=currentProfileId();
+  if(!id) return '默认';
+  var ps=getProfiles();
+  for(var i=0;i<ps.length;i++) if(ps[i].id===id) return ps[i].name;
+  return '默认';
+}
+/* 家长锁：一道乘法题，防止孩子误进 */
+function parentGate(cb){
+  var a=3+Math.floor(Math.random()*6), b=4+Math.floor(Math.random()*5);
+  var ans=a*b;
+  var opts=[ans];
+  while(opts.length<3){
+    var d=ans+[-3,-2,-1,1,2,3][Math.floor(Math.random()*6)];
+    if(d>0&&opts.indexOf(d)<0) opts.push(d);
+  }
+  shuffle(opts);
+  var mask=document.createElement('div');
+  mask.className='modal-mask';
+  mask.innerHTML='<div class="modal gate-modal">'+
+    '<div class="sage-title" style="margin-bottom:6px">🛡️ 家长验证</div>'+
+    '<p style="color:var(--muted);font-size:14px;margin-bottom:12px">这里是家长/老师专区，请回答：</p>'+
+    '<div class="gate-q">'+a+' × '+b+' = ?</div>'+
+    '<div class="opts">'+opts.map(function(o){return '<button data-v="'+o+'">'+o+'</button>';}).join('')+'</div>'+
+    '<div style="margin-top:10px"><button class="btn ghost small" id="gateCancel">取消</button></div>'+
+    '</div>';
+  document.body.appendChild(mask);
+  $all('.opts button',mask).forEach(function(el){
+    el.addEventListener('click',function(){
+      if(+el.getAttribute('data-v')===ans){ mask.remove(); cb(); }
+      else{
+        el.classList.add('wrong','shake'); el.disabled=true;
+        if(window.AUDIO) AUDIO.wrong();
+        later(function(){ mask.remove(); },800);
+      }
+    });
+  });
+  $('#gateCancel',mask).addEventListener('click',function(){ mask.remove(); });
+  mask.addEventListener('click',function(e){ if(e.target===mask) mask.remove(); });
+}
+function renderParent(){
+  clearTimers();
+  var M=window.META;
+  var s=M?M.statsHtml():null;
+  /* 各年级掌握度 */
+  var gradeRows=['1','2','3','4','5','6'].map(function(g){
+    var list=(window.GRADE_CHARS[g]||[]).filter(function(ch){ return !!charGlossOf(ch); });
+    var mast=gradeMastery(list);
+    return '<div class="pg-row"><span>'+g+' 年级</span><div class="gc-bar" style="flex:1"><div class="gc-fill" style="width:'+mast+'%"></div></div><b>'+mast+'%</b></div>';
+  }).join('');
+  var wbN=wrongBookList().length;
+  var R=window.READ_DATA?getRead():null;
+  var readN=R?Object.keys(R.read).length:0;
+  /* 档案 */
+  var ps=getProfiles();
+  var cur=currentProfileId();
+  var profRows='<div class="pg-row '+( !cur?'cur':'')+'" data-pid=""><span>👤 默认</span><b>'+(!cur?'当前使用':'' )+'</b><button class="btn ghost small" data-sw="">切换</button></div>';
+  profRows+=ps.map(function(p){
+    return '<div class="pg-row '+(cur===p.id?'cur':'')+'" data-pid="'+p.id+'"><span>👧 '+p.name+'</span><b>'+(cur===p.id?'当前使用':'')+'</b>'+
+      '<button class="btn ghost small" data-sw="'+p.id+'">切换</button>'+
+      '<button class="btn ghost small" data-del="'+p.id+'">删除</button></div>';
+  }).join('');
+  app.innerHTML=
+    '<div class="crumbs"><button class="btn ghost small" id="btnBack">← 返回首页</button><span>家长中心</span></div>'+
+    '<div class="ghead"><div class="gtitle">🛡️ 家长中心 · '+(cur?'档案：'+currentProfileName():'默认档案')+'</div></div>'+
+    '<div class="mecard"><h3>📊 学习报告</h3><div class="mestats">'+
+      '<div class="mestat"><b>'+(s?s.xp:0)+'</b><span>经验值</span></div>'+
+      '<div class="mestat"><b>'+(s?s.totalRight:0)+'</b><span>累计答对</span></div>'+
+      '<div class="mestat"><b>'+(s?s.totalAnswered:0)+'</b><span>累计答题</span></div>'+
+      '<div class="mestat"><b>'+(s?s.streak:0)+' 天</b><span>连续学习</span></div>'+
+      '<div class="mestat"><b>'+readN+'</b><span>已读短文</span></div>'+
+      '<div class="mestat"><b>'+wbN+'</b><span>错题待复习</span></div>'+
+    '</div>'+
+    '<h3 style="margin-top:14px">🎓 各年级掌握度</h3>'+gradeRows+
+    (s&&s.totalAnswered?('<p class="sub" style="font-size:13px;color:var(--muted);margin-top:8px">总正确率 '+Math.round(s.totalRight*100/s.totalAnswered)+'% · 建议：正确率低的年级先听写巩固，再挑战高年级。</p>'):'')+
+    '</div>'+
+    '<div class="mecard"><h3>👨‍👩‍👧 学生档案（多人共用一台设备）</h3>'+
+      '<p class="sub" style="font-size:13px;color:var(--muted)">每个孩子一个档案，星星、铜钱、错题各自独立。切换档案后自动重新加载。</p>'+
+      profRows+
+      '<div style="margin-top:10px;display:flex;gap:8px;justify-content:center">'+
+        '<input type="text" id="newProfName" placeholder="新档案名字，如：小明" style="max-width:160px">'+
+        '<button class="btn secondary small" id="btnAddProf">＋ 新建档案</button>'+
+      '</div>'+
+    '</div>'+
+    '<div class="mecard"><h3>🔧 数据管理</h3>'+
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">'+
+        '<button class="btn secondary" id="pgExport">📤 导出学习数据</button>'+
+        '<button class="btn secondary" id="pgGuide">📖 家长必读</button>'+
+        '<button class="btn secondary" id="pgReset">🗑️ 重置当前档案</button>'+
+      '</div>'+
+    '</div>';
+  $('#btnBack').addEventListener('click',renderHome);
+  $('#pgGuide').addEventListener('click',renderGuide);
+  $('#btnAddProf').addEventListener('click',function(){
+    var name=($('#newProfName').value||'').trim();
+    if(!name){ toast('先输入名字'); return; }
+    var list=getProfiles();
+    var id='p'+Date.now().toString(36);
+    list.push({id:id,name:name});
+    saveProfiles(list);
+    try{ localStorage.setItem('zigen_current_profile',id); }catch(e){}
+    toast('已切换到「'+name+'」的档案');
+    later(function(){ location.reload(); },600);
+  });
+  $all('[data-sw]').forEach(function(el){
+    el.addEventListener('click',function(){
+      try{ localStorage.setItem('zigen_current_profile',el.getAttribute('data-sw')); }catch(e){}
+      toast('切换档案中…');
+      later(function(){ location.reload(); },400);
+    });
+  });
+  $all('[data-del]').forEach(function(el){
+    el.addEventListener('click',function(){
+      var pid=el.getAttribute('data-del');
+      var list=getProfiles().filter(function(p){ return p.id!==pid; });
+      if(!confirm('删除这个档案及其全部学习数据？')) return;
+      saveProfiles(list);
+      try{
+        localStorage.removeItem('zigen_progress_v1_'+pid);
+        localStorage.removeItem('zigen_meta_v1_'+pid);
+        if(currentProfileId()===pid) localStorage.setItem('zigen_current_profile','');
+      }catch(e){}
+      renderParent();
+    });
+  });
+  $('#pgExport').addEventListener('click',function(){
+    var data={
+      profile:currentProfileName(),
+      exportedAt:new Date().toISOString(),
+      progress:PROG,
+      meta:(window.META?META.S:null)
+    };
+    var txt=JSON.stringify(data,null,1);
+    var mask=document.createElement('div');
+    mask.className='modal-mask';
+    mask.innerHTML='<div class="modal"><button class="modal-x">✕</button>'+
+      '<div class="sage-title" style="margin-bottom:8px">📤 学习数据（可复制保存）</div>'+
+      '<textarea id="expTxt" style="width:100%;height:220px;font-size:12px">'+txt.replace(/</g,'&lt;')+'</textarea>'+
+      '<div class="m-actions"><button class="btn big" id="expCopy">📋 复制到剪贴板</button></div></div>';
+    document.body.appendChild(mask);
+    $('.modal-x',mask).addEventListener('click',function(){ mask.remove(); });
+    mask.addEventListener('click',function(e){ if(e.target===mask) mask.remove(); });
+    $('#expCopy',mask).addEventListener('click',function(){
+      var ta=$('#expTxt',mask);
+      ta.focus(); ta.select();
+      try{ document.execCommand('copy'); toast('已复制'); }catch(e){ toast('复制失败，请长按全选复制'); }
+    });
+  });
+  $('#pgReset').addEventListener('click',function(){
+    if(confirm('确定清空「'+currentProfileName()+'」档案的星星、铜钱、错题和成就吗？此操作不可恢复！')){
+      try{ localStorage.removeItem(progKey()); }catch(e){}
+      PROG={stars:{},review:null,perf:{},gradeBest:{},starSlots:['wang','qing','mu','shui']};
+      if(window.META) META.reset();
+      toast('已重置');
+      later(function(){ location.reload(); },500);
+    }
+  });
+  updateHeader();
+}
+
+/* ================= 家长必读 ================= */
+function renderGuide(){
+  clearTimers();
+  app.innerHTML=
+  '<div class="guide">'+
+    '<h1>📖 家长必读 · 这套教程的科学依据</h1>'+
+    '<div class="block"><h3>一、为什么"从字根学字"是科学的？</h3>'+
+      '<ul>'+
+        '<li><b>汉字十之八九是形声字。</b>现代统计，形声字占汉字总量 80% 以上：一部分（形旁）提示意义，一部分（声旁）提示读音。</li>'+
+        '<li><b>声旁常常不只表音，还带着字源信息。</b>比如"亡"作声旁时，总与"消失、没有"有关（忘、盲、芒、妄、荒）。清代学者段玉裁、王念孙已有系统研究（"右文说"），现代王宁先生的《汉字构形学》进一步完善。抓住声旁，就能"一猜一整族"。</li>'+
+        '<li><b>字族集中识字是中国语文教育的传统方法。</b>清代《文字蒙求》就按字理归类教字；当代"字族文识字法"（鄢文俊先生）经过实验验证：把同族字集中学，识字效率与巩固率都显著高于逐字随文识字。</li>'+
+        '<li><b>符合儿童认知规律。</b>把字"归类+讲理"再学，孩子记住的不是孤立的笔画，而是有意义的组合（认知心理学称为"组块"与"意义编码"），记得牢、能迁移——遇到生字会自己拆字根、猜字义。</li>'+
+      '</ul>'+
+    '</div>'+
+    '<div class="block"><h3>二、课本为什么不这么教？</h3>'+
+      '<ul>'+
+        '<li><b>现行部编版语文的主线是"随文识字"</b>：在课文语境中学字，做到字不离词、词不离句，先保护阅读兴趣。这有其合理性。</li>'+
+        '<li><b>但课本并没有放弃字理。</b>一年级课文《小青蛙》整篇就是"青"字族识字（晴、情、清、请、睛），教材里也有归类识字、字理识字的安排。字族法不是"反课本"，而是课本之外的第二套系统，两者互补。</li>'+
+        '<li><b>完全照搬《说文解字》也不现实。</b>许慎生活在1900年前，没见过甲骨文，个别解释已被现代古文字学修正。所以本教程以现代研究为准，《说文》作为传统参照。</li>'+
+      '</ul>'+
+    '</div>'+
+    '<div class="block"><h3>三、「亡」到底是什么意思？</h3>'+
+      '<ul>'+
+        '<li><b>本义：逃亡、消失。</b>《说文解字》："亡，逃也。"甲骨文中"亡"常通"无"。"亡羊补牢"的亡，就是羊<b>跑丢了</b>。</li>'+
+        '<li><b>"死亡"是引申义。</b>人"消失了、不见了"，才委婉地引申出"死"。学生误以为"亡=死"，是因为只背了这一个义项——这也是"只记字形、不讲字理"的常见后果。</li>'+
+        '<li><b>一字带一族的示范：</b>忘（心+亡：记忆从心里消失）、忙（忄+亡：心乱无闲）、盲（目+亡：目之功能消失）、芒（艹+亡：细尖如刺）、妄（乱、没根据）、荒（庄稼消失、只剩草）、望（抬头望远方）、罔（借作"没有"）。</li>'+
+      '</ul>'+
+    '</div>'+
+    '<div class="block"><h3>四、使用建议（每天10分钟）</h3>'+
+      '<ul>'+
+        '<li><b>第1天：</b>学"亡字家族"——读故事、唱歌诀、点开每张字卡看拆字动画，顺手描红。</li>'+
+        '<li><b>第2-3天：</b>闯三关（组装→填空→连连看），拿满3星再换下一个字族。</li>'+
+        '<li><b>一周后：</b>挑战"终极关卡"复习巩固；鼓励孩子当"小老师"，把字族讲给家长听。</li>'+
+        '<li><b>日常迁移：</b>遇到生字先问"它的字根是什么？形旁提示什么？声旁读什么？"——养成字理思维，比多背50个字更值钱。</li>'+
+      '</ul>'+
+    '</div>'+
+    '<div class="block"><h3>五、参考与说明</h3>'+
+      '<ul>'+
+        '<li>许慎《说文解字》——传统字理之本；</li>'+
+        '<li>现代古文字学（甲骨文、金文研究成果）——本教程取义的主要依据；</li>'+
+        '<li>王宁《汉字构形学纲要》——当代构形理论；</li>'+
+        '<li>鄢文俊"字族文识字法"——当代字族教学实验；</li>'+
+        '<li>统编版（部编版）小学语文教材——字族内容参照。</li>'+
+        '<li><b>扩展字族库</b>：覆盖《义务教育语文课程标准（2022年版）》常用字表 3500 字，按"声旁/部首"自动归族成 500+ 字族，每族配拆解、释义、三类游戏。数据来源：Make Me a Hanzi 字形拆解库（含六书分类与声旁标注）+《新华字典》释义。自动字族的释义为字典原义，个别与教材表述不同，以教材为准。</li>'+
+      '</ul>'+
+      '<p class="small">说明：教程中的古字形为教学示意图（非原拓片）；个别字源学界尚有争议（如"芒"），本教程取通行助学之说。教学要点是"字族+字理"的思维方法，而非学术考据。</p>'+
+    '</div>'+
+    '<div class="block"><h3>六、本教程融合的字理识字教学法（五套经典的共通方法）</h3>'+
+      '<ul>'+
+        '<li><b>图示法 / 课件法</b>：象形字画廊、古字形示意图——把字"画"给孩子看。</li>'+
+        '<li><b>演示法</b>：点击朗读、拆字动画——动手、动口、动眼，记忆更深。</li>'+
+        '<li><b>故事法</b>：字圣爷爷讲故事——每个字根一段来历，故事讲完，字也记住了。</li>'+
+        '<li><b>比较法</b>：字义侦探——把同音、近形字（忙/盲/忘、清/晴/情）放在一起辨析。</li>'+
+        '<li><b>迁移法</b>：形旁看义、声旁定音——学会一个字根，自己猜透一族字。</li>'+
+        '<li><b>五步课堂环节</b>：观察字形→追根溯源→理解字义→组词说话→巩固闯关。每个字族页按此流程组织，并附"课堂实践·教学建议"（含导入语、讲解要点、易错提醒、活动设计）。</li>'+
+      '</ul>'+
+      '<p class="small">说明：以上为字理识字教学界公开的通用方法论（《说文解字进课堂》《字理识字教学设计》等著作所代表的教学流派）；本教程全部文字、图画均为原创编写，或引用公版古籍（《说文解字·叙》六书原文、传统民间字谜），未复制任何受版权保护的书籍内容。</p>'+
+    '</div>'+
+    '<div style="text-align:center"><button class="btn big" id="gGuideBack">🏠 回到首页</button></div>'+
+  '</div>';
+  $('#gGuideBack').addEventListener('click',renderHome);
+  updateHeader();
+}
+
+/* ================= 启动 ================= */
+document.getElementById('bnHome').addEventListener('click',function(){ AUDIO.tap(); renderHome(); });
+document.getElementById('bnSchool').addEventListener('click',function(){ AUDIO.tap(); renderSchool(); });
+document.getElementById('bnGame').addEventListener('click',function(){ AUDIO.tap(); renderGrade(); });
+document.getElementById('bnMe').addEventListener('click',function(){ AUDIO.tap(); renderMe(); });
+document.addEventListener('click',function(){ if(window.AUDIO) AUDIO.unlock(); },true);
+if(window.META) META.init();
+window.__appBack=function(){
+  var b=document.getElementById('btnBack')||document.getElementById('gBack');
+  if(b){ b.click(); return true; }
+  var m=document.querySelector('.modal-mask');
+  if(m){ m.remove(); return true; }
+  if(document.querySelector('.result')){ return true; }
+  return false;
+};
+renderHome();
+</script>
+</body>
+</html>
