@@ -789,3 +789,35 @@ body{padding-bottom:76px}
 .hhbar .qpbar{flex:1}
 .hhbar b{color:var(--green)}
 .hh-done{text-align:center;font-weight:800;color:#2E6B3E;margin-top:6px}
+
+/* ================= v5.6 图鉴/宝箱/BOSS/游戏中心 ================= */
+.hub-rank{background:linear-gradient(135deg,#FFF7E2,#FFFDF7);border:2px solid #F0D9A0;border-radius:14px;padding:10px;text-align:center;font-size:14px;margin:8px 0}
+.hub-rank b{color:var(--red);font-size:17px}
+.cardstats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:10px 0}
+.cs{background:var(--cardbg);border:1.5px solid var(--line);border-radius:12px;padding:8px 2px;text-align:center}
+.cs b{display:block;font-size:19px;color:var(--red)}
+.cs span{font-size:10px;color:var(--muted)}
+.cs.gold{border-color:#E5A93C;background:#FFF9EC}
+.cs.green b{color:#2E6B3E}
+.cs.blue b{color:#3E7CB1}
+.wcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px;margin:10px 0}
+.wcard-item{border-radius:12px;padding:8px 4px;text-align:center;border:1.5px solid var(--line);background:#F7F5F0}
+.wcard-item.gold{background:#FFF3D6;border-color:#E5A93C}
+.wcard-item.green{background:#EAF5EC;border-color:#9CC5A5}
+.wcard-item.blue{background:#E9F2FA;border-color:#A8C8E4}
+.wci-ch{font-family:var(--f-kai);font-size:26px;color:#423828}
+.wci-rar{font-size:10px;color:var(--muted);margin-top:2px}
+.packbox{position:relative;background:linear-gradient(160deg,#FFF7E2,#FFFDF7);border:3px solid var(--gold);border-radius:22px;padding:22px;max-width:420px;width:92%;box-shadow:0 12px 40px rgba(0,0,0,.3);animation:popin2 .4s cubic-bezier(.2,1.6,.4,1)}
+.pack-title{text-align:center;font-size:20px;font-weight:800;color:var(--red);margin-bottom:14px}
+.pack-cards{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.packcard{border-radius:14px;padding:14px 8px;text-align:center;min-width:86px;border:2px solid var(--line);background:#F7F5F0;animation:cardflip .6s cubic-bezier(.2,1.4,.4,1) backwards}
+.packcard.gold{background:#FFF3D6;border-color:#E5A93C}
+.packcard.green{background:#EAF5EC;border-color:#9CC5A5}
+.packcard.blue{background:#E9F2FA;border-color:#A8C8E4}
+.pc-ch{font-family:var(--f-kai);font-size:34px;color:#423828}
+.pc-rar{font-size:11px;color:var(--muted)}
+@keyframes cardflip{from{transform:rotateY(90deg) scale(.6);opacity:0}to{transform:rotateY(0) scale(1);opacity:1}}
+#packOk{display:block;margin:0 auto}
+.chest-card{border-color:#E5A93C;background:linear-gradient(135deg,#FFF9EC,#FFFDF7)}
+.boss-card{border-color:#C94A2C;background:linear-gradient(135deg,#FDF0EB,#FFFDF7)}
+.boss-banner{background:#C94A2C;color:#fff;border-radius:12px;padding:10px 14px;font-size:14px;font-weight:700;text-align:center;margin:8px 0;animation:pulse 1.8s infinite}

@@ -34,7 +34,8 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
 <nav id="botnav">
   <button class="bn-item on" id="bnHome" data-nav="home">🏠<span>大厅</span></button>
   <button class="bn-item" id="bnSchool" data-nav="school">📚<span>字族</span></button>
-  <button class="bn-item" id="bnGame" data-nav="game">🎮<span>闯关</span></button>
+  <button class="bn-item" id="bnGrade" data-nav="grade">🎓<span>闯关</span></button>
+  <button class="bn-item" id="bnGame" data-nav="game">🎮<span>游戏</span></button>
   <button class="bn-item" id="bnMe" data-nav="me">🏆<span>我的</span></button>
 </nav>
 
@@ -52,6 +53,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
 <script src="js/anim.js"></script>
 <script src="js/read.js"></script>
 <script src="js/map.js"></script>
+<script src="js/cards.js"></script>
 <script>
 'use strict';
 /* ================= 数据 ================= */
@@ -269,11 +271,12 @@ function loadProg(){
     if(p && p.stars){
       if(!p.perf) p.perf={};
       if(!p.gradeBest) p.gradeBest={};
-      if(!p.starSlots) p.starSlots=['wang','qing','mu','shui'];
+      if(!p.starSlots) p.starSlots=['wang','qing'];
+      if(p.starSlots.length>2) p.starSlots=p.starSlots.slice(0,2);
       return p;
     }
   }catch(e){}
-  return {stars:{},review:null,perf:{},gradeBest:{},starSlots:['wang','qing','mu','shui']};
+  return {stars:{},review:null,perf:{},gradeBest:{},starSlots:['wang','qing']};
 }
 function saveProg(){ try{ localStorage.setItem(progKey(),JSON.stringify(PROG)); }catch(e){} }
 function totalStars(){
@@ -374,6 +377,7 @@ function praise(){
 }
 function miss(){
   if(window.META) META.onAnswer(false);
+  try{ if(navigator.vibrate) navigator.vibrate(60); }catch(e){}
 }
 function toast(msg){
   var el=document.createElement('div');
@@ -498,7 +502,8 @@ function pickStarCand(exclude){
   return cands[0]||null;
 }
 function refreshStarSlots(){
-  var slots=PROG.starSlots||['wang','qing','mu','shui'];
+  var slots=PROG.starSlots||['wang','qing'];
+  if(slots.length>2) slots=slots.slice(0,2);
   var changed=false, graduated=[];
   var picked=[]; /* 本轮已补位的新族，防止两个字族同时毕业时补进同一族 */
   var newSlots=slots.map(function(id){
@@ -545,10 +550,12 @@ function renderHome(){
   var stats=M?M.statsHtml():null;
   var nextInfo=M&&M.next()?('距 '+M.next().e+M.next().n+' 还差 '+(M.next().xp-M.statsHtml().xp)+' 经验'):'已是最高等级！';
   var xpW=M&&M.next()?Math.round((M.statsHtml().xp-M.lv().xp)*100/(M.next().xp-M.lv().xp)):100;
+  var mascotWord=META&&META.S.streak>=7?'🔥 根宝被你的坚持点亮了！':(META&&META.S.streak>=3?'😄 根宝很开心，天天见你！':'坚持学习，根宝会越来越有精神！');
   app.innerHTML=
     '<div class="hero">'+
       '<div class="mascot" id="mascot" title="点我换装">'+(M?M.mascot().e:'🦉')+'</div>'+
       '<h1>字根探秘</h1>'+
+      '<p class="sub" style="margin-bottom:2px;font-weight:700;color:#8A5A10">'+mascotWord+'</p>'+
       '<p class="sub">像小侦探一样拆开汉字——抓住一个字根，一串字一次学透</p>'+
       '<div class="resbar">'+(M?M.chipsHtml():'')+'</div>'+
       '<div class="xpwrap"><span class="xpbar" id="xpbar" style="width:'+xpW+'%"></span></div>'+
@@ -566,10 +573,6 @@ function renderHome(){
       '<div class="entrycard" id="btnRead"><span class="eic">📖</span><b>悦读馆</b><small>读短文 · 点藏好词好句 · 仿写</small></div>'+
       '<div class="entrycard" id="btnMap"><span class="eic">🗺️</span><b>字林探险</b><small>30天学习地图 · 每日任务包</small></div>'+
       '<div class="entrycard" id="btnArena"><span class="eic">⚔️</span><b>每日擂台</b><small>90秒限时挑战</small></div>'+
-      '<div class="entrycard" id="btnGrade"><span class="eic">🎓</span><b>分年级闯关</b><small>1~6年级自适应自检</small></div>'+
-      '<div class="entrycard" id="btnRiddle"><span class="eic">🏮</span><b>字谜乐园</b><small>'+window.RIDDLES.length+' 条传统字谜</small></div>'+
-      '<div class="entrycard" id="btnMuseum"><span class="eic">🏛️</span><b>部首博物馆</b><small>六书 + '+window.RAD_MUSEUM.length+' 个部首</small></div>'+
-      '<div class="entrycard" id="btnGallery"><span class="eic">🖼️</span><b>象形字画廊</b><small>看图猜字</small></div>'+
       '<div class="entrycard" id="btnWrong"><span class="eic">📒</span><b>错题本</b><small>写错的字在这里加班</small></div>'+
     '</div>'+
     '<div class="homesec">🏅 我的成就（'+(M?stats.badges:'0')+'/'+(M?stats.badgesTotal:16)+'）</div>'+
@@ -598,11 +601,7 @@ function renderHome(){
   });
   $('#mascot').addEventListener('click',function(){ AUDIO.tap(); renderShop(); });
   $('#btnGuide').addEventListener('click',renderGuide);
-  $('#btnRiddle').addEventListener('click',renderRiddle);
-  $('#btnMuseum').addEventListener('click',renderMuseum);
-  $('#btnGallery').addEventListener('click',renderGallery);
   $('#btnWrong').addEventListener('click',renderWrongBook);
-  $('#btnGrade').addEventListener('click',function(){ renderGrade(); });
   $('#btnRead').addEventListener('click',renderReadHome);
   $('#btnMap').addEventListener('click',renderMap);
   $('#btnArena').addEventListener('click',renderArena);
@@ -742,6 +741,7 @@ function openMemberModal(famId,ch){
   if(!m) return;
   CUR.modal={famId:famId,ch:ch};
   if(window.META){ META.trackLearn(); META.trackGlyph(); }
+  if(window.cardGain) cardGain(ch);
   var formula;
   if(m.parts.length){
     var partsHtml=m.parts.map(function(p,i){
@@ -1997,6 +1997,45 @@ function startWrongReview(){
   updateHeader();
 }
 
+/* ================= 游戏中心 ================= */
+function renderGameHub(){
+  clearTimers();
+  setNav('game');
+  var q=getQ5();
+  var rank=arenaRank(q.arena.best);
+  app.innerHTML=
+    '<div class="readhome">'+
+      '<div class="ghead"><div class="gtitle">🎮 游戏与活动</div></div>'+
+      '<div class="hub-rank">⚔️ 擂台段位：<b>'+rank[1]+' '+rank[0]+'</b> · 最高 '+q.arena.best+' 分</div>'+
+      '<div class="entrygrid">'+
+        '<div class="entrycard" id="gArena"><span class="eic">⚔️</span><b>每日擂台</b><small>90秒限时 · 段位晋升</small></div>'+
+        '<div class="entrycard" id="gMap"><span class="eic">🗺️</span><b>字林探险</b><small>30天地图 · 宝箱 · BOSS</small></div>'+
+        '<div class="entrycard" id="gGrade"><span class="eic">🎓</span><b>分年级闯关</b><small>1~6年级自适应自检</small></div>'+
+        '<div class="entrycard" id="gReview"><span class="eic">🏆</span><b>终极挑战</b><small>四大字族混合闯关</small></div>'+
+        '<div class="entrycard" id="gCards"><span class="eic">🃏</span><b>字灵图鉴</b><small>集卡 · 开卡包</small></div>'+
+        '<div class="entrycard" id="gRead"><span class="eic">📖</span><b>句芽悦读馆</b><small>读短文 · 仿写 · 微写作</small></div>'+
+        '<div class="entrycard" id="gRiddle"><span class="eic">🏮</span><b>字谜乐园</b><small>'+window.RIDDLES.length+' 条传统字谜</small></div>'+
+        '<div class="entrycard" id="gMuseum"><span class="eic">🏛️</span><b>部首博物馆</b><small>六书 + '+window.RAD_MUSEUM.length+' 个部首</small></div>'+
+        '<div class="entrycard" id="gGallery"><span class="eic">🖼️</span><b>象形字画廊</b><small>看图猜字</small></div>'+
+      '</div>'+
+      '<div class="readtip">💡 越玩越带劲的秘密：擂台升段位、地图开宝箱、图鉴集字灵、第30天打大魔王——每天半小时，全都在这。</div>'+
+    '</div>';
+  $('#gArena').addEventListener('click',function(){ AUDIO.tap(); renderArena(); });
+  $('#gMap').addEventListener('click',function(){ AUDIO.tap(); renderMap(); });
+  $('#gGrade').addEventListener('click',function(){ AUDIO.tap(); renderGrade(); });
+  $('#gReview').addEventListener('click',function(){
+    AUDIO.tap();
+    if(totalStars()<12){ toast('再攒 '+(12-totalStars())+' 颗星就能解锁！'); return; }
+    runReview();
+  });
+  $('#gCards').addEventListener('click',function(){ AUDIO.tap(); renderCards(); });
+  $('#gRead').addEventListener('click',function(){ AUDIO.tap(); renderReadHome(); });
+  $('#gRiddle').addEventListener('click',renderRiddle);
+  $('#gMuseum').addEventListener('click',renderMuseum);
+  $('#gGallery').addEventListener('click',renderGallery);
+  updateHeader();
+}
+
 /* ================= 底部导航 ================= */
 function setNav(which){
   $all('#botnav .bn-item').forEach(function(b){
@@ -2230,7 +2269,7 @@ function renderParent(){
   $('#pgReset').addEventListener('click',function(){
     if(confirm('确定清空「'+currentProfileName()+'」档案的星星、铜钱、错题和成就吗？此操作不可恢复！')){
       try{ localStorage.removeItem(progKey()); }catch(e){}
-      PROG={stars:{},review:null,perf:{},gradeBest:{},starSlots:['wang','qing','mu','shui']};
+      PROG={stars:{},review:null,perf:{},gradeBest:{},starSlots:['wang','qing']};
       if(window.META) META.reset();
       toast('已重置');
       later(function(){ location.reload(); },500);
@@ -2306,7 +2345,8 @@ function renderGuide(){
 /* ================= 启动 ================= */
 document.getElementById('bnHome').addEventListener('click',function(){ AUDIO.tap(); renderHome(); });
 document.getElementById('bnSchool').addEventListener('click',function(){ AUDIO.tap(); renderSchool(); });
-document.getElementById('bnGame').addEventListener('click',function(){ AUDIO.tap(); renderGrade(); });
+document.getElementById('bnGrade').addEventListener('click',function(){ AUDIO.tap(); renderGrade(); });
+document.getElementById('bnGame').addEventListener('click',function(){ AUDIO.tap(); renderGameHub(); });
 document.getElementById('bnMe').addEventListener('click',function(){ AUDIO.tap(); renderMe(); });
 document.addEventListener('click',function(){ if(window.AUDIO) AUDIO.unlock(); },true);
 if(window.META) META.init();

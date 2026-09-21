@@ -53,7 +53,7 @@ function halfChecks(){
 /* ================= 学习地图 ================= */
 function renderMap(){
   clearTimers();
-  setNav('home');
+  setNav('game');
   var q=getQ5();
   q5RollDay();
   if(!q.map.start){ q.map.start=dateKey(); saveProg(); }
@@ -81,7 +81,8 @@ function renderMap(){
     else st=(q.map.full&&q.map.full[i])?'full':((q.map.done&&q.map.done[i])?'done':'open');
     if(st==='done'||st==='full') doneCount++;
     if(st==='full') fullCount++;
-    var icon=st==='locked'?'🔒':st==='full'?'🌟':st==='done'?'✅':st==='today'?'📍':'🎯';
+    var chest=((i+1)%5===0&&i>0);
+    var icon=chest?'🎁':(st==='locked'?'🔒':st==='full'?'🌟':st==='done'?'✅':st==='today'?'📍':'🎯');
     if(i>0){
       var pcx=18+((i-1)%5)*19, pcy=16+(Math.floor((i-1)/5))*26;
       nodeHtml+='<line x1="'+pcx+'" y1="'+pcy+'" x2="'+x+'" y2="'+y+'" stroke="'+(st==='locked'&&i>dayIdx?'#E2D7B8':'#E5A93C')+'" stroke-width="3" stroke-linecap="round"/>';
@@ -90,6 +91,32 @@ function renderMap(){
       '<text x="'+x+'" y="'+(y+5)+'" text-anchor="middle" font-size="11">'+icon+'</text>';
   }
   var todayNode=Math.min(dayIdx,NODES-1);
+  var q2=getQ5();
+  var chestDays=[4,9,14,19,24,29];
+  var openChests=[], closedChests=[];
+  chestDays.forEach(function(cd){
+    if(dayIdx>=cd){
+      if(q2.map['chest'+(cd+1)]) openChests.push(cd+1);
+      else closedChests.push(cd+1);
+    }
+  });
+  var chestBtn='';
+  if(closedChests.length){
+    chestBtn='<div class="mnode-card chest-card">'+
+      '<h3>🎁 宝箱（第 '+closedChests.join('、')+' 天）</h3>'+
+      '<p class="flowtip">完成今日任务包即可开启，里面有字灵卡包！</p>'+
+      '<button class="btn big" id="mpChest">🎁 开宝箱</button>'+
+      '</div>';
+  } else if(openChests.length){
+    chestBtn='<div class="mnode-card chest-card"><h3>🎁 已开宝箱：第 '+openChests.join('、')+' 天</h3>'+
+      '<p class="flowtip">宝箱已开启，去图鉴看看新字灵！</p></div>';
+  }
+  var bossBtn='';
+  if(dayIdx>=29){
+    bossBtn='<div class="mnode-card boss-card"><h3>👹 字根大魔王</h3>'+
+      '<p class="flowtip">30 天旅程的终点之战！60 秒极限答题，击败魔王赢传说卡包。</p>'+
+      '<button class="btn big" id="mpBoss">👹 挑战魔王（60秒）</button></div>';
+  }
   var taskPack=dayIdx<NODES
     ?'<div class="mnode-card">'+
        '<h3>📍 第 '+(dayIdx+1)+' 天 · 今日任务包（约30分钟）</h3>'+
@@ -116,8 +143,26 @@ function renderMap(){
       '</div>'+
       '<div class="mapwrap"><svg viewBox="0 0 95 160" class="mapsvg">'+nodeHtml+'</svg></div>'+
       taskPack+
-      '<div class="readtip">💡 每天完成一个任务包，30 天后回头看：3500 个常用字、字族思维、好词好句和写作手感，都在地图上留下了脚印。</div>'+
+      chestBtn+
+      bossBtn+
+      '<div class="readtip">💡 每天完成一个任务包，30 天后回头看：3500 个常用字、字族思维、好词好句和写作手感，都在地图上留下了脚印。每 5 天一个宝箱，第 30 天挑战字根大魔王！</div>'+
     '</div>';
+  var cb=$('#mpChest');
+  if(cb) cb.addEventListener('click',function(){
+    AUDIO.tap();
+    var hc=halfChecks();
+    if(hc.g||hc.r||hc.l){
+      var openedKey='chest'+(chestDays.filter(function(cd){return dayIdx>=cd;})[0]+1);
+      q2.map[openedKey]=1; saveProg();
+      var C=getCards?getCards():null;
+      if(C){ C.packs=(C.packs||0)+1; saveProg(); }
+      toast('🎁 宝箱开启！字灵卡包+1');
+      if(window.ANIM) ANIM.burst();
+      renderMap();
+    } else toast('先完成今日任务包才能开宝箱哦');
+  });
+  var bb=$('#mpBoss');
+  if(bb) bb.addEventListener('click',function(){ AUDIO.tap(); renderArena('boss'); });
   $('#mpBack').addEventListener('click',renderHome);
   var g=$('#mpGame'); if(g) g.addEventListener('click',function(){ AUDIO.tap(); renderGrade(); });
   var r=$('#mpRead'); if(r) r.addEventListener('click',function(){ AUDIO.tap(); renderReadHome(); });
@@ -137,22 +182,33 @@ function renderMap(){
   updateHeader();
 }
 
+/* 擂台段位 */
+function arenaRank(best){
+  if(best>=40) return ['字灵大师','👑','#C94A2C'];
+  if(best>=30) return ['钻石','💎','#3E7CB1'];
+  if(best>=20) return ['黄金','🥇','#E5A93C'];
+  if(best>=10) return ['白银','🥈','#9AA5AD'];
+  return ['青铜','🥉','#B07A50'];
+}
 /* ================= 每日擂台（90秒限时） ================= */
 var ARENA=null;
-function renderArena(){
+function renderArena(mode){
   clearTimers();
+  var boss=(mode==='boss');
   var q=getQ5();
   var t=dateKey();
   if(q.arena.today.date!==t) q.arena.today={date:t,score:0};
+  var totalTime=boss?60:90;
   app.innerHTML=
-    '<div class="ghead"><button class="btn ghost small" id="arBack">🏠 首页</button><div class="gtitle">⚔️ 每日擂台</div></div>'+
+    '<div class="ghead"><button class="btn ghost small" id="arBack">← '+(boss?'字林探险':'首页')+'</button><div class="gtitle">'+(boss?'👹 字根大魔王 · 终极BOSS':'⚔️ 每日擂台')+'</div></div>'+
+    (boss?'<div class="boss-banner">👹 魔王现身！60 秒内尽量多答题，击败它赢传说卡包！</div>':'')+
     '<div class="arena-top">'+
       '<div class="at-score">得分 <b id="arScore">0</b></div>'+
-      '<div class="at-time" id="arTime">90</div>'+
+      '<div class="at-time" id="arTime">'+totalTime+'</div>'+
     '</div>'+
     '<div id="arBody"></div>';
-  $('#arBack').addEventListener('click',renderHome);
-  var score=0, left=90;
+  $('#arBack').addEventListener('click',boss?renderMap:renderHome);
+  var score=0, left=totalTime;
   var timer=setInterval(function(){
     left--;
     var el=document.getElementById('arTime');
@@ -161,22 +217,35 @@ function renderArena(){
   },1000);
   function arenaEnd(s){
     var q2=getQ5();
-    if(s>q2.arena.best){ q2.arena.best=s; toast('🎉 新纪录！'+s+' 分'); if(window.ANIM) ANIM.burst(); }
-    q2.arena.today.score=Math.max(q2.arena.today.score,s);
+    if(!boss){
+      if(s>q2.arena.best){ q2.arena.best=s; toast('🎉 新纪录！'+s+' 分'); if(window.ANIM) ANIM.burst(); }
+      q2.arena.today.score=Math.max(q2.arena.today.score,s);
+    }else{
+      var beat=s>=10;
+      if(beat&&!q2.arena.bossBeaten){ q2.arena.bossBeaten=true; toast('👹 魔王被击败！'); }
+    }
     saveProg();
     var coins=Math.min(Math.floor(s/5),30);
     META.addCoins(coins); META.addXP(Math.min(s*3,60));
+    var rank=arenaRank(q2.arena.best);
+    var packHtml='';
+    if(boss){
+      var C=getCards?getCards():null;
+      if(C){ C.packs=(C.packs||0)+1; saveProg(); }
+      packHtml='<div class="mwfb-ok">🎁 传说卡包 +1！（图鉴里开）</div>';
+    }
     document.getElementById('arBody').innerHTML=
       '<div class="result">'+
-        '<div class="res-title">⏱️ 时间到！</div>'+
-        '<div class="res-sub">本次 <b>'+s+'</b> 分 · 历史最高 '+q2.arena.best+' 分 · 今日最佳 '+q2.arena.today.score+' 分<br>奖励 +'+coins+' 铜钱</div>'+
+        '<div class="res-title">'+(boss?(s>=10?'👑 魔王被击败！':'👹 差一点点，再练练！'):'⏱️ 时间到！')+'</div>'+
+        '<div class="res-sub">本次 <b>'+s+'</b> 分 · 历史最高 '+q2.arena.best+' 分 · 段位 '+rank[1]+rank[0]+'<br>奖励 +'+coins+' 铜钱</div>'+
+        packHtml+
         '<div class="res-btns">'+
-          '<button class="btn big" id="arAgain">⚔️ 再来一局</button>'+
-          '<button class="btn secondary" id="arHome">🏠 回首页</button>'+
+          '<button class="btn big" id="arAgain">'+(boss?'👹 再战魔王':'⚔️ 再来一局')+'</button>'+
+          '<button class="btn secondary" id="arHome">🏠 回'+(boss?'地图':'首页')+'</button>'+
         '</div>'+
       '</div>';
-    $('#arAgain').addEventListener('click',renderArena);
-    $('#arHome').addEventListener('click',renderHome);
+    $('#arAgain').addEventListener('click',function(){ renderArena(mode); });
+    $('#arHome').addEventListener('click',boss?renderMap:renderHome);
     updateHeader();
   }
   function nextQ(){
