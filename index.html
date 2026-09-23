@@ -2182,6 +2182,45 @@ function parentGate(cb){
   $('#gateCancel',mask).addEventListener('click',function(){ mask.remove(); });
   mask.addEventListener('click',function(e){ if(e.target===mask) mask.remove(); });
 }
+/* 家长中心：本周周报（拾句/写作/阅读/口袋） */
+function parentWeeklyHtml(){
+  var P=window.ensurePick?ensurePick():{done:{},book:[],pkGot:[]};
+  var R=window.getRead?getRead():{writeDone:[],read:{},mimicDone:{}};
+  var weekAgo=Date.now()-7*86400000;
+  var weekBook=(P.book||[]).filter(function(b){ return b.ts>=weekAgo; });
+  var weekDone=0;
+  Object.keys(P.done||{}).forEach(function(k){
+    var d=new Date(k.replace(/-/g,'/'));
+    if(!isNaN(d.getTime())&&d.getTime()>=weekAgo) weekDone++;
+  });
+  var weekWrite=(R.writeDone||[]).filter(function(w){ return w.t>=weekAgo; }).length;
+  var weekRead=0;
+  Object.keys(R.read||{}).forEach(function(id){
+    var v=R.read[id];
+    if(typeof v==='number'&&v>=weekAgo) weekRead++;
+  });
+  var weekPocket=(P.pkGot||[]).length;
+  var rows='<div class="mestats">'+
+    '<div class="mestat"><b>'+weekDone+'</b><span>本周拾句</span></div>'+
+    '<div class="mestat"><b>'+weekBook.length+'</b><span>写出的句子</span></div>'+
+    '<div class="mestat"><b>'+weekWrite+'</b><span>微写作</span></div>'+
+    '<div class="mestat"><b>'+weekRead+'</b><span>阅读短文</span></div>'+
+  '</div>';
+  if(weekBook.length){
+    rows+='<h3 style="margin-top:12px">🖋️ 孩子“用出去”的句子（内化的证据）</h3>'+
+      weekBook.slice(0,5).map(function(b){
+        var d=new Date(b.ts);
+        return '<div class="sentbook-item"><div class="sb-t">'+rdEscape(b.t)+'</div>'+
+          '<div class="sb-meta">'+(b.k==='仿写'?'✏️ 仿写':'📝 微写作')+' · '+(d.getMonth()+1)+'月'+d.getDate()+'日</div></div>';
+      }).join('')+
+      (weekBook.length>5?'<p class="sub" style="font-size:12px;color:var(--muted)">…还有 '+(weekBook.length-5)+' 条，见「我的句子本」</p>':'');
+  } else {
+    rows+='<p class="sub" style="font-size:13px;color:var(--muted);margin-top:8px">本周还没有写出的句子。建议：每天问孩子“今天捡到哪句了？”，比问“记住了没有”更有效。</p>';
+  }
+  rows+='<p class="sub" style="font-size:12px;color:var(--muted);margin-top:8px">💡 陪伴建议：只问“你最喜欢哪句”，别问“记住没有”。句子只有被孩子自己用出来，才算真的积累。</p>';
+  return rows;
+}
+
 function renderParent(){
   clearTimers();
   var M=window.META;
@@ -2218,6 +2257,7 @@ function renderParent(){
     '<h3 style="margin-top:14px">🎓 各年级掌握度</h3>'+gradeRows+
     (s&&s.totalAnswered?('<p class="sub" style="font-size:13px;color:var(--muted);margin-top:8px">总正确率 '+Math.round(s.totalRight*100/s.totalAnswered)+'% · 建议：正确率低的年级先听写巩固，再挑战高年级。</p>'):'')+
     '</div>'+
+    '<div class="mecard"><h3>📋 本周周报（近 7 天）</h3>'+parentWeeklyHtml()+'</div>'+
     '<div class="mecard"><h3>👨‍👩‍👧 学生档案（多人共用一台设备）</h3>'+
       '<p class="sub" style="font-size:13px;color:var(--muted)">每个孩子一个档案，星星、铜钱、错题各自独立。切换档案后自动重新加载。</p>'+
       profRows+

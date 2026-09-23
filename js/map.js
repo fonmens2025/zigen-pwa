@@ -117,6 +117,7 @@ function renderMap(){
       '<p class="flowtip">30 天旅程的终点之战！60 秒极限答题，击败魔王赢传说卡包。</p>'+
       '<button class="btn big" id="mpBoss">👹 挑战魔王（60秒）</button></div>';
   }
+  if(full&&window.creditFullDay) creditFullDay();
   var taskPack=dayIdx<NODES
     ?'<div class="mnode-card">'+
        '<h3>📍 第 '+(dayIdx+1)+' 天 · 今日任务包（约30分钟）</h3>'+

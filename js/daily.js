@@ -97,6 +97,105 @@ var DAILY_SENTS=[
 var PICK_SETS=['自然四季','想象王国','生活烟火','国学经典'];
 var PICK_SET_ICON={ '自然四季':'🌿','想象王国':'🪄','生活烟火':'🏮','国学经典':'📜' };
 
+/* ---------- 主题赛季：每季 5 张限定闪光句，集齐得限定徽章 ---------- */
+var SEASON_SENTS={
+ '秋':[
+  {s:'秋天的稻田翻起金色的波浪，稻穗沉甸甸地弯着腰。',src:'原创·秋季限定',lv:'L2',set:'秋季限定',type:'拟人',
+   why:'“弯着腰”把稻穗写成了谦虚的农夫，丰收也有礼貌。',d1:'稻子是金色的',d2:'秋天会刮风',
+   blank:{pre:'稻穗沉甸甸地（',post:'）。',ans:'弯着腰',w1:'摇摇头',w2:'睡大觉'}},
+  {s:'梧桐叶像一把把金色的小扇子，扇走了夏天的炎热。',src:'原创·仿《秋天的雨》',lv:'L2',set:'秋季限定',type:'比喻',
+   why:'叶子变成扇子，“扇走炎热”把两个季节连了起来。',d1:'梧桐叶很大',d2:'扇子能扇风',
+   blank:{pre:'扇走了夏天的（',post:'）。',ans:'炎热',w1:'雨水',w2:'小鸟'}},
+  {s:'大雁排成“人”字形，在蓝天上写下秋天的信。',src:'原创·秋季限定',lv:'L2',set:'秋季限定',type:'想象',
+   why:'雁队变成笔，天空变成纸，秋天会“写信”。',d1:'大雁会飞',d2:'信要贴邮票',
+   blank:{pre:'在蓝天上（',post:'）秋天的信。',ans:'写下',w1:'飞出',w2:'喊来'}},
+  {s:'桂花开了，整个村子都泡在甜甜的香气里。',src:'原创·秋季限定',lv:'L3',set:'秋季限定',type:'通感',
+   why:'一个“泡”字，让香气浓得能洗澡。',d1:'桂花是黄色的',d2:'村子很大',
+   blank:{pre:'整个村子都（',post:'）在甜甜的香气里。',ans:'泡',w1:'跑',w2:'笑'}},
+  {s:'秋天的夜晚，蟋蟀在草丛里弹琴，萤火虫提着灯笼巡逻。',src:'原创·秋季限定',lv:'L2',set:'秋季限定',type:'拟人',
+   why:'蟋蟀变琴师、萤火虫变卫兵，夜晚成了小剧场。',d1:'蟋蟀会叫',d2:'萤火虫会发光',
+   blank:{pre:'萤火虫提着（',post:'）巡逻。',ans:'灯笼',w1:'篮子',w2:'雨伞'}}
+ ],
+ '冬':[
+  {s:'雪花像一群白色的小精灵，轻轻地落在屋檐上。',src:'原创·冬季限定',lv:'L2',set:'冬季限定',type:'比喻+拟人',
+   why:'雪花变成小精灵，“轻轻落”写得又轻又美。',d1:'雪花是白色的',d2:'冬天很冷',
+   blank:{pre:'像一群白色的（',post:'）。',ans:'小精灵',w1:'小棉球',w2:'白蝴蝶'}},
+  {s:'冬天的风像小刀子，割得人脸生疼。',src:'原创·冬季限定',lv:'L2',set:'冬季限定',type:'比喻',
+   why:'把风比作刀子，冷得能“割”人，痛感一下子来了。',d1:'刀子很锋利',d2:'风看不见',
+   blank:{pre:'割得人脸（',post:'）。',ans:'生疼',w1:'发热',w2:'痒痒'}},
+  {s:'玻璃上结满了冰花，像一座座微缩的水晶森林。',src:'原创·冬季限定',lv:'L3',set:'冬季限定',type:'比喻',
+   why:'冰花变成水晶森林，窗玻璃成了童话世界。',d1:'冰花是水汽结的',d2:'玻璃是透明的',
+   blank:{pre:'像一座座微缩的（',post:'）。',ans:'水晶森林',w1:'玻璃花园',w2:'银色城堡'}},
+  {s:'大地盖上厚厚的雪被子，安静地睡着了。',src:'原创·冬季限定',lv:'L1',set:'冬季限定',type:'拟人',
+   why:'雪变被子、大地睡觉，冬天一下变得安静又温暖。',d1:'雪是白色的',d2:'被子很暖和',
+   blank:{pre:'大地盖上厚厚的（',post:'）。',ans:'雪被子',w1:'白毛毯',w2:'棉花糖'}},
+  {s:'腊梅在墙角悄悄开了，香得整条街都凑过来闻。',src:'原创·冬季限定',lv:'L3',set:'冬季限定',type:'夸张',
+   why:'“整条街都凑过来闻”，香得夸张又可爱。',d1:'腊梅冬天开',d2:'花是香的',
+   blank:{pre:'香得整条街都（',post:'）。',ans:'凑过来闻',w1:'跑过来看',w2:'笑起来啦'}}
+ ],
+ '春':[
+  {s:'春风像妈妈的手，轻轻地摸着柳树的头发。',src:'原创·春季限定',lv:'L1',set:'春季限定',type:'比喻+拟人',
+   why:'风变妈妈的手，柳条变头发，温柔看得见。',d1:'妈妈的手很温柔',d2:'柳条长长的',
+   blank:{pre:'轻轻地摸着柳树的（',post:'）。',ans:'头发',w1:'胳膊',w2:'衣服'}},
+  {s:'迎春花吹起金色的小喇叭，把春天广播到每个角落。',src:'原创·春季限定',lv:'L2',set:'春季限定',type:'拟人',
+   why:'花变喇叭“广播春天”，热热闹闹，声音都有了。',d1:'迎春花是黄色的',d2:'喇叭会响',
+   blank:{pre:'吹起金色的（',post:'）。',ans:'小喇叭',w1:'小铃铛',w2:'小雨伞'}},
+  {s:'春雨细细的、密密的，像牛毛，像花针，斜斜地织着一张大网。',src:'化用朱自清《春》',lv:'L3',set:'春季限定',type:'排比+比喻',
+   why:'牛毛、花针、大网连着三个比喻，春雨的细和密全写出来了。',d1:'春雨下得很小',d2:'牛毛很细',
+   blank:{pre:'像牛毛，像（',post:'），斜斜地织着一张大网。',ans:'花针',w1:'米粒',w2:'线头'}},
+  {s:'小燕子用尾巴剪开春风，剪出满园的花。',src:'原创·春季限定',lv:'L2',set:'春季限定',type:'想象',
+   why:'尾巴变剪刀，“剪”出春风和花，燕子成了春天的裁缝。',d1:'燕子的尾巴像剪刀',d2:'春天花会开',
+   blank:{pre:'用尾巴（',post:'）开春风。',ans:'剪',w1:'扇',w2:'扫'}},
+  {s:'桃树、杏树、梨树，你不让我，我不让你，都开满了花赶趟儿。',src:'朱自清《春》',lv:'L3',set:'春季限定',type:'拟人+排比',
+   why:'“你不让我，我不让你”把花开写成了比赛，热闹极了。',d1:'桃花是粉色的',d2:'春天百花齐放',
+   blank:{pre:'你不让我，我不让你，都开满了花（',post:'）。',ans:'赶趟儿',w1:'笑哈哈',w2:'排好队'}}
+ ],
+ '夏':[
+  {s:'夏天的夜晚，星星像撒了一地的碎银子。',src:'原创·夏季限定',lv:'L2',set:'夏季限定',type:'比喻',
+   why:'星星变碎银子，又亮又多，还能“捡”起来。',d1:'星星会发光',d2:'银子很值钱',
+   blank:{pre:'像撒了一地的（',post:'）。',ans:'碎银子',w1:'小灯珠',w2:'白芝麻'}},
+  {s:'知了在树上喊破了嗓子，把夏天叫得滚烫。',src:'原创·夏季限定',lv:'L2',set:'夏季限定',type:'拟人+夸张',
+   why:'“喊破嗓子”“叫得滚烫”，夏天的热有了声音。',d1:'知了夏天叫',d2:'夏天很热',
+   blank:{pre:'把夏天叫得（',post:'）。',ans:'滚烫',w1:'响亮',w2:'热闹'}},
+  {s:'荷塘里，青蛙们开起了演唱会，咕呱咕呱响成一片。',src:'原创·夏季限定',lv:'L1',set:'夏季限定',type:'拟人+拟声',
+   why:'“咕呱咕呱”让演唱会真的响了起来。',d1:'青蛙会跳',d2:'荷塘在夏天',
+   blank:{pre:'咕呱咕呱响成（',post:'）。',ans:'一片',w1:'一团',w2:'一阵'}},
+  {s:'太阳把柏油路晒得软软的，像踩着一块巨大的巧克力。',src:'原创·夏季限定',lv:'L3',set:'夏季限定',type:'比喻',
+   why:'马路变巧克力，热得离谱，也馋得可爱。',d1:'柏油路是黑的',d2:'巧克力遇热会软',
+   blank:{pre:'像踩着一块巨大的（',post:'）。',ans:'巧克力',w1:'软糖',w2:'黑地毯'}},
+  {s:'雷阵雨来了，豆大的雨点劈里啪啦地砸下来，天像裂开了一道口子。',src:'原创·夏季限定',lv:'L3',set:'夏季限定',type:'拟声+夸张',
+   why:'“劈里啪啦”+“天裂开口子”，雨大得像天漏了。',d1:'雷阵雨来得快',d2:'豆子圆圆的',
+   blank:{pre:'豆大的雨点（',post:'）地砸下来。',ans:'劈里啪啦',w1:'滴滴答答',w2:'哗啦哗啦'}}
+ ]
+};
+var SEASON_RANGE={ '春':[2,4], '夏':[5,7], '秋':[8,10], '冬':[11,1] };
+var SEASON_ICON={ '春':'🌱', '夏':'☀️', '秋':'🍁', '冬':'❄️' };
+function seasonName(){
+  var m=new Date().getMonth()+1;
+  for(var k in SEASON_RANGE){
+    var r=SEASON_RANGE[k];
+    if(r[0]<=r[1]&&m>=r[0]&&m<=r[1]) return k;
+    if(r[0]>r[1]&&(m>=r[0]||m<=r[1])) return k;
+  }
+  return null;
+}
+function seasonSent(){
+  var sn=seasonName();
+  if(!sn) return null;
+  var arr=SEASON_SENTS[sn];
+  var d=new Date();
+  var idx=Math.floor(((d-new Date(d.getFullYear(),0,0))/86400000))%arr.length;
+  return {sent:arr[idx], name:sn};
+}
+function seasonDaysLeft(){
+  var sn=seasonName();
+  if(!sn) return 0;
+  var r=SEASON_RANGE[sn], now=new Date(), end;
+  if(r[0]<=r[1]) end=new Date(now.getFullYear(), r[1], 0); /* r[1]月最后一天 */
+  else { end=new Date(now.getMonth()<2?now.getFullYear():now.getFullYear()+1, 2, 0); }
+  return Math.max(0, Math.ceil((end-now)/86400000));
+}
+
 /* ---------- 存档扩展 ---------- */
 function ensurePick(){
   if(!PROG.pick) PROG.pick={};
@@ -107,6 +206,8 @@ function ensurePick(){
   if(!P.book) P.book=[];
   if(!P.pkGot) P.pkGot=[];
   if(!P.revSeen) P.revSeen={};
+  if(!P.seasonDone) P.seasonDone={};
+  if(!P.seasonBadge) P.seasonBadge={};
   if(!P.makeup) P.makeup={n:1,wk:0};
   var wk=weekNo();
   if(P.makeup.wk!==wk){ P.makeup.wk=wk; P.makeup.n=Math.min(3,P.makeup.n+1); }
@@ -124,20 +225,25 @@ function pickRarity(s){ /* 闪光15%：句哈希稳定判定 */
   return h%100<15?'闪光':'普通';
 }
 
-/* ---------- 每日一拾：四步闭环 ---------- */
-function renderDailyPick(){
-  clearTimers(); 
+/* ---------- 每日一拾：四步闭环（mode='season' 为赛季限定句） ---------- */
+function renderDailyPick(mode){
+  clearTimers();
   var P=ensurePick();
-  var S=pickToday();
+  var isSeason=mode==='season';
+  var SS=isSeason?seasonSent():null;
+  var S=isSeason?SS.sent:pickToday();
   var tk=dateKey();
-  var doneToday=!!P.done[tk];
-  var rar=pickRarity(S.s);
+  var doneToday=isSeason?!!P.seasonDone[S.s]:!!P.done[tk];
+  var rar=isSeason?'闪光':pickRarity(S.s);
+  var titleHtml=isSeason
+    ?'<div class="gtitle">'+SEASON_ICON[SS.name]+' '+SS.name+'季收集季 · 限定句</div><div class="gsub">每天 1 张，集齐 5 张得限定徽章（剩 '+seasonDaysLeft()+' 天）</div>'
+    :'<div class="gtitle">🍀 每日一拾</div><div class="gsub">拾 → 读 → 懂 → 用，四步完成，句卡入册</div>';
   app.innerHTML=
     '<div class="readhome">'+
-      '<div class="ghead"><div class="gtitle">🍀 每日一拾</div><div class="gsub">拾 → 读 → 懂 → 用，四步完成，句卡入册</div></div>'+
-      (doneToday?'<div class="hub-rank">✅ 今天已经捡到宝啦！明天再来拾新句子。<br>今日句卡：<b>'+S.s+'</b></div>':'')+
+      '<div class="ghead">'+titleHtml+'</div>'+
+      (doneToday?'<div class="hub-rank">✅ '+(isSeason?'这张限定句已入册！明天再来拾下一张。':'今天已经捡到宝啦！明天再来拾新句子。')+'<br>'+(isSeason?'今日限定：':'今日句卡：')+'<b>'+S.s+'</b></div>':'')+
       '<div class="pick-card">'+
-        '<div class="pick-rar '+(rar==='闪光'?'rar-flash':'')+'">'+(rar==='闪光'?'✨ 闪光句':'句卡')+'</div>'+
+        '<div class="pick-rar '+(rar==='闪光'?'rar-flash':'')+'">'+(rar==='闪光'?'✨ 闪光句':(isSeason?'限定句卡':'句卡'))+'</div>'+
         '<div class="pick-sent">'+rdEscape(S.s)+'</div>'+
         '<div class="pick-src">—— '+rdEscape(S.src)+' · '+S.lv+' · '+S.type+'</div>'+
       '</div>'+
@@ -199,16 +305,25 @@ function renderDailyPick(){
         });
       });
     } else {
+      var seasonBtn='';
+      if(!isSeason){
+        var SS2=seasonSent();
+        if(SS2&&!P.seasonDone[SS2.sent.s]){
+          seasonBtn='<div class="step-ops"><button class="btn big" id="pkSeason">'+SEASON_ICON[SS2.name]+' 再拾 1 张'+SS2.name+'季限定句</button></div>';
+        }
+      }
       el.innerHTML='<div class="step-tip">🎉 完成！句卡已入册，去“句卡收藏册”看看今天的新卡吧。</div>'+
+        seasonBtn+
         '<div class="step-ops"><button class="btn big" id="pkCards">🃏 打开收藏册</button></div>';
       $('#pkCards').addEventListener('click',function(){ AUDIO.tap(); renderPickBook(); });
+      var pks=$('#pkSeason');
+      if(pks) pks.addEventListener('click',function(){ AUDIO.tap(); renderDailyPick('season'); });
     }
     drawSteps();
   }
   function goNext(){ cur++; drawBody(); }
   function finishPick(S,rar){
-    var tk=dateKey();
-    if(!P.done[tk]){
+    if(!P.done[tk]&&!isSeason){
       P.done[tk]=1;
       if(!P.cards[S.s]){
         P.cards[S.s]={rar:rar,set:S.set,ts:Date.now()};
@@ -218,10 +333,96 @@ function renderDailyPick(){
       }
       saveProg();
       META.trackLearn();
+      cur=4; drawBody();
+    } else if(isSeason&&!P.seasonDone[S.s]){
+      P.seasonDone[S.s]=1;
+      if(!P.cards[S.s]){
+        P.cards[S.s]={rar:'闪光',set:S.set,ts:Date.now()};
+        if(META){ META.S.coins+=8; META.save(); }
+        toast('✨ '+S.set+'句卡入册！+8 铜钱');
+        if(window.ANIM) ANIM.burst();
+      }
+      var sn=seasonName();
+      var all=SEASON_SENTS[sn].every(function(x){ return P.seasonDone[x.s]; });
+      if(all&&!P.seasonBadge){
+        P.seasonBadge={}; P.seasonBadge[sn]=1;
+        if(META) META.award('season'+sn);
+        toast('🎖️ '+sn+'季限定套装集齐！限定徽章点亮！');
+      }
+      saveProg();
+      META.trackLearn();
+      cur=4; drawBody();
     }
-    cur=4; drawBody();
   }
   drawSteps(); drawBody();
+}
+
+/* ---------- 睡前连播（TTS 顺序朗读句卡/好句） ---------- */
+var PL={tm:null,stop:false};
+function startPlaylist(list,title){
+  if(!list||!list.length){ toast('还没有可连播的句子'); return; }
+  clearTimers();
+  PL.stop=false;
+  app.innerHTML=
+    '<div class="readhome">'+
+      '<div class="ghead"><div class="gtitle">🌙 '+rdEscape(title)+'</div><div class="gsub">逐句朗读，每句间隔 2 秒 · 睡前故事式连播</div></div>'+
+      '<div class="hub-rank">第 <b id="plIdx">1</b>/'+list.length+' 句</div>'+
+      '<div class="pick-card"><div class="pick-sent" id="plSent">'+rdEscape(list[0])+'</div></div>'+
+      '<div class="step-ops">'+
+        '<button class="btn big" id="plStop">⏹ 停止连播</button>'+
+        '<button class="btn" id="plSkip">⏭ 下一句</button>'+
+        '<button class="btn" id="plBack">← 返回</button>'+
+      '</div>'+
+      '<div class="readtip">💤 躺好后把声音调小一点，听着听着就睡着啦。</div>'+
+    '</div>';
+  updateHeader();
+  var i=0;
+  function sayNext(){
+    if(PL.stop||i>=list.length){ return; }
+    document.getElementById('plIdx').textContent=(i+1);
+    document.getElementById('plSent').textContent=list[i];
+    try{
+      var u=new SpeechSynthesisUtterance(list[i]);
+      u.lang='zh-CN'; u.rate=0.85; u.pitch=1.05;
+      u.onend=function(){ i++; PL.tm=setTimeout(sayNext,2000); };
+      speechSynthesis.speak(u);
+    }catch(e){ i++; PL.tm=setTimeout(sayNext,2000); }
+  }
+  $('#plStop').addEventListener('click',function(){
+    AUDIO.tap(); PL.stop=true;
+    try{ speechSynthesis.cancel(); }catch(e){}
+    if(PL.tm) clearTimeout(PL.tm);
+    renderPickBook();
+  });
+  $('#plSkip').addEventListener('click',function(){
+    AUDIO.tap();
+    try{ speechSynthesis.cancel(); }catch(e){}
+    if(PL.tm) clearTimeout(PL.tm);
+    i++; sayNext();
+  });
+  $('#plBack').addEventListener('click',function(){
+    PL.stop=true;
+    try{ speechSynthesis.cancel(); }catch(e){}
+    if(PL.tm) clearTimeout(PL.tm);
+    renderPickBook();
+  });
+  sayNext();
+}
+
+/* ---------- 补签卡获取：连续全勤 3 天 +1（上限 3） ---------- */
+function creditFullDay(){
+  var P=ensurePick();
+  var tk=dateKey();
+  if(P.fullLast===tk) return;
+  var y=new Date(); y.setDate(y.getDate()-1);
+  var yk=y.getFullYear()+'-'+('0'+(y.getMonth()+1)).slice(-2)+'-'+('0'+y.getDate()).slice(-2);
+  P.fullStreak=(P.fullLast===yk)?((P.fullStreak||0)+1):1;
+  P.fullLast=tk;
+  if(P.fullStreak>=3&&P.fullStreak%3===0&&P.makeup.n<3){
+    P.makeup.n++;
+    toast('🪄 连续 '+P.fullStreak+' 天全勤！补签卡 +1（共 '+P.makeup.n+' 张）');
+  }
+  saveProg();
 }
 
 /* ---------- 句卡收藏册 ---------- */
@@ -231,7 +432,10 @@ function renderPickBook(){
   var ids=Object.keys(P.cards);
   var flash=0;
   ids.forEach(function(s){ if(P.cards[s].rar==='闪光') flash++; });
-  var setRows=PICK_SETS.map(function(sn){
+  var SN=seasonName();
+  var allSets=PICK_SETS.slice();
+  if(SN) allSets.push(SN==='春'?'春季限定':(SN==='夏'?'夏季限定':(SN==='秋'?'秋季限定':'冬季限定')));
+  var setRows=allSets.map(function(sn){
     var inSet=ids.filter(function(s){ return P.cards[s].set===sn; });
     var pct=Math.min(5,inSet.length);
     var done=inSet.length>=5;
@@ -259,10 +463,17 @@ function renderPickBook(){
         '<div class="cs green"><b>'+PICK_SETS.filter(function(sn){ return ids.filter(function(s){return P.cards[s].set===sn;}).length>=5; }).length+'</b><span>集齐套装</span></div>'+
         '<div class="cs blue"><b>'+Object.keys(P.done).length+'</b><span>拾句天</span></div>'+
       '</div>'+
+      (SN?'<div class="hub-rank">'+SEASON_ICON[SN]+' '+SN+'季收集季进行中 · 剩 <b>'+seasonDaysLeft()+'</b> 天 · 集齐 5 张限定句点亮限定徽章</div>':'')+
+      (ids.length?'<div class="step-ops"><button class="btn" id="pbPlay">🌙 睡前连播我的句卡</button></div>':'')+
       setRows+
       '<div class="pickcard-grid">'+cardHtml+'</div>'+
     '</div>';
   updateHeader();
+  var pb=$('#pbPlay');
+  if(pb) pb.addEventListener('click',function(){
+    AUDIO.tap();
+    startPlaylist(ids.slice().sort(function(a,b){ return P.cards[a].ts-P.cards[b].ts; }),'句卡连播');
+  });
 }
 
 /* ---------- 生字口袋 ---------- */
@@ -392,7 +603,9 @@ function badgeInfo(){
     {on:false, ic:'🦉', n:'字灵大师', d:'图鉴 150 张'},
     {on:false, ic:'⚔️', n:'擂台青铜', d:'擂台段位青铜以上'},
     {on:false, ic:'⚔️', n:'擂台黄金', d:'擂台段位黄金以上'},
-    {on:false, ic:'🎒', n:'口袋清空员', d:'累计认会 30 个口袋字'}
+    {on:false, ic:'🎒', n:'口袋清空员', d:'累计认会 30 个口袋字'},
+    {on:false, ic:'🏅', n:'赛季收藏家', d:'集齐任一季限定套装'},
+    {on:false, ic:'🔥', n:'全勤小达人', d:'连续 3 天任务包全完成'}
   ];
   var s=(META&&META.S)?META.S:{streak:0};
   if(s.streak>=7) B[0].on=true;
@@ -410,6 +623,8 @@ function badgeInfo(){
   if(rar!=='青铜') B[9].on=true;
   if(['黄金','钻石','字灵大师'].indexOf(rar)>=0) B[10].on=true;
   if((P.pkGot?P.pkGot.length:0)>=30) B[11].on=true;
+  if(P.seasonBadge&&Object.keys(P.seasonBadge).length) B[12].on=true;
+  if((P.fullStreak||0)>=3) B[13].on=true;
   return B;
 }
 function renderBadges(){

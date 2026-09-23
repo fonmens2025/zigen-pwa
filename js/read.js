@@ -437,6 +437,7 @@ function renderWordBook(){
         (sList?'<h3>📌 好句（'+R.savedS.length+'）</h3>'+sList:'')+
       '</div>'+
       (has?'<div class="rbtns"><button class="btn big" id="wbWrite">🖊️ 微写作：用掉一句</button><button class="btn secondary" id="wbMimic">✍️ 玩仿写</button></div>':'')+
+      (R.savedS.length?'<div class="step-ops"><button class="btn" id="wbPlay">🌙 睡前连播好句（'+R.savedS.length+' 句）</button></div>':'')+
     '</div>';
   $('#wbBack').addEventListener('click',renderReadHome);
   $all('.wb-item').forEach(function(el){
@@ -444,6 +445,12 @@ function renderWordBook(){
   });
   var bw=$('#wbWrite');
   if(bw) bw.addEventListener('click',renderMiniWrite);
+  var bp=$('#wbPlay');
+  if(bp) bp.addEventListener('click',function(){
+    AUDIO.tap();
+    if(window.startPlaylist) startPlaylist(R.savedS.slice(),'积词本好句连播');
+    else toast('连播功能未加载');
+  });
   var bm=$('#wbMimic');
   if(bm) bm.addEventListener('click',function(){
     var target=null;
