@@ -821,3 +821,55 @@ body{padding-bottom:76px}
 .chest-card{border-color:#E5A93C;background:linear-gradient(135deg,#FFF9EC,#FFFDF7)}
 .boss-card{border-color:#C94A2C;background:linear-gradient(135deg,#FDF0EB,#FFFDF7)}
 .boss-banner{background:#C94A2C;color:#fff;border-radius:12px;padding:10px 14px;font-size:14px;font-weight:700;text-align:center;margin:8px 0;animation:pulse 1.8s infinite}
+
+/* ================= v5.7 拾句闭环 / 句卡册 / 生字口袋 / 徽章 / 句子本 ================= */
+.dailyhero{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#FDF6E3,#FFFDF7);border:2px solid #E5C07A;border-radius:16px;padding:12px 14px;margin:8px 0 4px}
+.dh-tag{font-size:16px;font-weight:800;color:var(--red)}
+.dh-s{font-size:12px;color:var(--muted);margin-top:3px}
+.dh-meta{font-size:11px;color:#B08A4A;margin-top:3px}
+.dh-btn{background:var(--red);color:#fff;font-weight:800;padding:8px 14px;border-radius:12px;font-size:13px;white-space:nowrap}
+.pick-card{background:linear-gradient(160deg,#FFFDF7,#FBF3E0);border:2px solid #E8D5A8;border-radius:18px;padding:18px;margin:10px 0;text-align:center;box-shadow:0 4px 16px rgba(180,140,60,.12)}
+.pick-rar{display:inline-block;font-size:12px;font-weight:700;color:#8A6A30;border:1.5px solid #D9BE8C;border-radius:10px;padding:2px 10px;margin-bottom:8px}
+.pick-rar.rar-flash{color:#B8860B;border-color:#E5C07A;background:#FFF6E0;animation:pulse 2s infinite}
+.pick-sent{font-family:var(--f-kai);font-size:21px;line-height:1.7;color:#3E3420;margin:6px 0}
+.pick-src{font-size:12px;color:var(--muted)}
+.ps-steps{display:flex;gap:4px;margin:12px 0 8px}
+.ps-s{flex:1;text-align:center;font-size:12px;padding:7px 2px;border-radius:10px;background:#F3EFE4;color:#A99A76;border:1.5px solid transparent}
+.ps-s.done{background:#EAF5EC;color:#2E6B3E;border-color:#A9CDB2}
+.ps-s.cur{background:#FFF6E0;color:#8A5A10;border-color:#E5C07A;font-weight:800;animation:pulse 1.6s infinite}
+.step-tip{font-size:14px;color:#5A4A28;margin:6px 2px;line-height:1.7}
+.step-ops{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.pick-blank{font-family:var(--f-kai);font-size:20px;text-align:center;margin:10px 0;color:#3E3420}
+.pb-hole{display:inline-block;min-width:52px;border-bottom:3px solid var(--red);color:var(--red);font-weight:800;margin:0 2px}
+.whybtn.full{text-align:center;margin:4px 0}
+.wrongpick{opacity:.35;transform:scale(.97);filter:grayscale(.6)}
+.setrow{display:flex;align-items:center;gap:10px;background:var(--cardbg);border:1.5px solid var(--line);border-radius:14px;padding:10px;margin:7px 0}
+.setrow.setdone{border-color:#E5A93C;background:linear-gradient(135deg,#FFF9EC,#FFFDF7)}
+.set-ic{font-size:22px}
+.set-mid{flex:1}
+.set-mid b{font-size:14px;color:#4A3C20}
+.setbar{height:8px;background:#F0E9D8;border-radius:6px;margin-top:5px;overflow:hidden}
+.setbar span{display:block;height:100%;background:linear-gradient(90deg,#E5B84C,#D9972F);border-radius:6px}
+.set-n{font-size:12px;color:var(--muted);white-space:nowrap}
+.set-n b{color:#B8860B}
+.pickcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:6px}
+.pickcard{background:#FDFBF5;border:1.5px solid #E2D6BC;border-radius:14px;padding:10px;text-align:center}
+.pickcard.rar-flash{border-color:#E5C07A;background:linear-gradient(160deg,#FFF9E8,#FFFDF7);box-shadow:0 3px 10px rgba(217,166,60,.25)}
+.pc-rar{font-size:10px;color:#B08A4A;font-weight:700}
+.pc-s{font-family:var(--f-kai);font-size:14px;line-height:1.55;color:#3E3420;margin:4px 0}
+.pc-set{font-size:10px;color:var(--muted)}
+.pocket-grid{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;justify-content:center}
+.pocket-ch{font-family:var(--f-kai);font-size:26px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:#FFFDF7;border:2px solid #D9C9A0;border-radius:14px;color:#4A3C20}
+.pk-qs{font-family:var(--f-kai);font-size:19px;text-align:center;margin:14px 4px;line-height:1.7;color:#3E3420}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin:10px 0}
+.badge{border-radius:14px;padding:10px 4px;text-align:center;border:1.5px solid var(--line)}
+.badge.bon{background:linear-gradient(160deg,#FFF6E0,#FFFDF7);border-color:#E5C07A}
+.badge.boff{opacity:.45;filter:grayscale(.8)}
+.b-ic{font-size:24px}
+.b-n{font-size:11px;font-weight:800;color:#4A3C20;margin-top:3px}
+.b-d{font-size:9px;color:var(--muted);margin-top:2px}
+.sentbook-item{background:var(--cardbg);border:1.5px solid var(--line);border-left:4px solid #E5A93C;border-radius:12px;padding:10px;margin:7px 0}
+.sb-t{font-family:var(--f-kai);font-size:15px;line-height:1.7;color:#3E3420}
+.sb-meta{font-size:11px;color:var(--muted);margin-top:5px;display:flex;align-items:center;gap:8px}
+.cal-cell.makeup{cursor:pointer;background:#FDF6E3;border:1.5px dashed #E5C07A}
+.cal-cell.makeup:active{transform:scale(.92)}

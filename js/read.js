@@ -349,6 +349,7 @@ function openWordCard(w){
       '<div class="wc-ex">例句：'+rdEscape(w.ex)+'</div>'+
       '<div class="wc-ops">'+
         '<button class="btn" id="wcSay">🔊 再听一遍</button>'+
+        '<button class="btn" id="wcPocket">🎒 放进生字口袋</button>'+
         '<button class="btn big" id="wcSave">'+(saved?'✓ 已收藏':'＋ 收进积词本')+'</button>'+
       '</div>'+
     '</div>';
@@ -356,6 +357,10 @@ function openWordCard(w){
   mask.querySelector('#wcX').addEventListener('click',function(){ mask.remove(); });
   mask.addEventListener('click',function(ev){ if(ev.target===mask) mask.remove(); });
   mask.querySelector('#wcSay').addEventListener('click',function(){ speak(w.w); });
+  mask.querySelector('#wcPocket').addEventListener('click',function(){
+    if(window.pocketAdd){ pocketAdd(w.w); }
+    mask.remove();
+  });
   var saveBtn=mask.querySelector('#wcSave');
   saveBtn.addEventListener('click',function(){
     if(R.savedW.indexOf(w.w)<0){
@@ -494,6 +499,7 @@ function renderMiniWrite(){
       R.used[target]++;
     }
     R.writeDone.push({t:Date.now(),txt:txt});
+    if(window.bookAdd) bookAdd(txt,'微写作');
     saveProg();
     META.addCoins(25); META.addXP(25);
     META.quest('write');
@@ -546,6 +552,7 @@ function renderMimic(id){
   runMimicInline(art,'mimicArea',function(stars){
     var R=getRead();
     if(!R.mimicDone[art.id]||stars>R.mimicDone[art.id]){ R.mimicDone[art.id]=stars; saveProg(); }
+    if(stars>=2&&window.bookAdd&&art.mimic&&art.mimic[0]) bookAdd(art.mimic[0].ans||art.mimic[0].t||'', '仿写');
     var doneCount=0; for(var k in R.mimicDone) if(R.mimicDone[k]) doneCount++;
     if(doneCount>=5) META.award('mimic5');
     META.onGameEnd(stars);

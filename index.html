@@ -54,6 +54,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
 <script src="js/read.js"></script>
 <script src="js/map.js"></script>
 <script src="js/cards.js"></script>
+<script src="js/daily.js"></script>
 <script>
 'use strict';
 /* ================= 数据 ================= */
@@ -570,6 +571,7 @@ function renderHome(){
     '<div class="famgrid">'+cards+challenge+'</div>'+
     '<div class="homesec">🎪 游戏与活动</div>'+
     '<div class="entrygrid">'+
+      '<div class="entrycard" id="btnDaily"><span class="eic">🍀</span><b>每日一拾</b><small>3分钟 · 句卡入册</small></div>'+
       '<div class="entrycard" id="btnRead"><span class="eic">📖</span><b>悦读馆</b><small>读短文 · 点藏好词好句 · 仿写</small></div>'+
       '<div class="entrycard" id="btnMap"><span class="eic">🗺️</span><b>字林探险</b><small>30天学习地图 · 每日任务包</small></div>'+
       '<div class="entrycard" id="btnArena"><span class="eic">⚔️</span><b>每日擂台</b><small>90秒限时挑战</small></div>'+
@@ -602,6 +604,7 @@ function renderHome(){
   $('#mascot').addEventListener('click',function(){ AUDIO.tap(); renderShop(); });
   $('#btnGuide').addEventListener('click',renderGuide);
   $('#btnWrong').addEventListener('click',renderWrongBook);
+  $('#btnDaily').addEventListener('click',renderDailyPick);
   $('#btnRead').addEventListener('click',renderReadHome);
   $('#btnMap').addEventListener('click',renderMap);
   $('#btnArena').addEventListener('click',renderArena);
@@ -2003,10 +2006,18 @@ function renderGameHub(){
   setNav('game');
   var q=getQ5();
   var rank=arenaRank(q.arena.best);
+  var P=window.ensurePick?ensurePick():{done:{}};
+  var todayDone=!!P.done[dateKey()];
   app.innerHTML=
     '<div class="readhome">'+
       '<div class="ghead"><div class="gtitle">🎮 游戏与活动</div></div>'+
       '<div class="hub-rank">⚔️ 擂台段位：<b>'+rank[1]+' '+rank[0]+'</b> · 最高 '+q.arena.best+' 分</div>'+
+      '<div class="dailyhero" id="gDaily">'+
+        '<div class="dh-left"><div class="dh-tag">🍀 每日一拾</div>'+
+        '<div class="dh-s">拾 → 读 → 懂 → 用，四步捡回一张句卡</div>'+
+        '<div class="dh-meta">'+(todayDone?'✅ 今日已拾':'⏱ 约 3 分钟 · 每天 1 句')+'</div></div>'+
+        '<div class="dh-btn">'+(todayDone?'已拾':'去拾句 →')+'</div>'+
+      '</div>'+
       '<div class="entrygrid">'+
         '<div class="entrycard" id="gArena"><span class="eic">⚔️</span><b>每日擂台</b><small>90秒限时 · 段位晋升</small></div>'+
         '<div class="entrycard" id="gMap"><span class="eic">🗺️</span><b>字林探险</b><small>30天地图 · 宝箱 · BOSS</small></div>'+
@@ -2017,6 +2028,10 @@ function renderGameHub(){
         '<div class="entrycard" id="gRiddle"><span class="eic">🏮</span><b>字谜乐园</b><small>'+window.RIDDLES.length+' 条传统字谜</small></div>'+
         '<div class="entrycard" id="gMuseum"><span class="eic">🏛️</span><b>部首博物馆</b><small>六书 + '+window.RAD_MUSEUM.length+' 个部首</small></div>'+
         '<div class="entrycard" id="gGallery"><span class="eic">🖼️</span><b>象形字画廊</b><small>看图猜字</small></div>'+
+        '<div class="entrycard" id="gPB"><span class="eic">🃏</span><b>句卡收藏册</b><small>主题套装 · 闪光句</small></div>'+
+        '<div class="entrycard" id="gPocket"><span class="eic">🎒</span><b>生字口袋</b><small>2分钟字卡游戏</small></div>'+
+        '<div class="entrycard" id="gSBook"><span class="eic">📓</span><b>我的句子本</b><small>用出去的句子</small></div>'+
+        '<div class="entrycard" id="gBadges"><span class="eic">🏅</span><b>徽章墙</b><small>只和昨天的自己比</small></div>'+
       '</div>'+
       '<div class="readtip">💡 越玩越带劲的秘密：擂台升段位、地图开宝箱、图鉴集字灵、第30天打大魔王——每天半小时，全都在这。</div>'+
     '</div>';
@@ -2033,6 +2048,11 @@ function renderGameHub(){
   $('#gRiddle').addEventListener('click',renderRiddle);
   $('#gMuseum').addEventListener('click',renderMuseum);
   $('#gGallery').addEventListener('click',renderGallery);
+  $('#gDaily').addEventListener('click',function(){ AUDIO.tap(); renderDailyPick(); });
+  $('#gPB').addEventListener('click',function(){ AUDIO.tap(); renderPickBook(); });
+  $('#gPocket').addEventListener('click',function(){ AUDIO.tap(); renderPocket(); });
+  $('#gSBook').addEventListener('click',function(){ AUDIO.tap(); renderSentBook(); });
+  $('#gBadges').addEventListener('click',function(){ AUDIO.tap(); renderBadges(); });
   updateHeader();
 }
 
@@ -2095,6 +2115,8 @@ function renderMe(){
       '<div class="mecard"><h3>⚙️ 设置</h3>'+
         '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">'+
           '<button class="btn secondary" id="meCalendar">📅 签到日历</button>'+
+          '<button class="btn secondary" id="meBadges">🏅 徽章墙</button>'+
+          '<button class="btn secondary" id="meSBook">📓 我的句子本</button>'+
           '<button class="btn secondary" id="meSound">'+(SOUND?'🔊 声音已开':'🔇 声音已关')+'</button>'+
           '<button class="btn secondary" id="meShop">🎀 根宝换装</button>'+
           '<button class="btn secondary" id="meGuide">📖 家长必读</button>'+
@@ -2103,6 +2125,8 @@ function renderMe(){
       '</div>'+
     '</div>';
   $('#meCalendar').addEventListener('click',renderCalendar);
+  $('#meBadges').addEventListener('click',renderBadges);
+  $('#meSBook').addEventListener('click',renderSentBook);
   $('#meSound').addEventListener('click',function(){
     SOUND=!SOUND; updateHeader(); renderMe();
   });

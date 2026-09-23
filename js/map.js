@@ -316,7 +316,7 @@ function renderCalendar(){
     var act=q.days[k];
     var isToday=k===today;
     var isPast=k<today;
-    cells+='<div class="cal-cell'+(isToday?' today':'')+(act?' active':'')+(isPast&&!act?' past':'')+'">'+
+    cells+='<div class="cal-cell'+(isToday?' today':'')+(act?' active':'')+(isPast&&!act?' past':'')+(isPast&&!act&&window.makeupCount&&makeupCount()>0?' makeup':'')+'"'+(isPast&&!act&&window.makeupCount&&makeupCount()>0?' data-mk="'+k+'"':'')+'>'+
       '<span>'+d+'</span>'+(act?'<i class="cdot"></i>':'')+'</div>';
   }
   var streak=META?META.S.streak:0;
@@ -340,6 +340,7 @@ function renderCalendar(){
       '<div class="cal-week">' + ['一','二','三','四','五','六','日'].map(function(w){return '<span>'+w+'</span>';}).join('') + '</div>'+
       '<div class="cal-grid">'+cells+'</div>'+
       '<div class="streak-banner">🔥 已连续学习 <b>'+streak+'</b> 天'+(streak>=7?' · 七天连击达成！':'')+'</div>'+
+      '<div class="readtip">'+(window.makeupCount&&makeupCount()>0?'🪄 你有 <b>'+makeupCount()+'</b> 张补签卡：点一下漏掉的日子，火苗就接上了（每周自动发 1 张，最多囤 3 张）。':'补签卡每周自动发 1 张，最多囤 3 张。')+'</div>'+
       '<h3 class="bklv">🎁 连续签到奖励</h3>'+
       '<div class="ladder">'+ladderHtml+'</div>'+
       '<div class="readtip">💡 每天学一点（闯关/悦读/看字卡都算足迹）。坚持 30 天，你会看到自己的变化。</div>'+
@@ -347,6 +348,13 @@ function renderCalendar(){
   $('#calBack').addEventListener('click',renderMe);
   $('#calPrev').addEventListener('click',function(){ CAL.m--; if(CAL.m<0){CAL.m=11;CAL.y--;} renderCalendar(); });
   $('#calNext').addEventListener('click',function(){ CAL.m++; if(CAL.m>11){CAL.m=0;CAL.y++;} renderCalendar(); });
+  $all('[data-mk]').forEach(function(cell){
+    cell.addEventListener('click',function(){
+      if(!window.useMakeup){ return; }
+      var k=cell.getAttribute('data-mk');
+      if(useMakeup(k)) renderCalendar();
+    });
+  });
   $all('[data-lad]').forEach(function(b){
     b.addEventListener('click',function(){
       var n=+b.getAttribute('data-lad');
